@@ -3,6 +3,21 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 
+jar {
+    destinationDir project.file('/home/estafet/jboss-fuse-6.2.1.redhat-084/deploy')
+}
+
+//task hotdeploy(type: Copy) {
+//    println System.getProperty("user.dir");
+//    from 'bankx/build/libs';
+//    include '*.jar';
+//
+//    from(subprojects.configurations.runtime);
+//    into '/home/estafet/out';
+//}
+
+//assemble.dependsOn hotdeploy
+
 sourceCompatibility = 1.5
 
 repositories {

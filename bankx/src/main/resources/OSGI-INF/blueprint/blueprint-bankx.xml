@@ -7,8 +7,6 @@
             http://cxf.apache.org/blueprint/core http://cxf.apache.org/schemas/blueprint/core.xsd
            ">
 
-    <bean id="weatherProcessor" class="com.stackabuse.example.WeatherProcessor" />
-
     <camelContext xmlns="http://camel.apache.org/schema/blueprint">
 
         <route id="entry">
