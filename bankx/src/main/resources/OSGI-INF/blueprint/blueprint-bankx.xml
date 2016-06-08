@@ -7,5 +7,15 @@
             http://cxf.apache.org/blueprint/core http://cxf.apache.org/schemas/blueprint/core.xsd
            ">
 
+    <bean id="weatherProcessor" class="com.stackabuse.example.WeatherProcessor" />
+
+    <camelContext xmlns="http://camel.apache.org/schema/blueprint">
+
+        <route id="entry">
+            <from uri="jetty:http://localhost:20616/estafet/iban/report?httpClient.method=POST" />
+            <to uri="file:///home/estafet/out" />
+        </route>
+
+    </camelContext>
 
 </blueprint>
