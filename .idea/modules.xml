@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/task1-camel.iml" filepath="$PROJECT_DIR$/.idea/modules/task1-camel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/task1-camel_main.iml" filepath="$PROJECT_DIR$/.idea/modules/task1-camel_main.iml" group="task1-camel" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/task1-camel_test.iml" filepath="$PROJECT_DIR$/.idea/modules/task1-camel_test.iml" group="task1-camel" />
+    </modules>
+  </component>
+</project>
