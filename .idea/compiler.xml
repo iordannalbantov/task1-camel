@@ -19,10 +19,10 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="bankx_main" target="1.5" />
-      <module name="bankx_test" target="1.5" />
-      <module name="task1-camel_main" target="1.5" />
-      <module name="task1-camel_test" target="1.5" />
+      <module name="bankx_main" target="1.8" />
+      <module name="bankx_test" target="1.8" />
+      <module name="task1-camel_main" target="1.8" />
+      <module name="task1-camel_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

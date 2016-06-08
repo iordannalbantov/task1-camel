@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.apache.activemq:activemq-camel:5.13.3">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.activemq/activemq-camel/5.13.3/a879406e22a3e1d0a1422bb76ef3d45e951c5dbb/activemq-camel-5.13.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.activemq/activemq-camel/5.13.3/71e7636a1770d426347977df7d88b2928c5291cb/activemq-camel-5.13.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

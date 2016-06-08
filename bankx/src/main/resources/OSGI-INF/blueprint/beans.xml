@@ -7,15 +7,7 @@
             http://cxf.apache.org/blueprint/core http://cxf.apache.org/schemas/blueprint/core.xsd
            ">
 
-    <camelContext xmlns="http://camel.apache.org/schema/blueprint">
-
-        <routeBuilder ref="routeBuilder"/>
-
-        <!--<route id="entry">-->
-            <!--<from uri="jetty:http://localhost:20616/estafet/iban/report?httpClient.method=POST" />-->
-            <!--<to uri="file:///home/estafet/out" />-->
-        <!--</route>-->
-
-    </camelContext>
+    <bean id="routeBuilder" class="com.estafet.bench.yordan.nalbantov.task1.camel.BankXRouteBuilder">
+    </bean>
 
 </blueprint>
