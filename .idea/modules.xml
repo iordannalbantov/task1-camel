@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bankx/bankx.iml" filepath="$PROJECT_DIR$/.idea/modules/bankx/bankx.iml" group="bankx" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bankx/bankx_main.iml" filepath="$PROJECT_DIR$/.idea/modules/bankx/bankx_main.iml" group="bankx" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bankx/bankx_test.iml" filepath="$PROJECT_DIR$/.idea/modules/bankx/bankx_test.iml" group="bankx" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/task1-camel.iml" filepath="$PROJECT_DIR$/.idea/modules/task1-camel.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/task1-camel_main.iml" filepath="$PROJECT_DIR$/.idea/modules/task1-camel_main.iml" group="task1-camel" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/task1-camel_test.iml" filepath="$PROJECT_DIR$/.idea/modules/task1-camel_test.iml" group="task1-camel" />

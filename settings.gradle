@@ -1,2 +1,3 @@
 rootProject.name = 'task1-camel'
+include 'bankx'
 
