@@ -1,5 +1,6 @@
 package com.estafet.bench.yordan.nalbantov.task1.camel;
 
+import com.google.gson.Gson;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -20,26 +21,26 @@ public class IbanTest {
     private static final String SERVICE_URI = "http://localhost:20616/estafet/iban/report";
 
     private class Payload {
-        private String[] ibans = {
+        public String[] ibans = {
                 "BG66 ESTF 0616 0000 0000 01",
                 "BG66 ESTF 0616 0000 0000 02",
                 "BG66 ESTF 0616 0000 0000 03"
         };
 
-        @Override
-        public String toString() {
-            StringBuilder builder = new StringBuilder();
-            builder.append("{[");
-            for (int i = 0, ibansLength = ibans.length; i < ibansLength; i++) {
-                String iban = ibans[i];
-                builder.append("\"").append(iban).append("\"");
-                if (i + 1 != ibansLength) {
-                    builder.append(",");
-                }
-            }
-            builder.append("]}");
-            return builder.toString();
-        }
+//        @Override
+//        public String toString() {
+//            StringBuilder builder = new StringBuilder();
+//            builder.append("{[");
+//            for (int i = 0, ibansLength = ibans.length; i < ibansLength; i++) {
+//                String iban = ibans[i];
+//                builder.append("\"").append(iban).append("\"");
+//                if (i + 1 != ibansLength) {
+//                    builder.append(",");
+//                }
+//            }
+//            builder.append("]}");
+//            return builder.toString();
+//        }
     }
 
     @Test
@@ -47,7 +48,9 @@ public class IbanTest {
         try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();) {
             HttpPost postRequest = new HttpPost(SERVICE_URI);
             Payload payload = new Payload();
-            String json = payload.toString();
+
+            Gson gson = new Gson();
+            String json = gson.toJson(payload);
             HttpEntity entity = new ByteArrayEntity(json.getBytes(StandardCharsets.UTF_8));
             postRequest.setEntity(entity);
 

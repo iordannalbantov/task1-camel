@@ -19,9 +19,6 @@ public class BankXRouteBuilder extends RouteBuilder {
                 .split(body()).setHeader("IbanTimestampOfRequest", /* to string */ constant(now))
                 .to("activemq:queue:ibanReport");
 
-//        from("activemq:queue:ibanReport").id("processing")
-//                .to("file:///u01/data/iban/reports");
-
         from("direct:data").process(exchange -> {
             IbanSingleReportEntity entity = new IbanSingleReportEntity(null);
 
