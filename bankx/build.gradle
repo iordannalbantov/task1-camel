@@ -2,21 +2,25 @@ group 'org.estafet.bench.yordan.nalbantov'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'osgi'
 
 jar {
+    baseName = 'bankx'
     destinationDir project.file('/home/estafet/jboss-fuse-6.2.1.redhat-084/deploy')
+    manifest {
+        instruction 'Import-Package',
+                'org.apache.camel.builder, '+
+                'org.apache.camel.component.http, ' +
+                'org.apache.activemq, ' +
+                'org.apache.activemq.pool, ' +
+                'org.apache.camel.component.jms, ' +
+                'org.apache.activemq.camel.component, ' +
+                'com.fasterxml.jackson.databind, ' +
+                ' *'
+        // instruction 'Bundle-SymbolicName', 'blueprint.graceperiod:=true;blueprint.timeout:=10000'
+
+    }
 }
-
-//task hotdeploy(type: Copy) {
-//    println System.getProperty("user.dir");
-//    from 'bankx/build/libs';
-//    include '*.jar';
-//
-//    from(subprojects.configurations.runtime);
-//    into '/home/estafet/out';
-//}
-
-//assemble.dependsOn hotdeploy
 
 sourceCompatibility = 1.8
 
@@ -27,8 +31,8 @@ repositories {
 dependencies {
     compile group: 'org.apache.camel', name: 'camel-core', version: '2.15.1'
     compile group: 'org.apache.camel', name: 'camel-jetty', version: '2.15.1'
-    compile group: 'org.apache.activemq', name: 'activemq-camel', version: '5.13.3'
-    compile group: 'org.apache.activemq', name: 'activemq-pool', version: '5.13.3'
+    compile group: 'org.apache.activemq', name: 'activemq-camel', version: '5.11.0'
+    compile group: 'org.apache.activemq', name: 'activemq-pool', version: '5.11.0'
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.21'
     testCompile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
     testCompile group: 'com.google.code.gson', name: 'gson', version: '2.6.2'
