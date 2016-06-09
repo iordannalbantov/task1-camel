@@ -26,21 +26,6 @@ public class IbanTest {
                 "BG66 ESTF 0616 0000 0000 02",
                 "BG66 ESTF 0616 0000 0000 03"
         };
-
-//        @Override
-//        public String toString() {
-//            StringBuilder builder = new StringBuilder();
-//            builder.append("{[");
-//            for (int i = 0, ibansLength = ibans.length; i < ibansLength; i++) {
-//                String iban = ibans[i];
-//                builder.append("\"").append(iban).append("\"");
-//                if (i + 1 != ibansLength) {
-//                    builder.append(",");
-//                }
-//            }
-//            builder.append("]}");
-//            return builder.toString();
-//        }
     }
 
     @Test
