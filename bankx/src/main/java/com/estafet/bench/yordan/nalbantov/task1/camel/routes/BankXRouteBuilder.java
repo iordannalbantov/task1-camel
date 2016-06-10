@@ -1,7 +1,6 @@
 package com.estafet.bench.yordan.nalbantov.task1.camel.routes;
 
 import com.estafet.bench.yordan.nalbantov.task1.camel.aggregations.IbanSingleReportEntityAggregation;
-import com.estafet.bench.yordan.nalbantov.task1.camel.model.IbanSingleReportEntity;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.FakeDataProcessor;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.IbanSingleReportEntityProcessor;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.LoggerProcessor;
@@ -10,7 +9,6 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -42,14 +40,29 @@ public class BankXRouteBuilder extends RouteBuilder {
                 .unmarshal().json(JsonLibrary.Gson)
                 // Header is set before the splitting to ensure that it will be the same nevertheless splitting on large data may span milliseconds.
                 .setHeader("IbanTimestampOfRequest", simple("${date:now:yyyy MM dd HH mm ss SSS}"))
+                // Split the message object into IBANs (strings).
                 .split().method("splitters", "splitIbansLinkedHashMapToStrings")
+                // Send the IBANs to the message queue.
                 .to("activemq:queue:ibanReport");
 
+        // Populate beans with fake data, later on used to enrich the original beans.
         from("direct:data").routeId("data").process(fakeDataProcessor);
 
+        // Route with id "processing" from the message queue.
         from("activemq:queue:ibanReport").routeId("processing")
+                // Replace the body with a new instance of the bean.
                 .process(ibanSingleReportEntityProcessor)
+                // Populate the other three fields of the bean.
                 .enrich("direct:data", ibanSingleReportEntityAggregation)
+                // Aggregate all incoming messages by the header "IbanTimestampOfRequest".
+                .aggregate(header("IbanTimestampOfRequest"), new AggregationStrategy() {
+                    @Override
+                    public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
+                        return null;
+                    }
+                })
+                // Wait 2 seconds to aggregate all messages.
+                .completionTimeout(2000)
                 .to("file:///u01/data/iban/reports");
     }
 
