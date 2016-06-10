@@ -7,7 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by estafet.
+ * Created by Yordan Nalbantov.
  */
 public class LoggerProcessor implements Processor {
 
@@ -15,10 +15,6 @@ public class LoggerProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        if (exchange.getIn() != null && exchange.getIn().getBody() != null) {
-            logger.log(Level.INFO, "Message Processed with body: {0}", exchange.getIn().getBody().toString());
-        } else {
-            logger.log(Level.INFO, "Message Processed with body: null");
-        }
+        logger.log(Level.INFO, "Message Processed ");
     }
 }

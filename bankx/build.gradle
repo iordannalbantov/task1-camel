@@ -11,7 +11,7 @@ jar {
         instruction 'Import-Package',
                         'org.apache.camel.builder, ' +
                         'org.apache.camel.component.http, ' +
-                        'org.apache.camel.component.gson, ' +
+                        'org.apache.camel.component.jackson, ' +
                         'org.apache.activemq, ' +
                         'org.apache.activemq.pool, ' +
                         'org.apache.camel.component.jms, ' +
@@ -35,7 +35,7 @@ dependencies {
     compile group: 'org.apache.activemq', name: 'activemq-camel', version: '5.11.0'
     compile group: 'org.apache.activemq', name: 'activemq-pool', version: '5.11.0'
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.21'
-    compile group: 'org.apache.camel', name: 'camel-gson', version: '2.15.1'
+    compile group: 'org.apache.camel', name: 'camel-jackson', version: '2.15.1'
 
     testCompile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
     testCompile group: 'org.apache.camel', name: 'camel-gson', version: '2.15.1'

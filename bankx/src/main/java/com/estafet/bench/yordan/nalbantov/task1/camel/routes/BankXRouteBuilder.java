@@ -1,6 +1,7 @@
 package com.estafet.bench.yordan.nalbantov.task1.camel.routes;
 
 import com.estafet.bench.yordan.nalbantov.task1.camel.aggregations.IbanSingleReportEntityAggregation;
+import com.estafet.bench.yordan.nalbantov.task1.camel.model.IbanSingleReportEntity;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.FakeDataProcessor;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.IbanSingleReportEntityProcessor;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.LoggerProcessor;
@@ -9,6 +10,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**
@@ -37,7 +39,7 @@ public class BankXRouteBuilder extends RouteBuilder {
         // routeId is the correct way of setting route id. The id method sets component´s id.
         // Jetty restricted to accept POST requests only. 404 - method not allowed is returned otherwise.
         from("jetty:http://127.0.0.1:20616/estafet/iban/report?httpMethodRestrict=POST&continuationTimeout=5000").routeId("entry")
-                .unmarshal().json(JsonLibrary.Gson)
+                .unmarshal().json(JsonLibrary.Jackson)
                 // Header is set before the splitting to ensure that it will be the same nevertheless splitting on large data may span milliseconds.
                 .setHeader("IbanTimestampOfRequest", simple("${date:now:yyyy MM dd HH mm ss SSS}"))
                 // Split the message object into IBANs (strings).
@@ -58,12 +60,31 @@ public class BankXRouteBuilder extends RouteBuilder {
                 .aggregate(header("IbanTimestampOfRequest"), new AggregationStrategy() {
                     @Override
                     public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
+                        if (newExchange.getIn().getBody() instanceof IbanSingleReportEntity) {
+                            IbanSingleReportEntity entity = (IbanSingleReportEntity) newExchange.getIn().getBody();
+                            ArrayList<IbanSingleReportEntity> result;
+                            if (oldExchange == null) {
+                                result = new ArrayList<>();
+                                result.add(entity);
+                                newExchange.getIn().setBody(result);
+                                return newExchange;
+                            } else {
+                                //noinspection unchecked
+                                result = oldExchange.getIn().getBody(ArrayList.class);
+                                result.add(entity);
+                                return oldExchange;
+                            }
+                        }
                         return null;
                     }
-                })
+                }).process(loggerProcessor)
                 // Wait 2 seconds to aggregate all messages.
                 .completionTimeout(2000)
+                // Marshall back to JSON.
+                .marshal().json(JsonLibrary.Jackson)
                 .to("file:///u01/data/iban/reports");
+
+        // TODO: onException
     }
 
     public void setLoggerProcessor(LoggerProcessor loggerProcessor) {

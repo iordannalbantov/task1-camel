@@ -3,7 +3,7 @@ package com.estafet.bench.yordan.nalbantov.task1.camel.model;
 import java.io.Serializable;
 
 /**
- * Created by estafet on 09/06/16
+ * Created by Yordan Nalbantov
  */
 public class IbanSingleReportEntity implements Serializable {
 

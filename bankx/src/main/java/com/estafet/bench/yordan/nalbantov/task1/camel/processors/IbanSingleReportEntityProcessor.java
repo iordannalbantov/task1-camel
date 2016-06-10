@@ -8,7 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by estafet.
+ * Created by Yordan Nalbantov.
  */
 public class IbanSingleReportEntityProcessor implements Processor {
 

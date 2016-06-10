@@ -1,8 +1,7 @@
 package com.estafet.bench.yordan.nalbantov.task1.camel.splitters;
 
-import com.google.gson.internal.LinkedTreeMap;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -10,7 +9,7 @@ import java.util.List;
  */
 public class Splitters {
 
-    public List<String> splitIbansLinkedHashMapToStrings(LinkedTreeMap data) {
+    public List<String> splitIbansLinkedHashMapToStrings(HashMap data) {
         List<String> ibans = new ArrayList<>();
         Object node = data.get("ibans");
         if (node instanceof List) {

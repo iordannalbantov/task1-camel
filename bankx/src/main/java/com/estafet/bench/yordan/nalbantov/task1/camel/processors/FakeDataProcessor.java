@@ -7,7 +7,7 @@ import org.apache.camel.Processor;
 import java.util.logging.Logger;
 
 /**
- * Created by estafet on 10/06/16.
+ * Created by Yordan Nalbantov.
  */
 public class FakeDataProcessor implements Processor {
 
