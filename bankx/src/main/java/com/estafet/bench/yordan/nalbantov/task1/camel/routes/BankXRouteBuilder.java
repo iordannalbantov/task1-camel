@@ -9,7 +9,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 
 /**
- * Created by estafet on 08/06/16
+ * Created by Yordan Nalbantov.
  */
 public class BankXRouteBuilder extends RouteBuilder {
 
@@ -60,6 +60,8 @@ public class BankXRouteBuilder extends RouteBuilder {
                 .to("file:///u01/data/iban/reports");
 
         // TODO: onException
+        // TODO: remove unused type converter
+        // TODO: why the test is executing twice
     }
 
     public void setLoggerProcessor(LoggerProcessor loggerProcessor) {
