@@ -32,8 +32,8 @@ public class BankXRouteBuilder extends RouteBuilder {
         // Jetty restricted to accept POST requests only. 404 - method not allowed is returned otherwise.
         from("jetty:http://127.0.0.1:20616/estafet/iban/report?httpMethodRestrict=POST&continuationTimeout=5000").routeId("entry")
                 .unmarshal().json(JsonLibrary.Gson)
-                .split(body()).process(loggerProcessor)
-                .setHeader("IbanTimestampOfRequest", simple("${date:now:yyyy MM dd HH mm ss SSS}"))
+                .split().method("splitters", "splitIbansLinkedHashMapToStrings")
+                .setHeader("IbanTimestampOfRequest", simple("${date:now:yyyy MM dd HH mm ss SSS}")).process(loggerProcessor)
                 .to("activemq:queue:ibanReport");
 
         from("direct:data").routeId("data").process(ibanSingleReportEntityProcessor);

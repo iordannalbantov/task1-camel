@@ -17,7 +17,7 @@ public class LoggerProcessor implements Processor {
     @Override
     public void process(Exchange exchange) throws Exception {
         if (exchange.getIn() != null && exchange.getIn().getBody() != null) {
-            logger.log(Level.INFO, "Message Processed with body: %n {0} %n", exchange.getIn().getBody().toString());
+            logger.log(Level.INFO, "Message Processed with body: {0}", exchange.getIn().getBody().toString());
         } else {
             logger.log(Level.INFO, "Message Processed with body: null");
         }
