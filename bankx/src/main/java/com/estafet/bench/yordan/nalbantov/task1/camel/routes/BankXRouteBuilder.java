@@ -1,10 +1,14 @@
 package com.estafet.bench.yordan.nalbantov.task1.camel.routes;
 
+import com.estafet.bench.yordan.nalbantov.task1.camel.aggregations.IbanSingleReportEntityAggregation;
 import com.estafet.bench.yordan.nalbantov.task1.camel.model.IbanSingleReportEntity;
+import com.estafet.bench.yordan.nalbantov.task1.camel.processors.FakeDataProcessor;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.IbanSingleReportEntityProcessor;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.LoggerProcessor;
+import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
+import org.apache.camel.processor.aggregate.AggregationStrategy;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +22,11 @@ public class BankXRouteBuilder extends RouteBuilder {
 
     private LoggerProcessor loggerProcessor;
 
+    private FakeDataProcessor fakeDataProcessor;
+
     private IbanSingleReportEntityProcessor ibanSingleReportEntityProcessor;
+
+    private IbanSingleReportEntityAggregation ibanSingleReportEntityAggregation;
 
     @Override
     public void configure() throws Exception {
@@ -32,30 +40,16 @@ public class BankXRouteBuilder extends RouteBuilder {
         // Jetty restricted to accept POST requests only. 404 - method not allowed is returned otherwise.
         from("jetty:http://127.0.0.1:20616/estafet/iban/report?httpMethodRestrict=POST&continuationTimeout=5000").routeId("entry")
                 .unmarshal().json(JsonLibrary.Gson)
+                // Header is set before the splitting to ensure that it will be the same nevertheless splitting on large data may span milliseconds.
+                .setHeader("IbanTimestampOfRequest", simple("${date:now:yyyy MM dd HH mm ss SSS}"))
                 .split().method("splitters", "splitIbansLinkedHashMapToStrings")
-                .setHeader("IbanTimestampOfRequest", simple("${date:now:yyyy MM dd HH mm ss SSS}")).process(loggerProcessor)
                 .to("activemq:queue:ibanReport");
 
-        from("direct:data").routeId("data").process(ibanSingleReportEntityProcessor);
+        from("direct:data").routeId("data").process(fakeDataProcessor);
 
         from("activemq:queue:ibanReport").routeId("processing")
-                .process(exchange -> {
-                    logger.log(Level.INFO, "IbanTimestampOfRequest = {0}", exchange.getIn().getHeader("IbanTimestampOfRequest"));
-                    String iban = exchange.getIn().getBody(String.class);
-                    IbanSingleReportEntity entity = new IbanSingleReportEntity(iban);
-                    exchange.getIn().setBody(entity);
-                })
-                .enrich("direct:data", (original, resource) -> {
-                    IbanSingleReportEntity originalBody = original.getIn().getBody(IbanSingleReportEntity.class);
-                    IbanSingleReportEntity resourceBody = resource.getIn().getBody(IbanSingleReportEntity.class);
-
-                    originalBody.setName(resourceBody.getName());
-                    originalBody.setBalance(resourceBody.getBalance());
-                    originalBody.setCurrency(resourceBody.getCurrency());
-
-                    original.getIn().setBody(originalBody);
-                    return original;
-                })
+                .process(ibanSingleReportEntityProcessor)
+                .enrich("direct:data", ibanSingleReportEntityAggregation)
                 .to("file:///u01/data/iban/reports");
     }
 
@@ -63,7 +57,15 @@ public class BankXRouteBuilder extends RouteBuilder {
         this.loggerProcessor = loggerProcessor;
     }
 
+    public void setFakeDataProcessor(FakeDataProcessor fakeDataProcessor) {
+        this.fakeDataProcessor = fakeDataProcessor;
+    }
+
     public void setIbanSingleReportEntityProcessor(IbanSingleReportEntityProcessor ibanSingleReportEntityProcessor) {
         this.ibanSingleReportEntityProcessor = ibanSingleReportEntityProcessor;
+    }
+
+    public void setIbanSingleReportEntityAggregation(IbanSingleReportEntityAggregation ibanSingleReportEntityAggregation) {
+        this.ibanSingleReportEntityAggregation = ibanSingleReportEntityAggregation;
     }
 }

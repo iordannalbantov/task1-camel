@@ -2,7 +2,6 @@ package com.estafet.bench.yordan.nalbantov.task1.camel.processors;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.camel.language.Bean;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,7 +11,7 @@ import java.util.logging.Logger;
  */
 public class LoggerProcessor implements Processor {
 
-    private static Logger logger = Logger.getLogger(IbanSingleReportEntityProcessor.class.getSimpleName());
+    private static Logger logger = Logger.getLogger(FakeDataProcessor.class.getSimpleName());
 
     @Override
     public void process(Exchange exchange) throws Exception {

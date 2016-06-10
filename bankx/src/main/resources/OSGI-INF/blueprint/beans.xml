@@ -5,11 +5,19 @@
 
     <bean id="bankXRouteBuilder" class="com.estafet.bench.yordan.nalbantov.task1.camel.routes.BankXRouteBuilder">
         <property name="loggerProcessor" ref="loggerProcessor"/>
+        <property name="fakeDataProcessor" ref="fakeDataProcessor"/>
         <property name="ibanSingleReportEntityProcessor" ref="ibanSingleReportEntityProcessor"/>
+        <property name="ibanSingleReportEntityAggregation" ref="ibanSingleReportEntityAggregation"/>
     </bean>
 
     <bean id="loggerProcessor" class="com.estafet.bench.yordan.nalbantov.task1.camel.processors.LoggerProcessor"/>
 
-    <bean id="ibanSingleReportEntityProcessor" class="com.estafet.bench.yordan.nalbantov.task1.camel.processors.IbanSingleReportEntityProcessor"/>
+    <bean id="fakeDataProcessor" class="com.estafet.bench.yordan.nalbantov.task1.camel.processors.FakeDataProcessor"/>
+
+    <bean id="ibanSingleReportEntityProcessor"
+          class="com.estafet.bench.yordan.nalbantov.task1.camel.processors.IbanSingleReportEntityProcessor"/>
+
+    <bean id="ibanSingleReportEntityAggregation"
+          class="com.estafet.bench.yordan.nalbantov.task1.camel.aggregations.IbanSingleReportEntityAggregation"/>
 
 </blueprint>

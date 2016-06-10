@@ -4,21 +4,23 @@ import com.estafet.bench.yordan.nalbantov.task1.camel.model.IbanSingleReportEnti
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by estafet.
+ * Created by estafet on 10/06/16.
  */
-public class IbanSingleReportEntityProcessor implements Processor {
+public class FakeDataProcessor implements Processor {
 
     private static Logger logger = Logger.getLogger(FakeDataProcessor.class.getSimpleName());
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        logger.log(Level.INFO, "IbanTimestampOfRequest = {0}", exchange.getIn().getHeader("IbanTimestampOfRequest"));
-        String iban = exchange.getIn().getBody(String.class);
-        IbanSingleReportEntity entity = new IbanSingleReportEntity(iban);
+        IbanSingleReportEntity entity = new IbanSingleReportEntity(null);
+
+        entity.setName("Yordan Nalbantov");
+        entity.setBalance(100.0);
+        entity.setCurrency("BGN");
+
         exchange.getIn().setBody(entity);
     }
 }
