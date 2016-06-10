@@ -15,6 +15,13 @@ public class IbanSingleReportEntity implements Serializable {
     public IbanSingleReportEntity() {
     }
 
+    public IbanSingleReportEntity(String iban, String name, double balance, String currency) {
+        this.iban = iban;
+        this.name = name;
+        this.balance = balance;
+        this.currency = currency;
+    }
+
     public IbanSingleReportEntity(String iban) {
         this.iban = iban;
     }
