@@ -4,6 +4,7 @@ import com.estafet.bench.yordan.nalbantov.task1.camel.model.IbanSingleReportEnti
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.IbanSingleReportEntityProcessor;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.LoggerProcessor;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.model.dataformat.JsonLibrary;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,8 +29,11 @@ public class BankXRouteBuilder extends RouteBuilder {
         // Using IP instead of localhost, as it causes a log message.
         // Using not default continuation timeout of 5000, as it defaults to 30000 and generates a log info message.
         // routeId is the correct way of setting route id. The id method sets component´s id.
-        from("jetty:http://127.0.0.1:20616/estafet/iban/report?httpClient.method=POST&continuationTimeout=5000").routeId("entry").process(loggerProcessor)
-                .split(body()).setHeader("IbanTimestampOfRequest", simple("${date:now:yyyy MM dd HH mm ss SSS}"))
+        // Jetty restricted to accept POST requests only. 404 - method not allowed is returned otherwise.
+        from("jetty:http://127.0.0.1:20616/estafet/iban/report?httpMethodRestrict=POST&continuationTimeout=5000").routeId("entry")
+                .unmarshal().json(JsonLibrary.Gson)
+                .split(body()).process(loggerProcessor)
+                .setHeader("IbanTimestampOfRequest", simple("${date:now:yyyy MM dd HH mm ss SSS}"))
                 .to("activemq:queue:ibanReport");
 
         from("direct:data").routeId("data").process(ibanSingleReportEntityProcessor);

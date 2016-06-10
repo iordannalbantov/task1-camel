@@ -14,6 +14,7 @@
     <orderEntry type="library" name="Gradle: org.apache.activemq:activemq-camel:5.11.0" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.activemq:activemq-pool:5.11.0" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-simple:1.7.21" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.camel:camel-gson:2.15.1" level="project" />
     <orderEntry type="library" name="Gradle: com.sun.xml.bind:jaxb-core:2.2.11" level="project" />
     <orderEntry type="library" name="Gradle: com.sun.xml.bind:jaxb-impl:2.2.11" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.camel:camel-jetty8:2.15.1" level="project" />
@@ -23,6 +24,7 @@
     <orderEntry type="library" name="Gradle: org.apache.activemq:activemq-client:5.11.0" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.geronimo.specs:geronimo-jta_1.0.1B_spec:1.0.1" level="project" />
     <orderEntry type="library" name="Gradle: commons-pool:commons-pool:1.6" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.3" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.camel:camel-http:2.15.1" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.camel:camel-jetty-common:2.15.1" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.geronimo.specs:geronimo-servlet_3.0_spec:1.0" level="project" />
