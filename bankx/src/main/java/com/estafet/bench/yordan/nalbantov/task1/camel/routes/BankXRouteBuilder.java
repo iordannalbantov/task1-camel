@@ -2,24 +2,16 @@ package com.estafet.bench.yordan.nalbantov.task1.camel.routes;
 
 import com.estafet.bench.yordan.nalbantov.task1.camel.aggregations.IbanSingleReportEntityAggregation;
 import com.estafet.bench.yordan.nalbantov.task1.camel.aggregations.ReportAggregation;
-import com.estafet.bench.yordan.nalbantov.task1.camel.model.IbanSingleReportEntity;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.FakeDataProcessor;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.IbanSingleReportEntityProcessor;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.LoggerProcessor;
-import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
-import org.apache.camel.processor.aggregate.AggregationStrategy;
-
-import java.util.ArrayList;
-import java.util.logging.Logger;
 
 /**
  * Created by estafet on 08/06/16
  */
 public class BankXRouteBuilder extends RouteBuilder {
-
-    private static Logger logger = Logger.getLogger(BankXRouteBuilder.class.getSimpleName());
 
     private LoggerProcessor loggerProcessor;
 

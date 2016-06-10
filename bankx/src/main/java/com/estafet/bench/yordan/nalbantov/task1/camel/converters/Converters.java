@@ -23,7 +23,7 @@ public class Converters {
 
     @Converter
     public static InputStream toInputStream(IbanSingleReportEntity bean) {
-        InputStream inputStream = new ByteArrayInputStream("test" .getBytes(StandardCharsets.UTF_8));
+        InputStream inputStream = new ByteArrayInputStream("test".getBytes(StandardCharsets.UTF_8));
         return inputStream;
     }
 }
