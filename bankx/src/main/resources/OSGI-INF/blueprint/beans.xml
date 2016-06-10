@@ -8,6 +8,7 @@
         <property name="fakeDataProcessor" ref="fakeDataProcessor"/>
         <property name="ibanSingleReportEntityProcessor" ref="ibanSingleReportEntityProcessor"/>
         <property name="ibanSingleReportEntityAggregation" ref="ibanSingleReportEntityAggregation"/>
+        <property name="reportAggregation" ref="reportAggregation"/>
     </bean>
 
     <bean id="loggerProcessor" class="com.estafet.bench.yordan.nalbantov.task1.camel.processors.LoggerProcessor"/>
@@ -19,5 +20,7 @@
 
     <bean id="ibanSingleReportEntityAggregation"
           class="com.estafet.bench.yordan.nalbantov.task1.camel.aggregations.IbanSingleReportEntityAggregation"/>
+
+    <bean id="reportAggregation" class="com.estafet.bench.yordan.nalbantov.task1.camel.aggregations.ReportAggregation"/>
 
 </blueprint>

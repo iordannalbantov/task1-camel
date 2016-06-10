@@ -1,6 +1,7 @@
 package com.estafet.bench.yordan.nalbantov.task1.camel.routes;
 
 import com.estafet.bench.yordan.nalbantov.task1.camel.aggregations.IbanSingleReportEntityAggregation;
+import com.estafet.bench.yordan.nalbantov.task1.camel.aggregations.ReportAggregation;
 import com.estafet.bench.yordan.nalbantov.task1.camel.model.IbanSingleReportEntity;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.FakeDataProcessor;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.IbanSingleReportEntityProcessor;
@@ -27,6 +28,8 @@ public class BankXRouteBuilder extends RouteBuilder {
     private IbanSingleReportEntityProcessor ibanSingleReportEntityProcessor;
 
     private IbanSingleReportEntityAggregation ibanSingleReportEntityAggregation;
+
+    private ReportAggregation reportAggregation;
 
     @Override
     public void configure() throws Exception {
@@ -57,27 +60,7 @@ public class BankXRouteBuilder extends RouteBuilder {
                 // Populate the other three fields of the bean.
                 .enrich("direct:data", ibanSingleReportEntityAggregation)
                 // Aggregate all incoming messages by the header "IbanTimestampOfRequest".
-                .aggregate(header("IbanTimestampOfRequest"), new AggregationStrategy() {
-                    @Override
-                    public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
-                        if (newExchange.getIn().getBody() instanceof IbanSingleReportEntity) {
-                            IbanSingleReportEntity entity = (IbanSingleReportEntity) newExchange.getIn().getBody();
-                            ArrayList<IbanSingleReportEntity> result;
-                            if (oldExchange == null) {
-                                result = new ArrayList<>();
-                                result.add(entity);
-                                newExchange.getIn().setBody(result);
-                                return newExchange;
-                            } else {
-                                //noinspection unchecked
-                                result = oldExchange.getIn().getBody(ArrayList.class);
-                                result.add(entity);
-                                return oldExchange;
-                            }
-                        }
-                        return null;
-                    }
-                }).process(loggerProcessor)
+                .aggregate(header("IbanTimestampOfRequest"), reportAggregation).process(loggerProcessor)
                 // Wait 2 seconds to aggregate all messages.
                 .completionTimeout(2000)
                 // Marshall back to JSON.
@@ -101,5 +84,9 @@ public class BankXRouteBuilder extends RouteBuilder {
 
     public void setIbanSingleReportEntityAggregation(IbanSingleReportEntityAggregation ibanSingleReportEntityAggregation) {
         this.ibanSingleReportEntityAggregation = ibanSingleReportEntityAggregation;
+    }
+
+    public void setReportAggregation(ReportAggregation reportAggregation) {
+        this.reportAggregation = reportAggregation;
     }
 }
