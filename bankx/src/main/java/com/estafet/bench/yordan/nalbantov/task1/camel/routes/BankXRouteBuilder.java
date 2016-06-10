@@ -26,9 +26,6 @@ public class BankXRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        // fileName=${date:now:dd-MM-yyyy}
-        // 2016 06 07 19 41 07 100
-
         // Using IP instead of localhost, as it causes a log message.
         // Using not default continuation timeout of 5000, as it defaults to 30000 and generates a log info message.
         // routeId is the correct way of setting route id. The id method sets component´s id.
@@ -36,6 +33,7 @@ public class BankXRouteBuilder extends RouteBuilder {
         from("jetty:http://127.0.0.1:20616/estafet/iban/report?httpMethodRestrict=POST&continuationTimeout=5000").routeId("entry")
                 .unmarshal().json(JsonLibrary.Jackson)
                 // Header is set before the splitting to ensure that it will be the same nevertheless splitting on large data may span milliseconds.
+                // The format is such that could be used directly to form the final file name.
                 .setHeader("IbanTimestampOfRequest", simple("${date:now:yyyy MM dd HH mm ss SSS}"))
                 // Split the message object into IBANs (strings).
                 .split().method("splitters", "splitIbansLinkedHashMapToStrings")
