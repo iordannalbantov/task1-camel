@@ -1,36 +1,42 @@
 package com.estafet.bench.yordan.nalbantov.task1.camel.routes;
 
 import com.estafet.bench.yordan.nalbantov.task1.camel.model.IbanSingleReportEntity;
+import com.estafet.bench.yordan.nalbantov.task1.camel.processors.IbanSingleReportEntityProcessor;
+import com.estafet.bench.yordan.nalbantov.task1.camel.processors.LoggerProcessor;
 import org.apache.camel.builder.RouteBuilder;
 
-import java.time.LocalDateTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by estafet on 08/06/16
  */
 public class BankXRouteBuilder extends RouteBuilder {
 
+    private static Logger logger = Logger.getLogger(BankXRouteBuilder.class.getSimpleName());
+
+    private LoggerProcessor loggerProcessor;
+
+    private IbanSingleReportEntityProcessor ibanSingleReportEntityProcessor;
+
     @Override
     public void configure() throws Exception {
 
-        LocalDateTime now = LocalDateTime.now();
+        // fileName=${date:now:dd-MM-yyyy}
+        // 2016 06 07 19 41 07 100
 
-        from("jetty:http://localhost:20616/estafet/iban/report?httpClient.method=POST").routeId("entry")
-                .split(body()).setHeader("IbanTimestampOfRequest", /* to string */ constant(now))
+        // Using IP instead of localhost, as it causes a log message.
+        // Using not default continuation timeout of 5000, as it defaults to 30000 and generates a log info message.
+        // routeId is the correct way of setting route id. The id method sets component´s id.
+        from("jetty:http://127.0.0.1:20616/estafet/iban/report?httpClient.method=POST&continuationTimeout=5000").routeId("entry").process(loggerProcessor)
+                .split(body()).setHeader("IbanTimestampOfRequest", simple("${date:now:yyyy MM dd HH mm ss SSS}"))
                 .to("activemq:queue:ibanReport");
 
-        from("direct:data").process(exchange -> {
-            IbanSingleReportEntity entity = new IbanSingleReportEntity(null);
-
-            entity.setName("Yordan Nalbantov");
-            entity.setBalance(100.0);
-            entity.setCurrency("BGN");
-
-            exchange.getIn().setBody(entity);
-        });
+        from("direct:data").routeId("data").process(ibanSingleReportEntityProcessor);
 
         from("activemq:queue:ibanReport").routeId("processing")
                 .process(exchange -> {
+                    logger.log(Level.INFO, "IbanTimestampOfRequest = {0}", exchange.getIn().getHeader("IbanTimestampOfRequest"));
                     String iban = exchange.getIn().getBody(String.class);
                     IbanSingleReportEntity entity = new IbanSingleReportEntity(iban);
                     exchange.getIn().setBody(entity);
@@ -47,5 +53,13 @@ public class BankXRouteBuilder extends RouteBuilder {
                     return original;
                 })
                 .to("file:///u01/data/iban/reports");
+    }
+
+    public void setLoggerProcessor(LoggerProcessor loggerProcessor) {
+        this.loggerProcessor = loggerProcessor;
+    }
+
+    public void setIbanSingleReportEntityProcessor(IbanSingleReportEntityProcessor ibanSingleReportEntityProcessor) {
+        this.ibanSingleReportEntityProcessor = ibanSingleReportEntityProcessor;
     }
 }

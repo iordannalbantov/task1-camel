@@ -9,14 +9,14 @@ jar {
     destinationDir project.file('/home/estafet/jboss-fuse-6.2.1.redhat-084/deploy')
     manifest {
         instruction 'Import-Package',
-                'org.apache.camel.builder, '+
-                'org.apache.camel.component.http, ' +
-                'org.apache.activemq, ' +
-                'org.apache.activemq.pool, ' +
-                'org.apache.camel.component.jms, ' +
-                'org.apache.activemq.camel.component, ' +
-                'com.fasterxml.jackson.databind, ' +
-                ' *'
+                'org.apache.camel.builder, ' +
+                        'org.apache.camel.component.http, ' +
+                        'org.apache.activemq, ' +
+                        'org.apache.activemq.pool, ' +
+                        'org.apache.camel.component.jms, ' +
+                        'org.apache.activemq.camel.component, ' +
+                        'com.fasterxml.jackson.databind, ' +
+                        ' *'
         // instruction 'Bundle-SymbolicName', 'blueprint.graceperiod:=true;blueprint.timeout:=10000'
 
     }
