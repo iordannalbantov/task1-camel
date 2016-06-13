@@ -2,6 +2,7 @@ package com.estafet.bench.yordan.nalbantov.task1.camel.routes;
 
 import com.estafet.bench.yordan.nalbantov.task1.camel.aggregations.IbanSingleReportEntityAggregation;
 import com.estafet.bench.yordan.nalbantov.task1.camel.aggregations.ReportAggregation;
+import com.estafet.bench.yordan.nalbantov.task1.camel.model.IbanWrapper;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.FakeDataProcessor;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.IbanSingleReportEntityProcessor;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.LoggerProcessor;
@@ -31,12 +32,12 @@ public class BankXRouteBuilder extends RouteBuilder {
         // routeId is the correct way of setting route id. The id method sets component´s id.
         // Jetty restricted to accept POST requests only. 404 - method not allowed is returned otherwise.
         from("jetty:http://127.0.0.1:20616/estafet/iban/report?httpMethodRestrict=POST&continuationTimeout=5000").routeId("entry")
-                .unmarshal().json(JsonLibrary.Jackson)
+                .unmarshal().json(JsonLibrary.Jackson, IbanWrapper.class)
                 // Header is set before the splitting to ensure that it will be the same nevertheless splitting on large data may span milliseconds.
                 // The format is such that could be used directly to form the final file name.
                 .setHeader("IbanTimestampOfRequest", simple("${date:now:yyyy MM dd HH mm ss SSS}"))
                 // Split the message object into IBANs (strings).
-                .split().method("splitters", "splitIbansLinkedHashMapToStrings")
+                .split(simple("${body.getIbans()}")).process(loggerProcessor)
                 // Send the IBANs to the message queue.
                 .to("activemq:queue:ibanReport");
 
@@ -55,13 +56,10 @@ public class BankXRouteBuilder extends RouteBuilder {
                 .completionTimeout(2000)
                 // Marshall back to JSON.
                 .marshal().json(JsonLibrary.Jackson)
-                .to("file:///u01/data/iban/reports");
+                .to("file:///u01/data/iban/reports?fileName=${header.IbanTimestampOfRequest}.txt");
 
         // TODO: onException
-        // TODO: remove unused type converter
         // TODO: why the test is executing twice
-        // TODO: fix the final file name
-        // TODO: IbanWrapper
     }
 
     public void setLoggerProcessor(LoggerProcessor loggerProcessor) {
