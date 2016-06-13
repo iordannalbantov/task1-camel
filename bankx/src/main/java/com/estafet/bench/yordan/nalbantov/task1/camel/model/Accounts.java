@@ -5,24 +5,24 @@ import java.io.Serializable;
 /**
  * Created by Yordan Nalbantov
  */
-public class IbanSingleReportEntity implements Serializable {
+public class Accounts implements Serializable {
 
     private String iban;
     private String name;
     private double balance;
     private String currency;
 
-    public IbanSingleReportEntity() {
+    public Accounts() {
     }
 
-    public IbanSingleReportEntity(String iban, String name, double balance, String currency) {
+    public Accounts(String iban, String name, double balance, String currency) {
         this.iban = iban;
         this.name = name;
         this.balance = balance;
         this.currency = currency;
     }
 
-    public IbanSingleReportEntity(String iban) {
+    public Accounts(String iban) {
         this.iban = iban;
     }
 

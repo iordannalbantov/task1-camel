@@ -1,11 +1,12 @@
 package com.estafet.bench.yordan.nalbantov.task1.camel.routes;
 
-import com.estafet.bench.yordan.nalbantov.task1.camel.aggregations.IbanSingleReportEntityAggregation;
-import com.estafet.bench.yordan.nalbantov.task1.camel.aggregations.ReportAggregation;
+import com.estafet.bench.yordan.nalbantov.task1.camel.processors.AccountsEnricherAggregationStrategy;
+import com.estafet.bench.yordan.nalbantov.task1.camel.processors.ReportAggregation;
 import com.estafet.bench.yordan.nalbantov.task1.camel.model.IbanWrapper;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.FakeDataProcessor;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.IbanSingleReportEntityProcessor;
-import com.estafet.bench.yordan.nalbantov.task1.camel.processors.LoggerProcessor;
+import com.estafet.bench.yordan.nalbantov.task1.camel.processors.TestProcessor;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 
@@ -14,30 +15,36 @@ import org.apache.camel.model.dataformat.JsonLibrary;
  */
 public class BankXRouteBuilder extends RouteBuilder {
 
-    private LoggerProcessor loggerProcessor;
+    private TestProcessor testProcessor;
 
     private FakeDataProcessor fakeDataProcessor;
 
     private IbanSingleReportEntityProcessor ibanSingleReportEntityProcessor;
 
-    private IbanSingleReportEntityAggregation ibanSingleReportEntityAggregation;
+    private AccountsEnricherAggregationStrategy accountsEnricherAggregationStrategy;
 
     private ReportAggregation reportAggregation;
 
     @Override
     public void configure() throws Exception {
 
+//        onException(Exception.class).routeId("exception")
+//                .log(LoggingLevel.ERROR, "${exception.message}\n${exception.stacktrace}")
+//                .handled(true)
+//                .transform(constant("Something went wrong"))
+//                .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(505));
+
         // Using IP instead of localhost, as it causes a log message.
         // Using not default continuation timeout of 5000, as it defaults to 30000 and generates a log info message.
         // routeId is the correct way of setting route id. The id method sets component´s id.
         // Jetty restricted to accept POST requests only. 404 - method not allowed is returned otherwise.
-        from("jetty:http://127.0.0.1:20616/estafet/iban/report?httpMethodRestrict=POST&continuationTimeout=5000").routeId("entry")
+        from("jetty:http://0.0.0.0:20616/estafet/iban/report?httpMethodRestrict=POST&continuationTimeout=5000").routeId("entry")
                 .unmarshal().json(JsonLibrary.Jackson, IbanWrapper.class)
                 // Header is set before the splitting to ensure that it will be the same nevertheless splitting on large data may span milliseconds.
                 // The format is such that could be used directly to form the final file name.
                 .setHeader("IbanTimestampOfRequest", simple("${date:now:yyyy MM dd HH mm ss SSS}"))
                 // Split the message object into IBANs (strings).
-                .split(simple("${body.getIbans()}")).process(loggerProcessor)
+                .split(simple("${body.getIbans()}"))
                 // Send the IBANs to the message queue.
                 .to("activemq:queue:ibanReport");
 
@@ -49,9 +56,10 @@ public class BankXRouteBuilder extends RouteBuilder {
                 // Replace the body with a new instance of the bean.
                 .process(ibanSingleReportEntityProcessor)
                 // Populate the other three fields of the bean.
-                .enrich("direct:data", ibanSingleReportEntityAggregation)
+                .enrich("direct:data", accountsEnricherAggregationStrategy)
                 // Aggregate all incoming messages by the header "IbanTimestampOfRequest".
-                .aggregate(header("IbanTimestampOfRequest"), reportAggregation).process(loggerProcessor)
+                .aggregate(header("IbanTimestampOfRequest"), reportAggregation)
+                .log(LoggingLevel.INFO, "Aggregated")
                 // Wait 2 seconds to aggregate all messages.
                 .completionTimeout(2000)
                 // Marshall back to JSON.
@@ -62,8 +70,8 @@ public class BankXRouteBuilder extends RouteBuilder {
         // TODO: why the test is executing twice
     }
 
-    public void setLoggerProcessor(LoggerProcessor loggerProcessor) {
-        this.loggerProcessor = loggerProcessor;
+    public void setTestProcessor(TestProcessor testProcessor) {
+        this.testProcessor = testProcessor;
     }
 
     public void setFakeDataProcessor(FakeDataProcessor fakeDataProcessor) {
@@ -74,8 +82,8 @@ public class BankXRouteBuilder extends RouteBuilder {
         this.ibanSingleReportEntityProcessor = ibanSingleReportEntityProcessor;
     }
 
-    public void setIbanSingleReportEntityAggregation(IbanSingleReportEntityAggregation ibanSingleReportEntityAggregation) {
-        this.ibanSingleReportEntityAggregation = ibanSingleReportEntityAggregation;
+    public void setAccountsEnricherAggregationStrategy(AccountsEnricherAggregationStrategy accountsEnricherAggregationStrategy) {
+        this.accountsEnricherAggregationStrategy = accountsEnricherAggregationStrategy;
     }
 
     public void setReportAggregation(ReportAggregation reportAggregation) {

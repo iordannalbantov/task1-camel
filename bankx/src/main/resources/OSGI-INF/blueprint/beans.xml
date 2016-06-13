@@ -4,23 +4,23 @@
            xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
 
     <bean id="bankXRouteBuilder" class="com.estafet.bench.yordan.nalbantov.task1.camel.routes.BankXRouteBuilder">
-        <property name="loggerProcessor" ref="loggerProcessor"/>
+        <property name="testProcessor" ref="testProcessor"/>
         <property name="fakeDataProcessor" ref="fakeDataProcessor"/>
         <property name="ibanSingleReportEntityProcessor" ref="ibanSingleReportEntityProcessor"/>
-        <property name="ibanSingleReportEntityAggregation" ref="ibanSingleReportEntityAggregation"/>
+        <property name="accountsEnricherAggregationStrategy" ref="accountsEnricherAggregationStrategy"/>
         <property name="reportAggregation" ref="reportAggregation"/>
     </bean>
 
-    <bean id="loggerProcessor" class="com.estafet.bench.yordan.nalbantov.task1.camel.processors.LoggerProcessor"/>
+    <bean id="testProcessor" class="com.estafet.bench.yordan.nalbantov.task1.camel.processors.TestProcessor"/>
 
     <bean id="fakeDataProcessor" class="com.estafet.bench.yordan.nalbantov.task1.camel.processors.FakeDataProcessor"/>
 
     <bean id="ibanSingleReportEntityProcessor"
           class="com.estafet.bench.yordan.nalbantov.task1.camel.processors.IbanSingleReportEntityProcessor"/>
 
-    <bean id="ibanSingleReportEntityAggregation"
-          class="com.estafet.bench.yordan.nalbantov.task1.camel.aggregations.IbanSingleReportEntityAggregation"/>
+    <bean id="accountsEnricherAggregationStrategy"
+          class="com.estafet.bench.yordan.nalbantov.task1.camel.processors.AccountsEnricherAggregationStrategy"/>
 
-    <bean id="reportAggregation" class="com.estafet.bench.yordan.nalbantov.task1.camel.aggregations.ReportAggregation"/>
+    <bean id="reportAggregation" class="com.estafet.bench.yordan.nalbantov.task1.camel.processors.ReportAggregation"/>
 
 </blueprint>

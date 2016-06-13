@@ -9,16 +9,16 @@ import java.util.List;
  */
 public class AccountsWrapper implements Serializable {
 
-    private List<IbanSingleReportEntity> accounts = new ArrayList<>();
+    private List<Accounts> accounts = new ArrayList<>();
 
     public AccountsWrapper() {
     }
 
-    public List<IbanSingleReportEntity> getAccounts() {
+    public List<Accounts> getAccounts() {
         return accounts;
     }
 
-    public void setAccounts(List<IbanSingleReportEntity> accounts) {
+    public void setAccounts(List<Accounts> accounts) {
         this.accounts = accounts;
     }
 }

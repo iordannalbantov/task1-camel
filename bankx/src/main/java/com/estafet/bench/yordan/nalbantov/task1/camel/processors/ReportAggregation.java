@@ -1,11 +1,9 @@
-package com.estafet.bench.yordan.nalbantov.task1.camel.aggregations;
+package com.estafet.bench.yordan.nalbantov.task1.camel.processors;
 
 import com.estafet.bench.yordan.nalbantov.task1.camel.model.AccountsWrapper;
-import com.estafet.bench.yordan.nalbantov.task1.camel.model.IbanSingleReportEntity;
+import com.estafet.bench.yordan.nalbantov.task1.camel.model.Accounts;
 import org.apache.camel.Exchange;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
-
-import java.util.ArrayList;
 
 /**
  * Created by Yordan Nalbantov.
@@ -14,8 +12,8 @@ public class ReportAggregation implements AggregationStrategy {
 
     @Override
     public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
-        if (newExchange.getIn().getBody() instanceof IbanSingleReportEntity) {
-            IbanSingleReportEntity entity = (IbanSingleReportEntity) newExchange.getIn().getBody();
+        if (newExchange.getIn().getBody() instanceof Accounts) {
+            Accounts entity = (Accounts) newExchange.getIn().getBody();
             AccountsWrapper result;
             if (oldExchange == null) {
                 result = new AccountsWrapper();
