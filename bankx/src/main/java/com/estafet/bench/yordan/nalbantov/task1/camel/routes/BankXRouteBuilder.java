@@ -1,11 +1,7 @@
 package com.estafet.bench.yordan.nalbantov.task1.camel.routes;
 
-import com.estafet.bench.yordan.nalbantov.task1.camel.processors.AccountsEnricherAggregationStrategy;
-import com.estafet.bench.yordan.nalbantov.task1.camel.processors.ReportAggregation;
 import com.estafet.bench.yordan.nalbantov.task1.camel.model.IbanWrapper;
-import com.estafet.bench.yordan.nalbantov.task1.camel.processors.FakeDataProcessor;
-import com.estafet.bench.yordan.nalbantov.task1.camel.processors.IbanSingleReportEntityProcessor;
-import com.estafet.bench.yordan.nalbantov.task1.camel.processors.TestProcessor;
+import com.estafet.bench.yordan.nalbantov.task1.camel.processors.*;
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
@@ -29,25 +25,25 @@ public class BankXRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-        onException(Exception.class).routeId("exception")
-                .log(LoggingLevel.ERROR, "${exception.message}\n${exception.stacktrace}")
-                .handled(true)
-                .transform(constant("Something went wrong"))
-                .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(500));
-
         // Using IP instead of localhost, as it causes a log message.
         // Using not default continuation timeout of 5000, as it defaults to 30000 and generates a log info message.
         // routeId is the correct way of setting route id. The id method sets component´s id.
         // Jetty restricted to accept POST requests only. 404 - method not allowed is returned otherwise.
         from("jetty:http://0.0.0.0:20616/estafet/iban/report?httpMethodRestrict=POST&continuationTimeout=5000").routeId("entry")
+                .onException(Exception.class)
+                    .handled(true)
+                    .transform(constant("Something went wrong."))
+                    .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(500))
+                .end()
                 .unmarshal().json(JsonLibrary.Jackson, IbanWrapper.class)
                 // Header is set before the splitting to ensure that it will be the same nevertheless splitting on large data may span milliseconds.
                 // The format is such that could be used directly to form the final file name.
                 .setHeader("IbanTimestampOfRequest", simple("${date:now:yyyy MM dd HH mm ss SSS}"))
-                // Split the message object into IBANs (strings).
+                // Split the message object into IBANs, based on the collection from the bean.
                 .split(simple("${body.getIbans()}"))
                 // Send the IBANs to the message queue.
                 .to("activemq:queue:ibanReport");
+
 
         // Populate beans with fake data, later on used to enrich the original beans.
         from("direct:data").routeId("data").process(fakeDataProcessor);
