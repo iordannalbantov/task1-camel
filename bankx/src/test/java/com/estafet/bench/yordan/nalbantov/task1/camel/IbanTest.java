@@ -18,7 +18,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class IbanTest {
 
-    private static final String SERVICE_URI = "http://localhost:20616/estafet/iban/report";
+    private static final String SERVICE_URI = "http://127.0.0.1:20616/estafet/iban/report";
 
     private class Payload {
         public String[] ibans = {

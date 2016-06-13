@@ -18,7 +18,7 @@ public class TestProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        logger.log(Level.INFO, "Message Processed ");
-        // throw new Exception();
+//        logger.log(Level.INFO, "Message Processed ");
+         throw new Exception();
     }
 }

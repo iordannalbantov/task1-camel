@@ -6,6 +6,7 @@ import com.estafet.bench.yordan.nalbantov.task1.camel.model.IbanWrapper;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.FakeDataProcessor;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.IbanSingleReportEntityProcessor;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.TestProcessor;
+import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
@@ -28,11 +29,11 @@ public class BankXRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
-//        onException(Exception.class).routeId("exception")
-//                .log(LoggingLevel.ERROR, "${exception.message}\n${exception.stacktrace}")
-//                .handled(true)
-//                .transform(constant("Something went wrong"))
-//                .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(505));
+        onException(Exception.class).routeId("exception")
+                .log(LoggingLevel.ERROR, "${exception.message}\n${exception.stacktrace}")
+                .handled(true)
+                .transform(constant("Something went wrong"))
+                .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(500));
 
         // Using IP instead of localhost, as it causes a log message.
         // Using not default continuation timeout of 5000, as it defaults to 30000 and generates a log info message.
@@ -65,8 +66,6 @@ public class BankXRouteBuilder extends RouteBuilder {
                 // Marshall back to JSON.
                 .marshal().json(JsonLibrary.Jackson)
                 .to("file:///u01/data/iban/reports?fileName=${header.IbanTimestampOfRequest}.txt");
-
-        // TODO: onException
     }
 
     public void setTestProcessor(TestProcessor testProcessor) {
