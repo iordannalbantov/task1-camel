@@ -67,7 +67,6 @@ public class BankXRouteBuilder extends RouteBuilder {
                 .to("file:///u01/data/iban/reports?fileName=${header.IbanTimestampOfRequest}.txt");
 
         // TODO: onException
-        // TODO: why the test is executing twice
     }
 
     public void setTestProcessor(TestProcessor testProcessor) {
