@@ -9,16 +9,16 @@ import java.util.List;
  */
 public class AccountsWrapper implements Serializable {
 
-    private List<Accounts> accounts = new ArrayList<>();
+    private List<Account> accounts = new ArrayList<>();
 
     public AccountsWrapper() {
     }
 
-    public List<Accounts> getAccounts() {
+    public List<Account> getAccounts() {
         return accounts;
     }
 
-    public void setAccounts(List<Accounts> accounts) {
+    public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;
     }
 }

@@ -3,6 +3,7 @@ package com.estafet.bench.yordan.nalbantov.task1.camel.routes;
 import com.estafet.bench.yordan.nalbantov.task1.camel.model.IbanWrapper;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.*;
 import org.apache.camel.Exchange;
+import org.apache.camel.ExchangePattern;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
@@ -42,7 +43,7 @@ public class BankXRouteBuilder extends RouteBuilder {
                 // Split the message object into IBANs, based on the collection from the bean.
                 .split(simple("${body.getIbans()}"))
                 // Send the IBANs to the message queue.
-                .to("activemq:queue:ibanReport");
+                .to(ExchangePattern.InOnly,"activemq:queue:ibanReport").setBody(constant(""));
 
 
         // Populate beans with fake data, later on used to enrich the original beans.

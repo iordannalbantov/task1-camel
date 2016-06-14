@@ -1,7 +1,7 @@
 package com.estafet.bench.yordan.nalbantov.task1.camel.processors;
 
+import com.estafet.bench.yordan.nalbantov.task1.camel.model.Account;
 import com.estafet.bench.yordan.nalbantov.task1.camel.model.AccountsWrapper;
-import com.estafet.bench.yordan.nalbantov.task1.camel.model.Accounts;
 import org.apache.camel.Exchange;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 
@@ -12,8 +12,8 @@ public class ReportAggregation implements AggregationStrategy {
 
     @Override
     public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
-        if (newExchange.getIn().getBody() instanceof Accounts) {
-            Accounts entity = (Accounts) newExchange.getIn().getBody();
+        if (newExchange.getIn().getBody() instanceof Account) {
+            Account entity = (Account) newExchange.getIn().getBody();
             AccountsWrapper result;
             if (oldExchange == null) {
                 result = new AccountsWrapper();

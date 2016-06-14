@@ -6,9 +6,9 @@ import org.junit.runners.Suite;
 /**
  * Created by estafet.
  */
-@RunWith(Suite.class)
-@Suite.SuiteClasses ({
-        IbanTest.class
-})
+//@RunWith(Suite.class)
+//@Suite.SuiteClasses ({
+//        IbanTest.class
+//})
 public class BankXTestSuit {
 }

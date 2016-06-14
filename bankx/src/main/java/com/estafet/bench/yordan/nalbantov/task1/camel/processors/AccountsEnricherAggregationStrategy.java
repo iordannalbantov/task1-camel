@@ -1,6 +1,6 @@
 package com.estafet.bench.yordan.nalbantov.task1.camel.processors;
 
-import com.estafet.bench.yordan.nalbantov.task1.camel.model.Accounts;
+import com.estafet.bench.yordan.nalbantov.task1.camel.model.Account;
 import org.apache.camel.Exchange;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 
@@ -10,8 +10,8 @@ import org.apache.camel.processor.aggregate.AggregationStrategy;
 public class AccountsEnricherAggregationStrategy implements AggregationStrategy {
     @Override
     public Exchange aggregate(Exchange original, Exchange resource) {
-        Accounts originalBody = original.getIn().getBody(Accounts.class);
-        Accounts resourceBody = resource.getIn().getBody(Accounts.class);
+        Account originalBody = original.getIn().getBody(Account.class);
+        Account resourceBody = resource.getIn().getBody(Account.class);
 
         originalBody.setName(resourceBody.getName());
         originalBody.setBalance(resourceBody.getBalance());

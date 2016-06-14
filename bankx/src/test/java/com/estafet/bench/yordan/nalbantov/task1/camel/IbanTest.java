@@ -28,7 +28,7 @@ public class IbanTest {
         };
     }
 
-    @Test
+//    @Test
     public void reports() {
         try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();) {
             HttpPost postRequest = new HttpPost(SERVICE_URI);
