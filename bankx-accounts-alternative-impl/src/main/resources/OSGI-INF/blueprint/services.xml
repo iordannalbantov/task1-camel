@@ -3,8 +3,8 @@
            xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
            xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
 
-    <service id="accountsService" ref="accounts" interface="com.estafet.bankx.accounts.api.AccountServiceApi" ranking="1"/>
+    <service id="accountsService" ref="accounts" interface="com.estafet.bankx.accounts.api.AccountServiceApi" ranking="2"/>
 
-    <bean id="accounts" class="com.estafet.bankx.accounts.impl.AccountsServiceImpl"/>
+    <bean id="accounts" class="com.estafet.bankx.accounts.impl.AccountsServiceAlternativeImpl"/>
 
 </blueprint>

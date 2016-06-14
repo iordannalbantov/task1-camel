@@ -11,6 +11,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/bankx" />
+            <option value="$PROJECT_DIR$/bankx-accounts-alternative-impl" />
             <option value="$PROJECT_DIR$/bankx-accounts-api" />
             <option value="$PROJECT_DIR$/bankx-accounts-impl" />
             <option value="$PROJECT_DIR$/bankx-models" />

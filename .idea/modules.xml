@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/bankx.iml" filepath="$PROJECT_DIR$/.idea/modules/bankx.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bankx-accounts-alternative-impl/bankx-accounts-alternative-impl.iml" filepath="$PROJECT_DIR$/.idea/modules/bankx-accounts-alternative-impl/bankx-accounts-alternative-impl.iml" group="bankx-accounts-alternative-impl" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bankx-accounts-alternative-impl/bankx-accounts-alternative-impl_main.iml" filepath="$PROJECT_DIR$/.idea/modules/bankx-accounts-alternative-impl/bankx-accounts-alternative-impl_main.iml" group="bankx-accounts-alternative-impl" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bankx-accounts-alternative-impl/bankx-accounts-alternative-impl_test.iml" filepath="$PROJECT_DIR$/.idea/modules/bankx-accounts-alternative-impl/bankx-accounts-alternative-impl_test.iml" group="bankx-accounts-alternative-impl" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/bankx-accounts-api/bankx-accounts-api.iml" filepath="$PROJECT_DIR$/.idea/modules/bankx-accounts-api/bankx-accounts-api.iml" group="bankx-accounts-api" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/bankx-accounts-api/bankx-accounts-api_main.iml" filepath="$PROJECT_DIR$/.idea/modules/bankx-accounts-api/bankx-accounts-api_main.iml" group="bankx-accounts-api" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/bankx-accounts-api/bankx-accounts-api_test.iml" filepath="$PROJECT_DIR$/.idea/modules/bankx-accounts-api/bankx-accounts-api_test.iml" group="bankx-accounts-api" />

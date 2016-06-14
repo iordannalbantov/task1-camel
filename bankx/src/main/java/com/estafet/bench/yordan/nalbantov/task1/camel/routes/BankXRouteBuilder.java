@@ -14,6 +14,8 @@ import org.apache.camel.processor.aggregate.AggregationStrategy;
  */
 public class BankXRouteBuilder extends RouteBuilder {
 
+    // TODO: Response body of the JSON continues to be com.estafet.bankx.model.IbanWrapper.
+
     // Sory, but no way to set aggregation strategy by bean ref to aggregate.
     private AggregationStrategy reportAggregation = new ReportAggregation();
     private AggregationStrategy accountsEnricherAggregationStrategy = new AccountsEnricherAggregationStrategy();
