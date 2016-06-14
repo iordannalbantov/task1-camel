@@ -19,6 +19,14 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="bankx-accounts-alternative-impl_main" target="1.8" />
+      <module name="bankx-accounts-alternative-impl_test" target="1.8" />
+      <module name="bankx-accounts-api_main" target="1.8" />
+      <module name="bankx-accounts-api_test" target="1.8" />
+      <module name="bankx-accounts-impl_main" target="1.8" />
+      <module name="bankx-accounts-impl_test" target="1.8" />
+      <module name="bankx-models_main" target="1.8" />
+      <module name="bankx-models_test" target="1.8" />
       <module name="bankx_main" target="1.8" />
       <module name="bankx_test" target="1.8" />
       <module name="task1-camel_main" target="1.8" />

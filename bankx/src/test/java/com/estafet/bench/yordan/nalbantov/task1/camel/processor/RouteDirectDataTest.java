@@ -5,10 +5,8 @@ import org.apache.camel.ExchangePattern;
 import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
 import org.junit.Test;
 
-import java.util.logging.Logger;
-
 /**
- * Created by estafet.
+ * Created by Yordan Nalbantov.
  */
 public class RouteDirectDataTest extends CamelBlueprintTestSupport {
 
