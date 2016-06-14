@@ -5,7 +5,6 @@
 
     <bean id="bankXRouteBuilder" class="com.estafet.bench.yordan.nalbantov.task1.camel.routes.BankXRouteBuilder">
         <property name="testProcessor" ref="testProcessor"/>
-        <property name="fakeDataProcessor" ref="fakeDataProcessor"/>
         <property name="ibanSingleReportEntityProcessor" ref="ibanSingleReportEntityProcessor"/>
         <property name="accountsEnricherAggregationStrategy" ref="accountsEnricherAggregationStrategy"/>
         <property name="reportAggregation" ref="reportAggregation"/>

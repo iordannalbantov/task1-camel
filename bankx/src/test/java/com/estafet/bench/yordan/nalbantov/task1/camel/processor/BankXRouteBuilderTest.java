@@ -102,7 +102,7 @@ public class BankXRouteBuilderTest  {
 //            }
 //        });
 //
-//        String body = Utils.resource("payload\\validRequest.json");
+//        String body = Utils.resource("payload\\challenge.json");
 //        Map<String, Object> headers = new HashMap<>();
 //
 //        consumer.start();

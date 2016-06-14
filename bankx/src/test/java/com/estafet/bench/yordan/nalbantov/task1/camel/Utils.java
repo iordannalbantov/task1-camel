@@ -1,5 +1,7 @@
 package com.estafet.bench.yordan.nalbantov.task1.camel;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -20,6 +22,14 @@ public abstract class Utils {
     private static final Charset DEFAULT_ENCODING = StandardCharsets.UTF_8;
 
     private Utils() {
+    }
+
+    public static <T> T json(String resourceURI, Class<T> clazz) throws IOException {
+        String resource = Utils.resource(resourceURI);
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        return mapper.readValue(resource, clazz);
     }
 
     public static String resource(String resourceURI) {
