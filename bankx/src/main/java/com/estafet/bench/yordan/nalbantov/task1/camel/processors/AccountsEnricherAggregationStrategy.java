@@ -1,6 +1,6 @@
 package com.estafet.bench.yordan.nalbantov.task1.camel.processors;
 
-import com.estafet.bench.yordan.nalbantov.task1.camel.model.Account;
+import com.estafet.bankx.model.Account;
 import org.apache.camel.Exchange;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 
@@ -8,6 +8,7 @@ import org.apache.camel.processor.aggregate.AggregationStrategy;
  * Created by estafet.
  */
 public class AccountsEnricherAggregationStrategy implements AggregationStrategy {
+
     @Override
     public Exchange aggregate(Exchange original, Exchange resource) {
         Account originalBody = original.getIn().getBody(Account.class);

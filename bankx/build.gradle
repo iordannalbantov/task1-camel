@@ -1,12 +1,9 @@
-group 'org.estafet.bench.yordan.nalbantov'
+group 'com.estafet.bankx'
 version '1.0-SNAPSHOT'
 
-apply plugin: 'java'
-apply plugin: 'osgi'
 
 jar {
     baseName = 'bankx'
-//    destinationDir project.file('/home/estafet/jboss-fuse-6.2.1.redhat-084/deploy')
     manifest {
         instruction 'Import-Package',
                         'org.apache.camel.builder, ' +
@@ -17,17 +14,15 @@ jar {
                         'org.apache.camel.component.jms, ' +
                         'org.apache.activemq.camel.component, ' +
                         'com.fasterxml.jackson.databind, ' +
+                        'com.estafet.bankx.model, ' +
                         ' *'
     }
-}
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
+    destinationDir project.file('/home/estafet/jboss-fuse-6.2.1.redhat-084/deploy')
 }
 
 dependencies {
+    compile project(':bankx-models')
+
     compile group: 'org.apache.camel', name: 'camel-core', version: '2.15.1'
     compile group: 'org.apache.camel', name: 'camel-jetty', version: '2.15.1'
     compile group: 'org.apache.camel', name: 'camel-jackson', version: '2.15.1'
@@ -39,6 +34,8 @@ dependencies {
 
 // http://mvnrepository.com/artifact/org.apache.camel/camel-test
     compile group: 'org.apache.camel', name: 'camel-test-blueprint', version: '2.15.1'
+
+
 
     testCompile group: 'org.apache.camel', name: 'camel-gson', version: '2.15.1'
     testCompile group: 'org.apache.camel', name: 'camel-jetty', version: '2.15.1'

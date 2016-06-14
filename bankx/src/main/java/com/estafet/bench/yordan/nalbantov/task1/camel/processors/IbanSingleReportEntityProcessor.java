@@ -1,6 +1,6 @@
 package com.estafet.bench.yordan.nalbantov.task1.camel.processors;
 
-import com.estafet.bench.yordan.nalbantov.task1.camel.model.Account;
+import com.estafet.bankx.model.Account;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 

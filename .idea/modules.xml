@@ -2,24 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1174067834/bankx.iml" filepath="$PROJECT_DIR$/.idea/modules/1174067834/bankx.iml" group="bankx" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/963503540/bankx-accounts-alternative-impl.iml" filepath="$PROJECT_DIR$/.idea/modules/963503540/bankx-accounts-alternative-impl.iml" group="bankx-accounts-alternative-impl" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/963503540/bankx-accounts-alternative-impl_main.iml" filepath="$PROJECT_DIR$/.idea/modules/963503540/bankx-accounts-alternative-impl_main.iml" group="bankx-accounts-alternative-impl" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/963503540/bankx-accounts-alternative-impl_test.iml" filepath="$PROJECT_DIR$/.idea/modules/963503540/bankx-accounts-alternative-impl_test.iml" group="bankx-accounts-alternative-impl" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1891166246/bankx-accounts-api.iml" filepath="$PROJECT_DIR$/.idea/modules/1891166246/bankx-accounts-api.iml" group="bankx-accounts-api" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1891166246/bankx-accounts-api_main.iml" filepath="$PROJECT_DIR$/.idea/modules/1891166246/bankx-accounts-api_main.iml" group="bankx-accounts-api" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1891166246/bankx-accounts-api_test.iml" filepath="$PROJECT_DIR$/.idea/modules/1891166246/bankx-accounts-api_test.iml" group="bankx-accounts-api" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1503152748/bankx-accounts-impl.iml" filepath="$PROJECT_DIR$/.idea/modules/-1503152748/bankx-accounts-impl.iml" group="bankx-accounts-impl" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1503152748/bankx-accounts-impl_main.iml" filepath="$PROJECT_DIR$/.idea/modules/-1503152748/bankx-accounts-impl_main.iml" group="bankx-accounts-impl" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1503152748/bankx-accounts-impl_test.iml" filepath="$PROJECT_DIR$/.idea/modules/-1503152748/bankx-accounts-impl_test.iml" group="bankx-accounts-impl" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bankx-models.iml" filepath="$PROJECT_DIR$/.idea/modules/bankx-models.iml" group="bankx-models" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bankx-models_main.iml" filepath="$PROJECT_DIR$/.idea/modules/bankx-models_main.iml" group="bankx-models" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bankx-models_test.iml" filepath="$PROJECT_DIR$/.idea/modules/bankx-models_test.iml" group="bankx-models" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1174067834/bankx_main.iml" filepath="$PROJECT_DIR$/.idea/modules/1174067834/bankx_main.iml" group="bankx" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1174067834/bankx_test.iml" filepath="$PROJECT_DIR$/.idea/modules/1174067834/bankx_test.iml" group="bankx" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1957249357/task1-camel.iml" filepath="$PROJECT_DIR$/.idea/modules/1957249357/task1-camel.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1957249357/task1-camel_main.iml" filepath="$PROJECT_DIR$/.idea/modules/1957249357/task1-camel_main.iml" group="task1-camel" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1957249357/task1-camel_test.iml" filepath="$PROJECT_DIR$/.idea/modules/1957249357/task1-camel_test.iml" group="task1-camel" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bankx.iml" filepath="$PROJECT_DIR$/.idea/modules/bankx.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bankx/bankx-bankx.iml" filepath="$PROJECT_DIR$/.idea/modules/bankx/bankx-bankx.iml" group="bankx" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bankx/bankx-bankx_main.iml" filepath="$PROJECT_DIR$/.idea/modules/bankx/bankx-bankx_main.iml" group="bankx" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bankx/bankx-bankx_test.iml" filepath="$PROJECT_DIR$/.idea/modules/bankx/bankx-bankx_test.iml" group="bankx" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bankx-models/bankx-models.iml" filepath="$PROJECT_DIR$/.idea/modules/bankx-models/bankx-models.iml" group="bankx-models" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bankx-models/bankx-models_main.iml" filepath="$PROJECT_DIR$/.idea/modules/bankx-models/bankx-models_main.iml" group="bankx-models" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bankx-models/bankx-models_test.iml" filepath="$PROJECT_DIR$/.idea/modules/bankx-models/bankx-models_test.iml" group="bankx-models" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bankx_main.iml" filepath="$PROJECT_DIR$/.idea/modules/bankx_main.iml" group="bankx" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/bankx_test.iml" filepath="$PROJECT_DIR$/.idea/modules/bankx_test.iml" group="bankx" />
     </modules>
   </component>
 </project>

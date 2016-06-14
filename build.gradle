@@ -1,4 +1,4 @@
-group 'org.estafet.bench.yordan.nalbantov'
+group 'com.estafet.bankx'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
@@ -7,6 +7,13 @@ sourceCompatibility = 1.8
 
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'osgi'
+
+    sourceCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+    }
 }
 
 task copyFiles(type: Copy, dependsOn: subprojects.jar) {

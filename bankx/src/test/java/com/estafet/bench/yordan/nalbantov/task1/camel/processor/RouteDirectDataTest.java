@@ -1,10 +1,12 @@
 package com.estafet.bench.yordan.nalbantov.task1.camel.processor;
 
+import com.estafet.bankx.model.Account;
 import com.estafet.bench.yordan.nalbantov.task1.camel.Utils;
-import com.estafet.bench.yordan.nalbantov.task1.camel.model.Account;
+import com.estafet.bench.yordan.nalbantov.task1.camel.processors.AccountsEnricherAggregationStrategy;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.FakeDataProcessor;
+import com.estafet.bench.yordan.nalbantov.task1.camel.processors.IbanSingleReportEntityProcessor;
+import com.estafet.bench.yordan.nalbantov.task1.camel.processors.ReportAggregation;
 import com.estafet.bench.yordan.nalbantov.task1.camel.routes.BankXRouteBuilder;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.camel.CamelContext;
 import org.apache.camel.ExchangePattern;
 import org.apache.camel.builder.RouteBuilder;
@@ -30,6 +32,7 @@ public class RouteDirectDataTest extends CamelTestSupport {
     // TODO: Check the implementation against the specification.
 
     private FakeDataProcessor fakeDataProcessor = new FakeDataProcessor();
+    private IbanSingleReportEntityProcessor ibanSingleReportEntityProcessor = new IbanSingleReportEntityProcessor();
 
     @Test
     public void testRouteDirectData() throws Exception {
@@ -38,12 +41,16 @@ public class RouteDirectDataTest extends CamelTestSupport {
 
         // Challenge the route.
 
+        context.start();
+
         template.sendBody("direct:data", getTestAccount());
         Object obj = template.sendBody("direct:data", ExchangePattern.InOut, getTestAccount());
 
         // Assert results.
 
         assertEquals(getExpectedAccount(), obj);
+
+        context.stop();
     }
 
     private static final String TEST_DATA_BASE_URI = "payload//route//direct//data//";
@@ -55,19 +62,6 @@ public class RouteDirectDataTest extends CamelTestSupport {
     private Account getExpectedAccount() throws IOException {
         return Utils.json(TEST_DATA_BASE_URI + "expected.json", Account.class);
     }
-
-//    private static String BLUEPRINT_DESCRIPTOR = "OSGI-INF/blueprint/activemq.xml," +
-//            "OSGI-INF/blueprint/beans.xml," +
-//            "OSGI-INF/blueprint/context.xml," +
-//            "OSGI-INF/blueprint/idempotent.xml," +
-//            "OSGI-INF/blueprint/quartz.xml," +
-//            "OSGI-INF/blueprint/routes.xml";
-//
-//    @Override
-//    protected String getBlueprintDescriptor() {
-//        return BLUEPRINT_DESCRIPTOR;
-//    }
-
 
     @Override
     public void setUp() throws Exception {
@@ -81,6 +75,7 @@ public class RouteDirectDataTest extends CamelTestSupport {
         JndiRegistry registry = super.createRegistry();
 
         registry.bind("fakeDataProcessor", fakeDataProcessor);
+        registry.bind("ibanSingleReportEntityProcessor", ibanSingleReportEntityProcessor);
 
         return registry;
     }

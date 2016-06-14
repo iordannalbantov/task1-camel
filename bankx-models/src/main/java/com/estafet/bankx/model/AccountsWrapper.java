@@ -1,4 +1,4 @@
-package com.estafet.bench.yordan.nalbantov.task1.camel.model;
+package com.estafet.bankx.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
