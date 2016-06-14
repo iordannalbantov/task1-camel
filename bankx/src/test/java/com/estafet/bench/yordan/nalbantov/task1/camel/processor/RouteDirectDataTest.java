@@ -2,10 +2,8 @@ package com.estafet.bench.yordan.nalbantov.task1.camel.processor;
 
 import com.estafet.bankx.model.Account;
 import com.estafet.bench.yordan.nalbantov.task1.camel.Utils;
-import com.estafet.bench.yordan.nalbantov.task1.camel.processors.AccountsEnricherAggregationStrategy;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.FakeDataProcessor;
 import com.estafet.bench.yordan.nalbantov.task1.camel.processors.IbanSingleReportEntityProcessor;
-import com.estafet.bench.yordan.nalbantov.task1.camel.processors.ReportAggregation;
 import com.estafet.bench.yordan.nalbantov.task1.camel.routes.BankXRouteBuilder;
 import org.apache.camel.CamelContext;
 import org.apache.camel.ExchangePattern;
@@ -30,6 +28,7 @@ public class RouteDirectDataTest extends CamelTestSupport {
     // TODO: Switch to CamelTestSupport as CamelBlueprintSupport class have disadvantages.
     // TODO: Read test account and expected account from `json` file.
     // TODO: Check the implementation against the specification.
+    // TODO: The test is not running properly after the bankx-modles OSGI module introduction.
 
     private FakeDataProcessor fakeDataProcessor = new FakeDataProcessor();
     private IbanSingleReportEntityProcessor ibanSingleReportEntityProcessor = new IbanSingleReportEntityProcessor();
@@ -41,7 +40,7 @@ public class RouteDirectDataTest extends CamelTestSupport {
 
         // Challenge the route.
 
-        context.start();
+//        context.start();
 
         template.sendBody("direct:data", getTestAccount());
         Object obj = template.sendBody("direct:data", ExchangePattern.InOut, getTestAccount());
@@ -50,7 +49,7 @@ public class RouteDirectDataTest extends CamelTestSupport {
 
         assertEquals(getExpectedAccount(), obj);
 
-        context.stop();
+//        context.stop();
     }
 
     private static final String TEST_DATA_BASE_URI = "payload//route//direct//data//";

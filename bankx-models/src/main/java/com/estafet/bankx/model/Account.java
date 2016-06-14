@@ -15,6 +15,13 @@ public class Account implements Serializable {
     public Account() {
     }
 
+    public Account(Account account) {
+        this.iban = account.iban;
+        this.name = account.name;
+        this.balance = account.balance;
+        this.currency = account.currency;
+    }
+
     public Account(String iban, String name, double balance, String currency) {
         this.iban = iban;
         this.name = name;

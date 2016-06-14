@@ -7,7 +7,7 @@ jar {
         instruction 'Import-Package', '*'
         instruction 'Export-Package', 'com.estafet.bankx.model.*'
     }
-    destinationDir project.file('/home/estafet/jboss-fuse-6.2.1.redhat-084/deploy')
+     destinationDir project.file('/home/estafet/jboss-fuse-6.2.1.redhat-084/deploy')
 }
 
 dependencies {

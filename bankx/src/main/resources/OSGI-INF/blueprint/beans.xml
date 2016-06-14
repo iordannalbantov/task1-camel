@@ -8,7 +8,9 @@
 
     <bean id="testProcessor" class="com.estafet.bench.yordan.nalbantov.task1.camel.processors.TestProcessor"/>
 
-    <bean id="fakeDataProcessor" class="com.estafet.bench.yordan.nalbantov.task1.camel.processors.FakeDataProcessor"/>
+    <bean id="fakeDataProcessor" class="com.estafet.bench.yordan.nalbantov.task1.camel.processors.FakeDataProcessor">
+        <property name="accountEnricherService" ref="accountService"/>
+    </bean>
 
     <bean id="ibanSingleReportEntityProcessor"
           class="com.estafet.bench.yordan.nalbantov.task1.camel.processors.IbanSingleReportEntityProcessor"/>

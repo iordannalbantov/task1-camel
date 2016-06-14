@@ -40,7 +40,6 @@ public class BankXRouteBuilder extends RouteBuilder {
                 // Send the IBANs to the message queue.
                 .to(ExchangePattern.InOnly,"activemq:queue:ibanReport").setBody(constant(""));
 
-
         // Populate beans with fake data, later on used to enrich the original beans.
         from("direct:data").routeId("data").processRef("fakeDataProcessor");
 
@@ -55,7 +54,7 @@ public class BankXRouteBuilder extends RouteBuilder {
                 .log(LoggingLevel.INFO, "Aggregated")
                 // Wait 2 seconds to aggregate all messages.
                 .completionTimeout(2000)
-                // Marshall back to JSON.
+                // Marshall back to JSON. Can not prettify the output with Camel 2.15.1.
                 .marshal().json(JsonLibrary.Jackson)
                 .to("file:///u01/data/iban/reports?fileName=${header.IbanTimestampOfRequest}.txt");
     }

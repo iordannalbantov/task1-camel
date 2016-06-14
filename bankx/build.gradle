@@ -6,7 +6,7 @@ jar {
     baseName = 'bankx'
     manifest {
         instruction 'Import-Package',
-                        'org.apache.camel.builder, ' +
+                'org.apache.camel.builder, ' +
                         'org.apache.camel.component.http, ' +
                         'org.apache.camel.component.jackson, ' +
                         'org.apache.activemq, ' +
@@ -15,6 +15,7 @@ jar {
                         'org.apache.activemq.camel.component, ' +
                         'com.fasterxml.jackson.databind, ' +
                         'com.estafet.bankx.model, ' +
+                        'com.estafet.bankx.accounts.api, ' +
                         ' *'
     }
     destinationDir project.file('/home/estafet/jboss-fuse-6.2.1.redhat-084/deploy')
@@ -22,6 +23,7 @@ jar {
 
 dependencies {
     compile project(':bankx-models')
+    compile project(':bankx-accounts-api')
 
     compile group: 'org.apache.camel', name: 'camel-core', version: '2.15.1'
     compile group: 'org.apache.camel', name: 'camel-jetty', version: '2.15.1'
