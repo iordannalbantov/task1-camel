@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Created by estafet.
+ * Created by Yordan Nalbantov.
  */
 public class AccountsServiceImpl implements AccountServiceApi {
 

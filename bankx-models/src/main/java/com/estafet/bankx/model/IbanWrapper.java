@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by estafet.
+ * Created by Yordan Nalbantov.
  */
 public class IbanWrapper implements Serializable {
 

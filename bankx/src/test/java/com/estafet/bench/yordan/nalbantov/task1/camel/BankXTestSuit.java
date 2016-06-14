@@ -4,7 +4,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
- * Created by estafet.
+ * Created by Yordan Nalbantov.
  */
 //@RunWith(Suite.class)
 //@Suite.SuiteClasses ({

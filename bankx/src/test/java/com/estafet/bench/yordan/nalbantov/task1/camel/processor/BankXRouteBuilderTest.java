@@ -4,7 +4,7 @@ import org.apache.camel.CamelContext;
 import org.apache.camel.component.properties.PropertiesComponent;
 
 /**
- * Created by estafet.
+ * Created by Yordan Nalbantov.
  */
 public class BankXRouteBuilderTest  {
 

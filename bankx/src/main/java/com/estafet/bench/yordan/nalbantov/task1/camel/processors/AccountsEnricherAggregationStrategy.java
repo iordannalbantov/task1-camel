@@ -5,7 +5,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 
 /**
- * Created by estafet.
+ * Created by Yordan Nalbantov.
  */
 public class AccountsEnricherAggregationStrategy implements AggregationStrategy {
 
