@@ -27,7 +27,7 @@ public class BankXRouteBuilder extends RouteBuilder {
         // Using not default continuation timeout of 5000, as it defaults to 30000 and generates a log info message.
         // routeId is the correct way of setting route id. The id method sets component´s id.
         // Jetty restricted to accept POST requests only. 404 - method not allowed is returned otherwise.
-        from("jetty:http://0.0.0.0:20616/estafet/iban/report?httpMethodRestrict=POST&continuationTimeout=5000").routeId("entry")
+        from("jetty:{{bankx.endpoint.entry.url}}?httpMethodRestrict=POST&continuationTimeout=5000").routeId("entry")
                 .onException(Exception.class)
                     .handled(true)
                     .transform(constant("Something went wrong."))
