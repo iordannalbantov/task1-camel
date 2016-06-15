@@ -60,5 +60,8 @@ public class BankXRouteBuilder extends RouteBuilder {
                 // Marshall back to JSON. Can not prettify the output with Camel 2.15.1.
                 .marshal().json(JsonLibrary.Jackson)
                 .to("sftp://{{bankx.endpoint.output.host}}:22/{{bankx.endpoint.output.dir}}?username={{bankx.endpoint.output.username}}&knownHostsFile={{bankx.endpoint.output.knownHostsFile}}&privateKeyFile={{bankx.endpoint.output.privateKeyFile}}&connectTimeout=20000&fileName=${header.IbanTimestampOfRequest}.txt").id("output");
+
+        from("quartz2://dummy/schedule?cron={{bankx.endpoint.dummySchedule.cron}}&fireNow=true").routeId("dummySchedule")
+                .log(LoggingLevel.INFO, "Cron route executed.");
     }
 }

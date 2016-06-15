@@ -9,3 +9,5 @@ bankx.endpoint.output.dir=reports
 bankx.endpoint.output.username=estafet
 bankx.endpoint.output.knownHostsFile=/home/estafet/.ssh/authorized_keys
 bankx.endpoint.output.privateKeyFile=/home/estafet/private.ppk
+
+bankx.endpoint.dummySchedule.cron=*+*+*+*+*+?+*
