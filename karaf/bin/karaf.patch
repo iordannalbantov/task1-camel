@@ -1,0 +1,11 @@
+--- karaf       2015-11-25 11:51:16.000000000 +0200
++++ /home/estafet/jboss-fuse-6.2.1.redhat-084/bin/karaf 2016-06-10 13:13:54.814199747 +0300
+@@ -269,7 +269,7 @@
+ }
+
+ setupDefaults() {
+-    DEFAULT_JAVA_OPTS="-Xms$JAVA_MIN_MEM -Xmx$JAVA_MAX_MEM -XX:+UnlockDiagnosticVMOptions -XX:+UnsyncloadClass "
++    DEFAULT_JAVA_OPTS="-Xms$JAVA_MIN_MEM -Xmx$JAVA_MAX_MEM -XX:+UnlockDiagnosticVMOptions -XX:+UnsyncloadClass -Dorg.apache.activemq.SERIALIZABLE_PACKAGES="*""
+
+     #Set the JVM_VENDOR specific JVM flags
+     if [ "$JVM_VENDOR" = "SUN" ]; then

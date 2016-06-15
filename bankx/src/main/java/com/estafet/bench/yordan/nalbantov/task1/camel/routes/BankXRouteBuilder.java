@@ -1,7 +1,8 @@
 package com.estafet.bench.yordan.nalbantov.task1.camel.routes;
 
 import com.estafet.bankx.model.IbanWrapper;
-import com.estafet.bench.yordan.nalbantov.task1.camel.processors.*;
+import com.estafet.bench.yordan.nalbantov.task1.camel.processors.AccountsEnricherAggregationStrategy;
+import com.estafet.bench.yordan.nalbantov.task1.camel.processors.ReportAggregation;
 import org.apache.camel.Exchange;
 import org.apache.camel.ExchangePattern;
 import org.apache.camel.LoggingLevel;
@@ -29,9 +30,9 @@ public class BankXRouteBuilder extends RouteBuilder {
         // Jetty restricted to accept POST requests only. 404 - method not allowed is returned otherwise.
         from("jetty:{{bankx.endpoint.entry.url}}?httpMethodRestrict=POST&continuationTimeout=5000").routeId("entry")
                 .onException(Exception.class)
-                    .handled(true)
-                    .transform(constant("Something went wrong."))
-                    .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(500))
+                .handled(true)
+                .transform(constant("Something went wrong."))
+                .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(500))
                 .end()
                 .unmarshal().json(JsonLibrary.Jackson, IbanWrapper.class)
                 // Header is set before the splitting to ensure that it will be the same nevertheless splitting on large data may span milliseconds.
@@ -40,7 +41,7 @@ public class BankXRouteBuilder extends RouteBuilder {
                 // Split the message object into IBANs, based on the collection from the bean.
                 .split(simple("${body.getIbans()}"))
                 // Send the IBANs to the message queue.
-                .to(ExchangePattern.InOnly,"activemq:queue:ibanReport").setBody(constant(""));
+                .to(ExchangePattern.InOnly, "activemq:queue:ibanReport").setBody(constant(""));
 
         // Populate beans with fake data, later on used to enrich the original beans.
         from("direct:data").routeId("data").processRef("fakeDataProcessor");
