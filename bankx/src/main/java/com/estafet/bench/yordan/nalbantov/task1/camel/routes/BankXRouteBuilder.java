@@ -61,6 +61,9 @@ public class BankXRouteBuilder extends RouteBuilder {
                 .marshal().json(JsonLibrary.Jackson)
                 .to("sftp://{{bankx.endpoint.output.host}}:22/{{bankx.endpoint.output.dir}}?username={{bankx.endpoint.output.username}}&knownHostsFile={{bankx.endpoint.output.knownHostsFile}}&privateKeyFile={{bankx.endpoint.output.privateKeyFile}}&connectTimeout=20000&fileName=${header.IbanTimestampOfRequest}.txt").id("output");
 
+        from("sftp://{{bankx.endpoint.output.host}}:22/{{bankx.endpoint.output.dir}}?username={{bankx.endpoint.output.username}}&knownHostsFile={{bankx.endpoint.output.knownHostsFile}}&privateKeyFile={{bankx.endpoint.output.privateKeyFile}}&connectTimeout=20000&delay=60000").routeId("scan")
+                .log(LoggingLevel.INFO, "File $simple{in.header.CamelFileName} received.");
+
         from("quartz2://dummy/schedule?cron={{bankx.endpoint.dummySchedule.cron}}&fireNow=true").routeId("dummySchedule")
                 .log(LoggingLevel.INFO, "Cron route executed.");
     }
