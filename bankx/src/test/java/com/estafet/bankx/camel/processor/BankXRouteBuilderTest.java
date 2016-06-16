@@ -1,12 +1,9 @@
 package com.estafet.bankx.camel.processor;
 
-import org.apache.camel.CamelContext;
-import org.apache.camel.component.properties.PropertiesComponent;
-
 /**
  * Created by Yordan Nalbantov.
  */
-public class BankXRouteBuilderTest  {
+public class BankXRouteBuilderTest {
 
 //    private FakeDataProcessor fakeDataProcessor = new FakeDataProcessor();
 //
@@ -75,7 +72,6 @@ public class BankXRouteBuilderTest  {
 //
 //    @Produce(uri = "direct:data")
 //    private ProducerTemplate template1;
-
 
 
 //    @Test

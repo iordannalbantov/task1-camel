@@ -1,13 +1,15 @@
 bankx.endpoint.entry.url = http://0.0.0.0:20616/estafet/iban/report
 
+bankx.endpoint.directEntry.destination = /u01/data/iban/reports
+
 # As sftp supports only relative paths it is recommended to use symlink to the actual location.
 # ln -s /u01/data/iban/reports/ /home/estafet/reports
 # sftp://127.0.0.1:22/../../u01/data/iban/reports?... also works.
 
-bankx.endpoint.output.host=127.0.0.1
-bankx.endpoint.output.dir=reports
-bankx.endpoint.output.username=estafet
-bankx.endpoint.output.knownHostsFile=/home/estafet/.ssh/authorized_keys
-bankx.endpoint.output.privateKeyFile=/home/estafet/private.ppk
+bankx.endpoint.output.host = 127.0.0.1
+bankx.endpoint.output.dir = reports
+bankx.endpoint.output.username = estafet
+bankx.endpoint.output.knownHostsFile = /home/estafet/.ssh/authorized_keys
+bankx.endpoint.output.privateKeyFile = /home/estafet/private.ppk
 
-bankx.endpoint.dummySchedule.cron=*+*+*+*+*+?+*
+bankx.endpoint.dummySchedule.cron = *+*+*+*+*+?+*

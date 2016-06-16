@@ -8,6 +8,8 @@
 
     <bean id="testProcessor" class="com.estafet.bankx.camel.processors.TestProcessor"/>
 
+    <bean id="prepareTransformationProcessor" class="com.estafet.bankx.camel.processors.PrepareTransformationProcessor"/>
+
     <bean id="fakeDataProcessor" class="com.estafet.bankx.camel.processors.FakeDataProcessor">
         <property name="accountEnricherService" ref="accountService"/>
     </bean>

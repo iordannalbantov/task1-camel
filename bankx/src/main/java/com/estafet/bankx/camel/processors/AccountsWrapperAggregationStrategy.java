@@ -1,6 +1,5 @@
 package com.estafet.bankx.camel.processors;
 
-import com.estafet.bankx.model.AccountWrapper;
 import com.estafet.bankx.model.AccountsReportWrapper;
 import org.apache.camel.Exchange;
 import org.apache.camel.processor.aggregate.AggregationStrategy;

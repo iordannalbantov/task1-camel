@@ -1,10 +1,10 @@
 package com.estafet.bankx.camel.processor;
 
-import com.estafet.bankx.model.Account;
 import com.estafet.bankx.camel.Utils;
 import com.estafet.bankx.camel.processors.FakeDataProcessor;
 import com.estafet.bankx.camel.processors.IbanSingleReportEntityProcessor;
 import com.estafet.bankx.camel.routes.BankXRouteBuilder;
+import com.estafet.bankx.model.Account;
 import org.apache.camel.CamelContext;
 import org.apache.camel.ExchangePattern;
 import org.apache.camel.builder.RouteBuilder;
@@ -25,8 +25,6 @@ import java.io.IOException;
  */
 public class RouteDirectDataTest extends CamelTestSupport {
 
-    // TODO: Switch to CamelTestSupport as CamelBlueprintSupport class have disadvantages.
-    // TODO: Read test account and expected account from `json` file.
     // TODO: Check the implementation against the specification.
     // TODO: The test is not running properly after the bankx-modles OSGI module introduction.
 
@@ -47,7 +45,7 @@ public class RouteDirectDataTest extends CamelTestSupport {
 
         // Assert results.
         assertTrue(obj instanceof Account);
-        // assertEquals(getExpectedAccount(), obj);
+//         assertEquals(getExpectedAccount(), obj);
 
         // context.stop();
     }

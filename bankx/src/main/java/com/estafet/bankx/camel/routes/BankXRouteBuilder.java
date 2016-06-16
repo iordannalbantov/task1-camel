@@ -1,10 +1,10 @@
 package com.estafet.bankx.camel.routes;
 
+import com.estafet.bankx.camel.processors.AccountsEnricherAggregationStrategy;
 import com.estafet.bankx.camel.processors.AccountsWrapperAggregationStrategy;
+import com.estafet.bankx.camel.processors.ReportAggregation;
 import com.estafet.bankx.model.AccountWrapper;
 import com.estafet.bankx.model.IbanWrapper;
-import com.estafet.bankx.camel.processors.AccountsEnricherAggregationStrategy;
-import com.estafet.bankx.camel.processors.ReportAggregation;
 import org.apache.camel.Exchange;
 import org.apache.camel.ExchangePattern;
 import org.apache.camel.LoggingLevel;
@@ -13,24 +13,18 @@ import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 import org.apache.camel.processor.idempotent.MemoryIdempotentRepository;
 
-import java.util.Random;
-
 /**
  * Created by Yordan Nalbantov.
  */
 public class BankXRouteBuilder extends RouteBuilder {
 
-    // TODO: Response body of the JSON continues to be com.estafet.bankx.model.IbanWrapper.
-
-    // Sory, but no way to set aggregation strategy by bean ref to aggregate.
+    // Sorry, but no way to set aggregation strategy by bean ref.
     private AggregationStrategy reportAggregation = new ReportAggregation();
     private AggregationStrategy accountsEnricherAggregationStrategy = new AccountsEnricherAggregationStrategy();
     private AggregationStrategy accountsWrapperAggregationStrategy = new AccountsWrapperAggregationStrategy();
 
     @Override
     public void configure() throws Exception {
-
-        Random randomGenerator = new Random();
 
         // Using IP instead of localhost, as it causes a log message.
         // Using not default continuation timeout of 5000, as it defaults to 30000 and generates a log info message.
@@ -42,6 +36,14 @@ public class BankXRouteBuilder extends RouteBuilder {
                 .transform(constant("Something went wrong."))
                 .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(500))
                 .end()
+                // It seems that jetty endpoint is assuming that there will not be any modifications of the body.
+                // Therefore, it is best not to modify the HttpMessage instance in the route.
+                // If the message object is replaced with an message of another class, it leads to calling toString
+                // method on the new object, at the pint when the response to the caller is rendered.
+                // In the last case it is impossible to return meaningful message to the caller.
+                .to(ExchangePattern.InOnly, "direct:entry").setBody(constant(""));
+
+        from("direct:entry").routeId("directEntry")
                 .unmarshal().json(JsonLibrary.Jackson, IbanWrapper.class)
                 // Header is set before the splitting to ensure that it will be the same nevertheless splitting on large data may span milliseconds.
                 // The format is such that could be used directly to form the final file name.
@@ -49,7 +51,7 @@ public class BankXRouteBuilder extends RouteBuilder {
                 // Split the message object into IBANs, based on the collection from the bean.
                 .split(simple("${body.getIbans()}"))
                 // Send the IBANs to the message queue.
-                .to(ExchangePattern.InOnly, "activemq:queue:ibanReport").setBody(constant(""));
+                .to("activemq:queue:ibanReport");
 
         // Populate beans with fake data, later on used to enrich the original beans.
         from("direct:data").routeId("data").processRef("fakeDataProcessor");
@@ -83,8 +85,10 @@ public class BankXRouteBuilder extends RouteBuilder {
                 .aggregate(simple("${in.header.CamelFileName.substring(0, 10)}"), accountsWrapperAggregationStrategy)
                 .completionTimeout(2000)
                 // Set output filename and transform it. We could use sftp for writing again,
-                // but for this test it is pointless.
-                .setHeader(Exchange.XSLT_FILE_NAME, simple("/u01/data/iban/reports/${date:now:yyyyMMdd}_" + Integer.toString(randomGenerator.nextInt(9999999) + 1) + ".csv"))
+                // but for this test it is pointless. Also, we must use processor to populate the file name because
+                // it must be dynamic, to avoid some problems that will occur when because of the fact that the route
+                // is called once per a minute, but not daily.
+                .processRef("prepareTransformationProcessor")
                 .to("xslt:com/estafet/bankx/camel/xslt/AccountsCSV.xsl?output=file");
 
         from("quartz2://dummy/schedule?cron={{bankx.endpoint.dummySchedule.cron}}&fireNow=true").routeId("dummySchedule")
