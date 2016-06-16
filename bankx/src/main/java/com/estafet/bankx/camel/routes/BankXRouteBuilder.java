@@ -11,6 +11,7 @@ import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
+import org.apache.camel.processor.idempotent.MemoryIdempotentRepository;
 
 import java.util.Random;
 
@@ -70,6 +71,7 @@ public class BankXRouteBuilder extends RouteBuilder {
 
         from("sftp://{{bankx.endpoint.output.host}}:22/{{bankx.endpoint.output.dir}}?username={{bankx.endpoint.output.username}}&knownHostsFile={{bankx.endpoint.output.knownHostsFile}}&privateKeyFile={{bankx.endpoint.output.privateKeyFile}}&connectTimeout=20000&delay=60000").routeId("scan")
                 .filter(header(Exchange.FILE_NAME).endsWith(".txt"))
+                .idempotentConsumer(header(Exchange.FILE_NAME), MemoryIdempotentRepository.memoryIdempotentRepository(200))
                 // Log the content of the files.
                 .log(LoggingLevel.INFO, "File $simple{in.header.CamelFileName} received with body: $simple{in.body}")
                 // Unmarshal them for future use.
