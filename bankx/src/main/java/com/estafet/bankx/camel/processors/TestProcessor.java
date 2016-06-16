@@ -1,4 +1,4 @@
-package com.estafet.bench.yordan.nalbantov.task1.camel.processors;
+package com.estafet.bankx.camel.processors;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;

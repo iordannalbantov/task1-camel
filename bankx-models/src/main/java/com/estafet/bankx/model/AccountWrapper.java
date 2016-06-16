@@ -1,5 +1,7 @@
 package com.estafet.bankx.model;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,11 +9,12 @@ import java.util.List;
 /**
  * Created by Yordan Nalbantov.
  */
-public class AccountsWrapper implements Serializable {
+@XmlRootElement
+public class AccountWrapper implements Serializable {
 
     private List<Account> accounts = new ArrayList<>();
 
-    public AccountsWrapper() {
+    public AccountWrapper() {
     }
 
     public List<Account> getAccounts() {

@@ -1,4 +1,4 @@
-package com.estafet.bench.yordan.nalbantov.task1.camel;
+package com.estafet.bankx.camel;
 
 import com.google.gson.Gson;
 import org.apache.http.HttpEntity;

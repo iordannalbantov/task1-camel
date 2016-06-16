@@ -1,8 +1,10 @@
-package com.estafet.bench.yordan.nalbantov.task1.camel.routes;
+package com.estafet.bankx.camel.routes;
 
+import com.estafet.bankx.camel.processors.AccountsWrapperAggregationStrategy;
+import com.estafet.bankx.model.AccountWrapper;
 import com.estafet.bankx.model.IbanWrapper;
-import com.estafet.bench.yordan.nalbantov.task1.camel.processors.AccountsEnricherAggregationStrategy;
-import com.estafet.bench.yordan.nalbantov.task1.camel.processors.ReportAggregation;
+import com.estafet.bankx.camel.processors.AccountsEnricherAggregationStrategy;
+import com.estafet.bankx.camel.processors.ReportAggregation;
 import org.apache.camel.Exchange;
 import org.apache.camel.ExchangePattern;
 import org.apache.camel.LoggingLevel;
@@ -20,6 +22,7 @@ public class BankXRouteBuilder extends RouteBuilder {
     // Sory, but no way to set aggregation strategy by bean ref to aggregate.
     private AggregationStrategy reportAggregation = new ReportAggregation();
     private AggregationStrategy accountsEnricherAggregationStrategy = new AccountsEnricherAggregationStrategy();
+    private AggregationStrategy accountsWrapperAggregationStrategy = new AccountsWrapperAggregationStrategy();
 
     @Override
     public void configure() throws Exception {
@@ -62,7 +65,14 @@ public class BankXRouteBuilder extends RouteBuilder {
                 .to("sftp://{{bankx.endpoint.output.host}}:22/{{bankx.endpoint.output.dir}}?username={{bankx.endpoint.output.username}}&knownHostsFile={{bankx.endpoint.output.knownHostsFile}}&privateKeyFile={{bankx.endpoint.output.privateKeyFile}}&connectTimeout=20000&fileName=${header.IbanTimestampOfRequest}.txt").id("output");
 
         from("sftp://{{bankx.endpoint.output.host}}:22/{{bankx.endpoint.output.dir}}?username={{bankx.endpoint.output.username}}&knownHostsFile={{bankx.endpoint.output.knownHostsFile}}&privateKeyFile={{bankx.endpoint.output.privateKeyFile}}&connectTimeout=20000&delay=60000").routeId("scan")
-                .log(LoggingLevel.INFO, "File $simple{in.header.CamelFileName} received.");
+                .filter(header(Exchange.FILE_NAME).endsWith(".txt"))
+                .unmarshal().json(JsonLibrary.Jackson, AccountWrapper.class)
+                .processRef("accountsReportProcessor")
+                .aggregate(simple("${in.header.CamelFileName.substring(0, 10)}"), accountsWrapperAggregationStrategy)
+                .completionTimeout(2000)
+                .setHeader(Exchange.XSLT_FILE_NAME, simple("/u01/data/iban/reports/${date:now:yyyyMMdd}.csv"))
+                .to("xslt:com/estafet/bankx/camel/xslt/AccountsCSV.xsl?output=file")
+                .log(LoggingLevel.INFO, "File $simple{in.header.CamelFileName} received with body: $simple{in.body}");
 
         from("quartz2://dummy/schedule?cron={{bankx.endpoint.dummySchedule.cron}}&fireNow=true").routeId("dummySchedule")
                 .log(LoggingLevel.INFO, "Cron route executed.");

@@ -1,4 +1,4 @@
-package com.estafet.bench.yordan.nalbantov.task1.camel.processor;
+package com.estafet.bankx.camel.processor;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.component.properties.PropertiesComponent;

@@ -1,4 +1,4 @@
-package com.estafet.bench.yordan.nalbantov.task1.camel.processors;
+package com.estafet.bankx.camel.processors;
 
 import com.estafet.bankx.accounts.api.AccountServiceApi;
 import com.estafet.bankx.model.Account;
@@ -10,7 +10,7 @@ import org.apache.camel.Processor;
  */
 public class FakeDataProcessor implements Processor {
 
-    AccountServiceApi accountEnricherService;
+    private AccountServiceApi accountEnricherService;
 
     @Override
     public void process(Exchange exchange) throws Exception {

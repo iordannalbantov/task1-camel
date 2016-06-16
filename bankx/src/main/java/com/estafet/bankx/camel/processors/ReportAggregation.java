@@ -1,7 +1,7 @@
-package com.estafet.bench.yordan.nalbantov.task1.camel.processors;
+package com.estafet.bankx.camel.processors;
 
 import com.estafet.bankx.model.Account;
-import com.estafet.bankx.model.AccountsWrapper;
+import com.estafet.bankx.model.AccountWrapper;
 import org.apache.camel.Exchange;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 
@@ -14,15 +14,15 @@ public class ReportAggregation implements AggregationStrategy {
     public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
         if (newExchange.getIn().getBody() instanceof Account) {
             Account entity = (Account) newExchange.getIn().getBody();
-            AccountsWrapper result;
+            AccountWrapper result;
             if (oldExchange == null) {
-                result = new AccountsWrapper();
+                result = new AccountWrapper();
                 result.getAccounts().add(entity);
                 newExchange.getIn().setBody(result);
                 return newExchange;
             } else {
                 //noinspection unchecked
-                result = oldExchange.getIn().getBody(AccountsWrapper.class);
+                result = oldExchange.getIn().getBody(AccountWrapper.class);
                 result.getAccounts().add(entity);
                 return oldExchange;
             }

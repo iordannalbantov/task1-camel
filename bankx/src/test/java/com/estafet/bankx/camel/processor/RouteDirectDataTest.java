@@ -1,10 +1,10 @@
-package com.estafet.bench.yordan.nalbantov.task1.camel.processor;
+package com.estafet.bankx.camel.processor;
 
 import com.estafet.bankx.model.Account;
-import com.estafet.bench.yordan.nalbantov.task1.camel.Utils;
-import com.estafet.bench.yordan.nalbantov.task1.camel.processors.FakeDataProcessor;
-import com.estafet.bench.yordan.nalbantov.task1.camel.processors.IbanSingleReportEntityProcessor;
-import com.estafet.bench.yordan.nalbantov.task1.camel.routes.BankXRouteBuilder;
+import com.estafet.bankx.camel.Utils;
+import com.estafet.bankx.camel.processors.FakeDataProcessor;
+import com.estafet.bankx.camel.processors.IbanSingleReportEntityProcessor;
+import com.estafet.bankx.camel.routes.BankXRouteBuilder;
 import org.apache.camel.CamelContext;
 import org.apache.camel.ExchangePattern;
 import org.apache.camel.builder.RouteBuilder;
