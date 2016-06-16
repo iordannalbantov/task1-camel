@@ -23,7 +23,7 @@ import java.io.IOException;
  * <p>
  * Created by Yordan Nalbantov.
  */
-public class RouteDirectDataTest extends CamelTestSupport {
+public class RouteDataTest extends CamelTestSupport {
 
     // TODO: Check the implementation against the specification.
     // TODO: The test is not running properly after the bankx-modles OSGI module introduction.

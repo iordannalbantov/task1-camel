@@ -36,7 +36,7 @@ public class BankXRouteBuilder extends RouteBuilder {
                 .transform(constant("Something went wrong."))
                 .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(500))
                 .end()
-                // It seems that jetty endpoint is assuming that there will not be any modifications of the body.
+                // It seems that jetty endpoint is assuming that there will not be any modification on the body.
                 // Therefore, it is best not to modify the HttpMessage instance in the route.
                 // If the message object is replaced with an message of another class, it leads to calling toString
                 // method on the new object, at the pint when the response to the caller is rendered.

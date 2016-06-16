@@ -7,7 +7,7 @@ import org.apache.camel.builder.SimpleBuilder;
 import java.util.Random;
 
 /**
- * Created by estafet.
+ * Created by Yordan Nalbantov.
  */
 public class PrepareTransformationProcessor implements Processor {
 

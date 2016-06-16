@@ -6,7 +6,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 
 /**
- * Created by estafet.
+ * Created by Yordan Nalbantov.
  */
 public class AccountsReportProcessor implements Processor {
 
