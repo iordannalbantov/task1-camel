@@ -82,7 +82,7 @@ public class BankXRouteBuilder extends RouteBuilder {
                 .completionTimeout(2000)
                 // Set output filename and transform it. We could use sftp for writing again,
                 // but for this test it is pointless.
-                .setHeader(Exchange.XSLT_FILE_NAME, simple("/u01/data/iban/reports/${date:now:yyyyMMdd}_" + Integer.toString(randomGenerator.nextInt(1440) + 1) + ".csv"))
+                .setHeader(Exchange.XSLT_FILE_NAME, simple("/u01/data/iban/reports/${date:now:yyyyMMdd}_" + Integer.toString(randomGenerator.nextInt(9999999) + 1) + ".csv"))
                 .to("xslt:com/estafet/bankx/camel/xslt/AccountsCSV.xsl?output=file");
 
         from("quartz2://dummy/schedule?cron={{bankx.endpoint.dummySchedule.cron}}&fireNow=true").routeId("dummySchedule")
