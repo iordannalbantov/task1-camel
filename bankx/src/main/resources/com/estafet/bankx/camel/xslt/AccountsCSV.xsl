@@ -6,8 +6,11 @@
 
     <xsl:template match="/*/child::*">
         <xsl:for-each select="child::*">
-            <xsl:if test="position() != last()"><xsl:text>&apos;</xsl:text><xsl:value-of select="normalize-space(.)"/><xsl:text>&apos;,</xsl:text></xsl:if>
-            <xsl:if test="position()  = last()"><xsl:text>&apos;</xsl:text><xsl:value-of select="normalize-space(.)"/><xsl:text>&apos;</xsl:text><xsl:text>&#xA;&#xD;</xsl:text>
+            <xsl:if test="position() != last()">
+                <xsl:text>&apos;</xsl:text><xsl:value-of select="normalize-space(.)"/><xsl:text>&apos;,</xsl:text>
+            </xsl:if>
+            <xsl:if test="position()  = last()">
+                <xsl:text>&apos;</xsl:text><xsl:value-of select="normalize-space(.)"/><xsl:text>&apos;</xsl:text><xsl:text>&#xA;&#xD;</xsl:text>
             </xsl:if>
         </xsl:for-each>
     </xsl:template>

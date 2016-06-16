@@ -12,6 +12,8 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 
+import java.util.Random;
+
 /**
  * Created by Yordan Nalbantov.
  */
@@ -26,6 +28,8 @@ public class BankXRouteBuilder extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
+
+        Random randomGenerator = new Random();
 
         // Using IP instead of localhost, as it causes a log message.
         // Using not default continuation timeout of 5000, as it defaults to 30000 and generates a log info message.
@@ -66,13 +70,20 @@ public class BankXRouteBuilder extends RouteBuilder {
 
         from("sftp://{{bankx.endpoint.output.host}}:22/{{bankx.endpoint.output.dir}}?username={{bankx.endpoint.output.username}}&knownHostsFile={{bankx.endpoint.output.knownHostsFile}}&privateKeyFile={{bankx.endpoint.output.privateKeyFile}}&connectTimeout=20000&delay=60000").routeId("scan")
                 .filter(header(Exchange.FILE_NAME).endsWith(".txt"))
+                // Log the content of the files.
+                .log(LoggingLevel.INFO, "File $simple{in.header.CamelFileName} received with body: $simple{in.body}")
+                // Unmarshal them for future use.
                 .unmarshal().json(JsonLibrary.Jackson, AccountWrapper.class)
+                // Replace the AccountWrapper with AccountReportWrapper.
                 .processRef("accountsReportProcessor")
+                // Aggregate daily data. N.B. Reading should be synchronized to execute once a day.
+                // For the test it is not.
                 .aggregate(simple("${in.header.CamelFileName.substring(0, 10)}"), accountsWrapperAggregationStrategy)
                 .completionTimeout(2000)
-                .setHeader(Exchange.XSLT_FILE_NAME, simple("/u01/data/iban/reports/${date:now:yyyyMMdd}.csv"))
-                .to("xslt:com/estafet/bankx/camel/xslt/AccountsCSV.xsl?output=file")
-                .log(LoggingLevel.INFO, "File $simple{in.header.CamelFileName} received with body: $simple{in.body}");
+                // Set output filename and transform it. We could use sftp for writing again,
+                // but for this test it is pointless.
+                .setHeader(Exchange.XSLT_FILE_NAME, simple("/u01/data/iban/reports/${date:now:yyyyMMdd}_" + Integer.toString(randomGenerator.nextInt(1440) + 1) + ".csv"))
+                .to("xslt:com/estafet/bankx/camel/xslt/AccountsCSV.xsl?output=file");
 
         from("quartz2://dummy/schedule?cron={{bankx.endpoint.dummySchedule.cron}}&fireNow=true").routeId("dummySchedule")
                 .log(LoggingLevel.INFO, "Cron route executed.");
