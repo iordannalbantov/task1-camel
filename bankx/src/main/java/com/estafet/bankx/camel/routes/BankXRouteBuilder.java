@@ -3,15 +3,14 @@ package com.estafet.bankx.camel.routes;
 import com.estafet.bankx.camel.processors.AccountsEnricherAggregationStrategy;
 import com.estafet.bankx.camel.processors.AccountsWrapperAggregationStrategy;
 import com.estafet.bankx.camel.processors.ReportAggregation;
-import com.estafet.bankx.model.AccountWrapper;
 import com.estafet.bankx.model.IbanWrapper;
 import org.apache.camel.Exchange;
 import org.apache.camel.ExchangePattern;
-import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
-import org.apache.camel.processor.idempotent.MemoryIdempotentRepository;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by Yordan Nalbantov.
@@ -22,6 +21,7 @@ public class BankXRouteBuilder extends RouteBuilder {
     public static final String ROUTE_DIRECT_ENTRY = "direct:entry";
     public static final String ROUTE_DIRECT_ENTRY_ID = "directEntry";
     public static final String ROUTE_DIRECT_DATA_ID = "data";
+    public static final String ROUTE_JETTY_ENTRY_ID = "entry";
 
     // Sorry, but no way to set aggregation strategy by bean ref.
     private AggregationStrategy reportAggregation = new ReportAggregation();
@@ -35,18 +35,18 @@ public class BankXRouteBuilder extends RouteBuilder {
         // Using not default continuation timeout of 5000, as it defaults to 30000 and generates a log info message.
         // routeId is the correct way of setting route id. The id method sets component´s id.
         // Jetty restricted to accept POST requests only. 404 - method not allowed is returned otherwise.
-        from("jetty:{{bankx.endpoint.entry.url}}?httpMethodRestrict=POST&continuationTimeout=5000").routeId("entry")
+        from("jetty:{{bankx.endpoint.entry.url}}?httpMethodRestrict=POST&continuationTimeout=5000").routeId(ROUTE_JETTY_ENTRY_ID)
                 .onException(Exception.class)
                 .handled(true)
                 .transform(constant("Something went wrong."))
-                .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(500))
+                .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(HttpServletResponse.SC_INTERNAL_SERVER_ERROR))
                 .end()
                 // It seems that jetty endpoint is assuming that there will not be any modification of the body.
                 // Therefore, it is best not to modify the HttpMessage instance in the route.
                 // If the message object is replaced with an message of another class, it leads to calling toString
                 // method on the new object, at the pint when the response to the caller is rendered.
                 // In the last case it is impossible to return meaningful message to the caller.
-                .to(ExchangePattern.InOnly, "direct:entry").setBody(constant(""));
+                .to(ExchangePattern.InOnly, ROUTE_DIRECT_ENTRY).setBody(constant(""));
 
         from(ROUTE_DIRECT_ENTRY).routeId(ROUTE_DIRECT_ENTRY_ID)
                 .unmarshal().json(JsonLibrary.Jackson, IbanWrapper.class)
