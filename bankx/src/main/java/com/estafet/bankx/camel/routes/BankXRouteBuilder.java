@@ -6,6 +6,7 @@ import com.estafet.bankx.camel.processors.ReportAggregation;
 import com.estafet.bankx.model.IbanWrapper;
 import org.apache.camel.Exchange;
 import org.apache.camel.ExchangePattern;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
@@ -22,6 +23,7 @@ public class BankXRouteBuilder extends RouteBuilder {
     public static final String ROUTE_DIRECT_ENTRY_ID = "directEntry";
     public static final String ROUTE_DIRECT_DATA_ID = "data";
     public static final String ROUTE_JETTY_ENTRY_ID = "entry";
+    public static final String ROUTE_QUARTZ_DUMMY_SCHEDULE_ID = "dummySchedule";
 
     // Sorry, but no way to set aggregation strategy by bean ref.
     private AggregationStrategy reportAggregation = new ReportAggregation();
@@ -95,8 +97,8 @@ public class BankXRouteBuilder extends RouteBuilder {
 //                // is called once per a minute, but not daily.
 //                .processRef("prepareTransformationProcessor")
 //                .to("xslt:com/estafet/bankx/camel/xslt/AccountsCSV.xsl?output=file");
-//
-//        from("quartz2://dummy/schedule?cron={{bankx.endpoint.dummySchedule.cron}}&fireNow=true").routeId("dummySchedule")
-//                .log(LoggingLevel.INFO, "Cron route executed.");
+
+        from("quartz2://dummy/schedule?cron={{bankx.endpoint.dummySchedule.cron}}&fireNow=true").routeId(ROUTE_QUARTZ_DUMMY_SCHEDULE_ID)
+                .log(LoggingLevel.INFO, "Cron route executed.").id("dummyScheduleResult");
     }
 }

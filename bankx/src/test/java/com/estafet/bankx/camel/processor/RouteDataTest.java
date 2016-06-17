@@ -44,9 +44,9 @@ public class RouteDataTest extends CamelTestSupport {
     private static final long WAIT_TIMEOUT = 5000L;
 
     // TODO: Check the implementation against the specification.
-    // TODO: The test is not running properly after the bankx-modles OSGI module introduction.
-    // TODO: Mock accountEnricherService.
+    // TODO: Mock accountEnricherService with mockito.
     // TODO: Test negative cases and alternative scenarios.
+    // TODO: Separate tests in diferent files.
 
     private final AccountServiceApi accountEnricherService = new AccountsServiceImpl();
 
@@ -85,6 +85,36 @@ public class RouteDataTest extends CamelTestSupport {
         postProcessor.postProcessBeforeInitialization(ibanSingleReportEntityProcessor, "ibanSingleReportEntityProcessor");
         postProcessor.postProcessBeforeInitialization(prepareTransformationProcessor, "prepareTransformationProcessor");
         postProcessor.postProcessBeforeInitialization(testProcessor, "testProcessor");
+    }
+
+    @Test
+    public void testRouteQuartz() throws Exception {
+
+        // Lookup roots.
+
+
+        RouteDefinition routeDefinition = context.getRouteDefinition(BankXRouteBuilder.ROUTE_QUARTZ_DUMMY_SCHEDULE_ID);
+
+        // Prepare test data.
+
+        // Prepare test scenario.
+
+        MockEndpoint mockResult = getMockEndpoint("mock:dummyScheduleResult");
+        mockResult.expectedMessageCount(2);
+
+        routeDefinition
+                .adviceWith(context, new AdviceWithRouteBuilder() {
+                    @Override
+                    public void configure() throws Exception {
+                        weaveById("dummyScheduleResult").replace().to(mockResult);
+                    }
+                });
+
+        // Challenge the route.
+
+        // Assert results.
+
+        assertMockEndpointsSatisfied();
     }
 
     @Test
@@ -170,8 +200,8 @@ public class RouteDataTest extends CamelTestSupport {
         routeDefinition.adviceWith(context, new AdviceWithRouteBuilder() {
             @Override
             public void configure() throws Exception {
-                weaveById("result").replace().to(mockResult);
                 replaceFromWith("direct:entry");
+                weaveById("result").replace().to(mockResult);
             }
         });
 
