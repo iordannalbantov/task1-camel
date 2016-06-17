@@ -1,6 +1,5 @@
 package com.estafet.bankx.camel;
 
-import com.google.gson.Gson;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -28,20 +27,20 @@ public class IbanTest {
     }
 
     //    @Test
-    public void reports() {
-        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();) {
-            HttpPost postRequest = new HttpPost(SERVICE_URI);
-            Payload payload = new Payload();
-
-            Gson gson = new Gson();
-            String json = gson.toJson(payload);
-            HttpEntity entity = new ByteArrayEntity(json.getBytes(StandardCharsets.UTF_8));
-            postRequest.setEntity(entity);
-
-            HttpResponse response = httpClient.execute(postRequest);
-            String result = EntityUtils.toString(response.getEntity());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void reports() {
+//        try (CloseableHttpClient httpClient = HttpClientBuilder.create().build();) {
+//            HttpPost postRequest = new HttpPost(SERVICE_URI);
+//            Payload payload = new Payload();
+//
+//            Gson gson = new Gson();
+//            String json = gson.toJson(payload);
+//            HttpEntity entity = new ByteArrayEntity(json.getBytes(StandardCharsets.UTF_8));
+//            postRequest.setEntity(entity);
+//
+//            HttpResponse response = httpClient.execute(postRequest);
+//            String result = EntityUtils.toString(response.getEntity());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

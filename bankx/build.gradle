@@ -28,9 +28,12 @@ dependencies {
 
     compile group: 'org.apache.camel', name: 'camel-core', version: '2.15.1'
     compile group: 'org.apache.camel', name: 'camel-jetty', version: '2.15.1'
+    compile group: 'org.apache.camel', name: 'camel-ftp', version: '2.15.1'
     compile group: 'org.apache.camel', name: 'camel-jackson', version: '2.15.1'
     compile group: 'org.apache.activemq', name: 'activemq-camel', version: '5.11.0'
     compile group: 'org.apache.activemq', name: 'activemq-pool', version: '5.11.0'
+
+
     compile group : 'org.apache.camel', name : 'camel-quartz2', version: '2.15.1'
 //    compile group: 'org.apache.camel', name: 'camel-jacksonxml', version: '2.15.1'
 
@@ -43,12 +46,21 @@ dependencies {
 
     compile group: 'org.apache.camel', name: 'camel-test-blueprint', version: '2.15.1'
 
-    testCompile group: 'org.apache.camel', name: 'camel-gson', version: '2.15.1'
+
+    testCompile project(':bankx-models')
+    testCompile project(':bankx-accounts-api')
+    testCompile project(':bankx-accounts-impl')
+
+    testCompile group: 'org.apache.camel', name: 'camel-core', version: '2.15.1'
     testCompile group: 'org.apache.camel', name: 'camel-jetty', version: '2.15.1'
+    testCompile group: 'org.apache.camel', name: 'camel-ftp', version: '2.15.1'
     testCompile group: 'org.apache.camel', name: 'camel-jackson', version: '2.15.1'
     testCompile group: 'org.apache.activemq', name: 'activemq-camel', version: '5.11.0'
     testCompile group: 'org.apache.activemq', name: 'activemq-pool', version: '5.11.0'
     testCompile group: 'org.apache.camel', name : 'camel-quartz2', version: '2.15.1'
+
+    testCompile group: 'org.apache.camel', name: 'camel-http', version: '2.15.1'
+    //testCompile group: 'org.apache.camel', name: 'camel-gson', version: '2.15.1'
 //    testCompile group: 'org.apache.camel', name: 'camel-jacksonxml', version: '2.15.1'
     testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.21'
 

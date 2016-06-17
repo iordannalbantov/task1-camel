@@ -32,6 +32,20 @@ public abstract class Utils {
         return mapper.readValue(resource, clazz);
     }
 
+    /**
+     * This method converts JSON message, presented as String, into JSON object from the specified class.
+     * @param resource The String representation of JSON message.
+     * @param clazz The class to convert to.
+     * @param <T> Generic for type safety.
+     * @return The result object of clazz type.
+     * @throws IOException Exception on any error.
+     */
+    public static <T> T jsonFromString(String resource, Class<T> clazz) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        return mapper.readValue(resource, clazz);
+    }
+
     public static String resource(String resourceURI) {
         InputStream inputStream = Utils.class.getClassLoader().getResourceAsStream(resourceURI);
         return toString(inputStream);
