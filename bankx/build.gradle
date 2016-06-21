@@ -46,6 +46,7 @@ dependencies {
 
     compile group: 'org.apache.camel', name: 'camel-test-blueprint', version: '2.15.1'
 
+    compile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
 
     testCompile project(':bankx-models')
     testCompile project(':bankx-accounts-api')
@@ -68,6 +69,13 @@ dependencies {
     testCompile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
 
     testCompile group: 'com.jayway.restassured', name: 'rest-assured', version: '2.9.0'
+
+    testCompile group: 'org.apache.ftpserver', name: 'ftplet-api', version: '1.0.6'
+    testCompile group: 'org.apache.ftpserver', name: 'ftpserver-core', version: '1.0.6'
+
+    testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+
+
 
 //    testCompile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.4'
 

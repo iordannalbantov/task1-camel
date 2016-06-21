@@ -1,25 +1,19 @@
 package com.estafet.bankx.camel.processor;
 
-import com.estafet.bankx.accounts.api.AccountServiceApi;
-import com.estafet.bankx.accounts.impl.AccountsServiceImpl;
 import com.estafet.bankx.camel.Utils;
-import com.estafet.bankx.camel.processors.*;
-import com.estafet.bankx.camel.routes.BankXRouteBuilder;
+import com.estafet.bankx.camel.base.BankXServerTestSupport;
+import com.estafet.bankx.camel.routes.BankXServiceRouteBuilder;
 import com.estafet.bankx.model.Account;
 import com.estafet.bankx.model.IbanWrapper;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
-import org.apache.camel.CamelContext;
 import org.apache.camel.ExchangePattern;
 import org.apache.camel.builder.AdviceWithRouteBuilder;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.component.properties.PropertiesComponent;
-import org.apache.camel.impl.DefaultCamelBeanPostProcessor;
-import org.apache.camel.impl.JndiRegistry;
 import org.apache.camel.model.FromDefinition;
 import org.apache.camel.model.RouteDefinition;
-import org.apache.camel.test.junit4.CamelTestSupport;
+import org.junit.After;
 import org.junit.Test;
 
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.jayway.restassured.RestAssured.given;
+import static org.apache.camel.language.simple.SimpleLanguage.simple;
 import static org.hamcrest.Matchers.equalTo;
 
 /**
@@ -36,85 +31,28 @@ import static org.hamcrest.Matchers.equalTo;
  * <p>
  * Created by Yordan Nalbantov.
  */
-public class RouteDataTest extends CamelTestSupport {
+public class BankXServiceRouteBuilderTest extends BankXServerTestSupport {
+
     /**
      * The default assert period in Camel is 10 secconds.
      */
     private static final int ASSERT_PERIOD = 10_000;
     private static final long WAIT_TIMEOUT = 5000L;
 
-    // TODO: Check the implementation against the specification.
     // TODO: Mock accountEnricherService with mockito.
     // TODO: Test negative cases and alternative scenarios.
-    // TODO: Separate tests in diferent files.
-
-    private final AccountServiceApi accountEnricherService = new AccountsServiceImpl();
-
-    private final AccountsReportProcessor accountsReportProcessor = new AccountsReportProcessor();
-    private final FakeDataProcessor fakeDataProcessor = new FakeDataProcessor();
-    private final IbanSingleReportEntityProcessor ibanSingleReportEntityProcessor = new IbanSingleReportEntityProcessor();
-    private final PrepareTransformationProcessor prepareTransformationProcessor = new PrepareTransformationProcessor();
-    private final TestProcessor testProcessor = new TestProcessor();
-
-    @Override
-    protected JndiRegistry createRegistry() throws Exception {
-        JndiRegistry registry = super.createRegistry();
-
-        registry.bind("accountEnricherService", accountEnricherService);
-        registry.bind("accountsReportProcessor", accountsReportProcessor);
-
-        fakeDataProcessor.setAccountEnricherService(accountEnricherService);
-        registry.bind("fakeDataProcessor", fakeDataProcessor);
-        registry.bind("ibanSingleReportEntityProcessor", ibanSingleReportEntityProcessor);
-        registry.bind("prepareTransformationProcessor", prepareTransformationProcessor);
-        registry.bind("testProcessor", testProcessor);
-
-        return registry;
-    }
 
     @Override
     public void setUp() throws Exception {
         super.setUp();
 
-        DefaultCamelBeanPostProcessor postProcessor = new DefaultCamelBeanPostProcessor(context);
-
-        postProcessor.postProcessBeforeInitialization(accountEnricherService, "accountEnricherService");
-
-        postProcessor.postProcessBeforeInitialization(accountsReportProcessor, "accountsReportProcessor");
-        postProcessor.postProcessBeforeInitialization(fakeDataProcessor, "fakeDataProcessor");
-        postProcessor.postProcessBeforeInitialization(ibanSingleReportEntityProcessor, "ibanSingleReportEntityProcessor");
-        postProcessor.postProcessBeforeInitialization(prepareTransformationProcessor, "prepareTransformationProcessor");
-        postProcessor.postProcessBeforeInitialization(testProcessor, "testProcessor");
+        // At this point, prepare the Ftp for the unit test if needed.
     }
 
-    @Test
-    public void testRouteQuartz() throws Exception {
-
-        // Lookup roots.
-
-
-        RouteDefinition routeDefinition = context.getRouteDefinition(BankXRouteBuilder.ROUTE_QUARTZ_DUMMY_SCHEDULE_ID);
-
-        // Prepare test data.
-
-        // Prepare test scenario.
-
-        MockEndpoint mockResult = getMockEndpoint("mock:dummyScheduleResult");
-        mockResult.expectedMessageCount(2);
-
-        routeDefinition
-                .adviceWith(context, new AdviceWithRouteBuilder() {
-                    @Override
-                    public void configure() throws Exception {
-                        weaveById("dummyScheduleResult").replace().to(mockResult);
-                    }
-                });
-
-        // Challenge the route.
-
-        // Assert results.
-
-        assertMockEndpointsSatisfied();
+    @Override
+    @After
+    public void tearDown() throws Exception {
+        super.tearDown();
     }
 
     @Test
@@ -122,7 +60,7 @@ public class RouteDataTest extends CamelTestSupport {
 
         // Lookup roots.
 
-        RouteDefinition routeDefinition = context.getRouteDefinition(BankXRouteBuilder.ROUTE_JETTY_ENTRY_ID);
+        RouteDefinition routeDefinition = context.getRouteDefinition("entry");
 
         List<FromDefinition> fromDefinitions = routeDefinition.getInputs();
         FromDefinition definition = fromDefinitions.get(0);
@@ -147,7 +85,7 @@ public class RouteDataTest extends CamelTestSupport {
                 .adviceWith(context, new AdviceWithRouteBuilder() {
                     @Override
                     public void configure() throws Exception {
-                        interceptSendToEndpoint(BankXRouteBuilder.ROUTE_DIRECT_ENTRY)
+                        interceptSendToEndpoint("direct:entry")
                                 .skipSendToOriginalEndpoint()
                                 .to("mock:result");
                     }
@@ -179,7 +117,7 @@ public class RouteDataTest extends CamelTestSupport {
 
         // Lookup roots.
 
-        RouteDefinition routeDefinition = context.getRouteDefinition(BankXRouteBuilder.ROUTE_DIRECT_ENTRY_ID);
+        RouteDefinition routeDefinition = context.getRouteDefinition("directEntry");
 
         // Prepare test data.
 
@@ -188,7 +126,7 @@ public class RouteDataTest extends CamelTestSupport {
 
         // Prepare test scenario.
 
-        MockEndpoint mockResult = getMockEndpoint("mock:result");
+        MockEndpoint mockResult = getMockEndpoint("mock:entry");
         // Test setting the header value.
         mockResult.expectedMessagesMatches(mockResult.allMessages().simple("${in.header.IbanTimestampOfRequest.length}").isEqualTo(23));
         // Test the splitting. It seams that there is no way to assure that exactly N messages have arrived.
@@ -223,10 +161,45 @@ public class RouteDataTest extends CamelTestSupport {
         Account challenge = Utils.json("payload//route//direct//data//challenge.json", Account.class);
         Account expected = Utils.json("payload//route//direct//data//expected.json", Account.class);
 
-        Object result = template.sendBody(BankXRouteBuilder.ROUTE_DIRECT_DATA, ExchangePattern.InOut, challenge);
+        Object result = template.sendBody("direct:data", ExchangePattern.InOut, challenge);
 
         // Assert results.
         assertEquals("The enriched result does not equal the expected.", expected, result);
+    }
+
+    @Test
+    public void testRouteProcessing() throws Exception {
+
+        // Lookup roots.
+
+        RouteDefinition routeDefinition = context.getRouteDefinition("processing");
+
+        // Prepare test data.
+
+        String challenge = "BG66 ESTF 0616 0000 0000 01";
+//        IbanWrapper challengeIbanWrapper = Utils.jsonFromString(challenge, IbanWrapper.class);
+
+        // Prepare test scenario.
+
+        MockEndpoint mockResult = getMockEndpoint("mock:result");
+        mockResult.expectedMessageCount(1);
+        mockResult.setAssertPeriod(ASSERT_PERIOD);
+
+        routeDefinition.adviceWith(context, new AdviceWithRouteBuilder() {
+            @Override
+            public void configure() throws Exception {
+                replaceFromWith("direct:processing");
+                weaveById("output").replace().to(mockResult);
+            }
+        });
+
+        // Challenge the route.
+        Object result = template.sendBodyAndHeader("direct:processing", ExchangePattern.InOut, challenge,
+                "IbanTimestampOfRequest", simple("${date:now:yyyy MM dd HH mm ss SSS}"));
+
+        // Assert results.
+
+        assertMockEndpointsSatisfied();
     }
 
     /**
@@ -237,23 +210,6 @@ public class RouteDataTest extends CamelTestSupport {
      */
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new BankXRouteBuilder();
-    }
-
-    /**
-     * Creating Camel Context with `test` properties.
-     *
-     * @return The newly created Camel context.
-     * @throws Exception On any setup and configuration problem.
-     */
-    @Override
-    protected CamelContext createCamelContext() throws Exception {
-        // Generally this is not needed for this example but I wold like to remember to test using properties as route configuration.
-        CamelContext context = super.createCamelContext();
-
-        PropertiesComponent properties = context.getComponent("properties", PropertiesComponent.class);
-        properties.setLocation("classpath:etc/test.properties");
-
-        return context;
+        return new BankXServiceRouteBuilder();
     }
 }

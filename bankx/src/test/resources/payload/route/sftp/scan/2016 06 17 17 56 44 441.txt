@@ -1,0 +1,1 @@
+{"accounts":[{"iban":"BG66 ESTF 0616 0000 0000 01","name":"Ivan Ivanov","balance":200.0,"currency":"BGN"},{"iban":"BG66 ESTF 0616 0000 0000 02","name":"Dimitar Iliev","balance":200.0,"currency":"BGN"},{"iban":"BG66 ESTF 0616 0000 0000 03","name":"Ivan Miltenov","balance":200.0,"currency":"BGN"}]}

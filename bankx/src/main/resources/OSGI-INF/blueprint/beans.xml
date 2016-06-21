@@ -3,7 +3,7 @@
            xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
            xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
 
-    <bean id="bankXRouteBuilder" class="com.estafet.bankx.camel.routes.BankXRouteBuilder">
+    <bean id="bankXRouteBuilder" class="com.estafet.bankx.camel.routes.BankXServiceRouteBuilder">
     </bean>
 
     <bean id="testProcessor" class="com.estafet.bankx.camel.processors.TestProcessor"/>
@@ -22,6 +22,6 @@
     <bean id="accountsEnricherAggregationStrategy"
           class="com.estafet.bankx.camel.processors.AccountsEnricherAggregationStrategy"/>
 
-    <bean id="reportAggregation" class="com.estafet.bankx.camel.processors.ReportAggregation"/>
+    <bean id="reportAggregationStrategy" class="com.estafet.bankx.camel.processors.ReportAggregationStrategy"/>
 
 </blueprint>

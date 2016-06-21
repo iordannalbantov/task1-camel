@@ -8,7 +8,7 @@ import org.apache.camel.processor.aggregate.AggregationStrategy;
 /**
  * Created by Yordan Nalbantov.
  */
-public class ReportAggregation implements AggregationStrategy {
+public class ReportAggregationStrategy implements AggregationStrategy {
 
     @Override
     public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
