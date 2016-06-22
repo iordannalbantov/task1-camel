@@ -4,7 +4,7 @@
            xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.2.0"
            xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
 
-    <cm:property-placeholder id="laceholder" persistent-id="bankx.placeholders" update-strategy="reload">
+    <cm:property-placeholder id="placeholder" persistent-id="bankx.placeholders" update-strategy="reload">
     </cm:property-placeholder>
 
     <camelContext xmlns="http://camel.apache.org/schema/blueprint" typeConverterStatisticsEnabled="true">

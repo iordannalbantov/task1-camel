@@ -27,6 +27,12 @@
       <module name="bankx-accounts-impl_test" target="1.8" />
       <module name="bankx-bankx_main" target="1.8" />
       <module name="bankx-bankx_test" target="1.8" />
+      <module name="bankx-dao-api_main" target="1.8" />
+      <module name="bankx-dao-api_test" target="1.8" />
+      <module name="bankx-dao-impl_main" target="1.8" />
+      <module name="bankx-dao-impl_test" target="1.8" />
+      <module name="bankx-dao-model_main" target="1.8" />
+      <module name="bankx-dao-model_test" target="1.8" />
       <module name="bankx-models_main" target="1.8" />
       <module name="bankx-models_test" target="1.8" />
       <module name="bankx_main" target="1.8" />
