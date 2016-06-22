@@ -14,6 +14,9 @@ public class AccountServiceImpl implements AccountService {
     @PersistenceContext
     protected EntityManager entityManager;
 
+    public AccountServiceImpl() {
+    }
+
     @Override
     public void merge(Account account) {
         entityManager.merge(account);
@@ -22,5 +25,13 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account lockup(String iban) {
         return entityManager.find(Account.class, iban);
+    }
+
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
+
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 }

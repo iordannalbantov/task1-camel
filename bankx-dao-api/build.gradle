@@ -5,9 +5,10 @@ jar {
     baseName = 'bankx-dao-api'
     manifest {
         instruction 'Import-Package',
-                'com.estafet.bankx.dao-api, ' +
+                'com.estafet.bankx.dao-model, ' +
                         '*'
-        instruction 'Export-Package', 'com.estafet.bankx.dao-api.*'
+        instruction 'Export-Package', 'com.estafet.bankx.dao-api, ' +
+                ' *'
     }
     destinationDir project.file('/home/estafet/jboss-fuse-6.2.1.redhat-084/deploy')
 }

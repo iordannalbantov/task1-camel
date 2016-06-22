@@ -3,12 +3,15 @@
            xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
            xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
 
-    <bean id="bankXRouteBuilder" class="com.estafet.bankx.camel.routes.BankXServiceRouteBuilder">
-    </bean>
+    <bean id="bankXDbRouteBuilder" class="com.estafet.bankx.camel.routes.BankXDbRouteBuilder"/>
+    <bean id="bankXReportsRouteBuilder" class="com.estafet.bankx.camel.routes.BankXReportsRouteBuilder"/>
+    <bean id="bankXSchedulesRouteBuilder" class="com.estafet.bankx.camel.routes.BankXSchedulesRouteBuilder"/>
+    <bean id="bankXServiceRouteBuilder" class="com.estafet.bankx.camel.routes.BankXServiceRouteBuilder"/>
 
     <bean id="testProcessor" class="com.estafet.bankx.camel.processors.TestProcessor"/>
 
-    <bean id="prepareTransformationProcessor" class="com.estafet.bankx.camel.processors.PrepareTransformationProcessor"/>
+    <bean id="prepareTransformationProcessor"
+          class="com.estafet.bankx.camel.processors.PrepareTransformationProcessor"/>
 
     <bean id="fakeDataProcessor" class="com.estafet.bankx.camel.processors.FakeDataProcessor">
         <property name="accountEnricherService" ref="accountService"/>
@@ -23,5 +26,11 @@
           class="com.estafet.bankx.camel.processors.AccountsEnricherAggregationStrategy"/>
 
     <bean id="reportAggregationStrategy" class="com.estafet.bankx.camel.processors.ReportAggregationStrategy"/>
+
+    <bean id="accountsWrapperAggregationStrategy" class="com.estafet.bankx.camel.processors.AccountsWrapperAggregationStrategy"/>
+
+    <bean id="dbMergeProcessor" class="com.estafet.bankx.camel.processors.DbMergeProcessor">
+        <property name="accountService" ref="daoAccountService"/>
+    </bean>
 
 </blueprint>

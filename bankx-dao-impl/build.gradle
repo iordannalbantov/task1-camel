@@ -8,7 +8,8 @@ jar {
                 'com.estafet.bankx.dao-model, ' +
                         'com.estafet.bankx.dao-api, ' +
                         ' *'
-        instruction 'Export-Package', 'com.estafet.bankx.dao-impl.*'
+        instruction 'Export-Package', 'com.estafet.bankx.dao-impl, ' +
+                '*'
     }
     destinationDir project.file('/home/estafet/jboss-fuse-6.2.1.redhat-084/deploy')
 }
@@ -17,11 +18,11 @@ dependencies {
     compile project(':bankx-dao-model')
     compile project(':bankx-dao-api')
 
-    compile group: 'org.apache.openjpa', name: 'openjpa', version: '2.4.1'
+    compile group: 'org.apache.openjpa', name: 'openjpa', version: '2.3.0'
 
     testCompile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
 
-    testCompile group: 'org.apache.openjpa', name: 'openjpa', version: '2.4.1'
+    testCompile group: 'org.apache.openjpa', name: 'openjpa', version: '2.3.0'
     testCompile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
     testCompile group: 'org.dbunit', name: 'dbunit', version: '2.5.2'
 }

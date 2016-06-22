@@ -1,6 +1,6 @@
 package com.estafet.bankx.camel.routes;
 
-import com.estafet.bankx.camel.routes.base.BaseBankXRouteBuilder;
+import com.estafet.bankx.camel.base.camel.BaseBankXRouteBuilder;
 import org.apache.camel.LoggingLevel;
 
 /**

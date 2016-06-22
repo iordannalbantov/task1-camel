@@ -22,6 +22,7 @@ public class Account  {
     private Boolean changed;
 
     public Account() {
+        this.changed = false;
     }
 
     public String getIban() {

@@ -1,4 +1,4 @@
-package com.estafet.bankx.camel.routes.base;
+package com.estafet.bankx.camel.base.camel;
 
 import org.apache.camel.builder.RouteBuilder;
 

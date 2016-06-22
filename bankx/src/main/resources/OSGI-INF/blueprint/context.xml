@@ -8,7 +8,10 @@
     </cm:property-placeholder>
 
     <camelContext xmlns="http://camel.apache.org/schema/blueprint" typeConverterStatisticsEnabled="true">
-        <routeBuilder ref="bankXRouteBuilder"/>
+        <routeBuilder ref="bankXDbRouteBuilder"/>
+        <routeBuilder ref="bankXReportsRouteBuilder"/>
+        <routeBuilder ref="bankXSchedulesRouteBuilder"/>
+        <routeBuilder ref="bankXServiceRouteBuilder"/>
     </camelContext>
 
 </blueprint>

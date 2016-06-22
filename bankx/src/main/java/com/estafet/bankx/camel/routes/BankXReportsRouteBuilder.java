@@ -1,12 +1,15 @@
 package com.estafet.bankx.camel.routes;
 
-import com.estafet.bankx.camel.routes.base.BaseBankXRouteBuilder;
+import com.estafet.bankx.camel.base.camel.BaseBankXRouteBuilder;
+import com.estafet.bankx.camel.pojo.AccountPayload;
 import com.estafet.bankx.model.AccountWrapper;
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 import org.apache.camel.processor.idempotent.MemoryIdempotentRepository;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by Yordan Nalbantov.
@@ -21,10 +24,10 @@ public class BankXReportsRouteBuilder extends BaseBankXRouteBuilder {
                 .filter(header(Exchange.FILE_NAME).endsWith(".txt"))
                 .idempotentConsumer(header(Exchange.FILE_NAME), MemoryIdempotentRepository.memoryIdempotentRepository(200))
                 // Log the content of the files.
-                .log(LoggingLevel.INFO, "File $simple{in.header.CamelFileName} received with body: $simple{in.body}")
+                .log(LoggingLevel.INFO, "File ${in.header.CamelFileName} received with body: ${in.body}")
                 // Unmarshal them for future use.
                 .unmarshal().json(JsonLibrary.Jackson, AccountWrapper.class)
-                // Replace the AccountWrapper with AccountReportWrapper.
+                // Replace the GenericPayloadWrapper with AccountReportWrapper.
                 .processRef("accountsReportProcessor")
                 // Aggregate daily data. N.B. Reading should be synchronized to execute once a day.
                 // For the test it is not.
