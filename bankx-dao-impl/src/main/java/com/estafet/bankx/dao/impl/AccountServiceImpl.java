@@ -19,7 +19,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void merge(Account account) {
-        entityManager.merge(account);
+       Account mergedAccount = entityManager.merge(account);
     }
 
     @Override

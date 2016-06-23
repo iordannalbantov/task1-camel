@@ -5,23 +5,23 @@
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
 
-    <persistence-unit name="bankx-unit" transaction-type="RESOURCE_LOCAL">
-        <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+    <!--<persistence-unit name="bankx" transaction-type="RESOURCE_LOCAL">-->
+        <!--<provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>-->
 
-        <!--<class>com.arqiva.chm.dao.model.JobRequest</class>-->
+        <!--&lt;!&ndash;<class>com.arqiva.chm.dao.model.JobRequest</class>&ndash;&gt;-->
 
-        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <!--<exclude-unlisted-classes>true</exclude-unlisted-classes>-->
 
-        <properties>
-            <property name="openjpa.ConnectionDriverName" value="org.postgresql.Driver"/>
-            <property name="openjpa.ConnectionURL" value="jdbc:postgresql://localhost:5432/iban"/>
+        <!--<properties>-->
+            <!--<property name="openjpa.ConnectionDriverName" value="org.postgresql.Driver"/>-->
+            <!--<property name="openjpa.ConnectionURL" value="jdbc:postgresql://localhost:5432/iban"/>-->
 
-            <property name="openjpa.ConnectionUserName" value="postgres"/>
-            <property name="openjpa.ConnectionPassword" value="welcome1"/>
+            <!--<property name="openjpa.ConnectionUserName" value="postgres"/>-->
+            <!--<property name="openjpa.ConnectionPassword" value="welcome1"/>-->
 
-            <property name="openjpa.DynamicEnhancementAgent" value="true"/>
-            <property name="openjpa.RuntimeUnenhancedClasses" value="supported"/>
-        </properties>
-    </persistence-unit>
+            <!--<property name="openjpa.DynamicEnhancementAgent" value="true"/>-->
+            <!--<property name="openjpa.RuntimeUnenhancedClasses" value="supported"/>-->
+        <!--</properties>-->
+    <!--</persistence-unit>-->
 
 </persistence>

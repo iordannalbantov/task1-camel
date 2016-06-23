@@ -1,5 +1,6 @@
 package com.estafet.bankx.camel.processors;
 
+import com.estafet.bankx.camel.pojo.AccountPayload;
 import com.estafet.bankx.dao.api.AccountService;
 import com.estafet.bankx.dao.model.Account;
 import org.apache.camel.Exchange;
@@ -14,9 +15,14 @@ public class DbMergeProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        Account account = exchange.getIn().getBody(Account.class);
+        AccountPayload accountPayload = exchange.getIn().getBody(AccountPayload.class);
 
-        accountService.merge(account);
+        if (accountPayload != null) {
+            for (Account account : accountPayload.getData()) {
+                account.setChanged(true);
+                accountService.merge(account);
+            }
+        }
 
         exchange.getOut().setBody("");
     }
