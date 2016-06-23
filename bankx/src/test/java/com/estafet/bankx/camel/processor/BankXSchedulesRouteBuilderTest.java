@@ -31,7 +31,7 @@ public class BankXSchedulesRouteBuilderTest extends BankXServerTestSupport {
                 .adviceWith(context, new AdviceWithRouteBuilder() {
                     @Override
                     public void configure() throws Exception {
-                        weaveById("dummyScheduleResult").replace().to(mockResult);
+                        weaveById("dummyScheduleResult").replace().to("mock:dummyScheduleResult");
                     }
                 });
 

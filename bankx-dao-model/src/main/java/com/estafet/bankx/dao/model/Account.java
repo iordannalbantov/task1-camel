@@ -1,15 +1,16 @@
 package com.estafet.bankx.dao.model;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * Created by Yordan Nalbantov.
  */
 @Entity
-@Cacheable
 @Table(name = "account")
-public class Account  {
+public class Account {
 
     @Id
     @Column(name = "iban")

@@ -139,7 +139,7 @@ public class BankXServiceRouteBuilderTest extends BankXServerTestSupport {
             @Override
             public void configure() throws Exception {
                 replaceFromWith("direct:entry");
-                weaveById("result").replace().to(mockResult);
+                weaveById("result").replace().to("mock:entry");
             }
         });
 
@@ -189,7 +189,7 @@ public class BankXServiceRouteBuilderTest extends BankXServerTestSupport {
             @Override
             public void configure() throws Exception {
                 replaceFromWith("direct:processing");
-                weaveById("output").replace().to(mockResult);
+                weaveById("output").replace().to("mock:result");
             }
         });
 

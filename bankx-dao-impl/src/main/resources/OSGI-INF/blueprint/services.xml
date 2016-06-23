@@ -12,7 +12,7 @@
              ranking="1"/>
 
     <bean id="accountDbService" class="com.estafet.bankx.dao.impl.AccountServiceImpl">
-        <jpa:context unitname="model" property="entityManager"/>
+        <jpa:context unitname="bankx-unit" property="entityManager"/>
         <tx:transaction method="*" value="Required"/>
     </bean>
 

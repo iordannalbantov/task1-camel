@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "iban": "BG66 ESTF 0616 0000 0000 01",
+      "name": "Ivan Ivanov",
+      "balance": "100.10",
+      "changed": "true"
+    },
+    {
+      "iban": "BG66 ESTF 0616 0000 0000 02",
+      "name": "Petar Petrov",
+      "balance": "111.22",
+      "changed": "true"
+    }
+  ]
+}

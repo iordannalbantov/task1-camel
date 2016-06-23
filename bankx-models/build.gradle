@@ -4,7 +4,9 @@ version '1.0-SNAPSHOT'
 jar {
     baseName = 'bankx-models'
     manifest {
-        instruction 'Import-Package', '*'
+        instruction 'Import-Package',                 'org.apache.commons.dbcp, ' +
+                'javax.sql, ' +
+                '*'
         instruction 'Export-Package', 'com.estafet.bankx.model.*'
     }
      destinationDir project.file('/home/estafet/jboss-fuse-6.2.1.redhat-084/deploy')

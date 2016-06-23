@@ -53,7 +53,7 @@ public class BankXReportsRouteBuilderTest extends BankXServerTestSupport {
             @Override
             public void configure() throws Exception {
                 replaceFromWith("direct:scan");
-                weaveById("scanResult").replace().to(mockResult);
+                weaveById("scanResult").replace().to("mock:scanResult");
             }
         });
 
