@@ -5,6 +5,7 @@ import com.estafet.bankx.dao.model.Account;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 /**
  * Created by Yordan Nalbantov.
@@ -58,9 +59,23 @@ public class AccountServiceImpl implements AccountService {
         return false;
     }
 
+    @Override
+    public List<Account> changed() {
+        return Account.changed(entityManager);
+    }
+
+    @Override
+    public void same(List<Account> accounts) {
+        for (Account account : accounts) {
+            account.setChanged(false);
+            entityManager.merge(account);
+        }
+    }
+
     /**
      * An accessor for the EntityManager. The usage scenario requires only the modifier but the beans specification
      * requires both, so it is good practice to do it that way.
+     *
      * @return The EntityManager instance provided to this service.
      */
     public EntityManager getEntityManager() {
@@ -69,6 +84,7 @@ public class AccountServiceImpl implements AccountService {
 
     /**
      * The modifier for the EntityManager dependency.
+     *
      * @param entityManager The new EntityManager provided for this service.
      */
     public void setEntityManager(EntityManager entityManager) {

@@ -37,4 +37,8 @@
         <property name="accountService" ref="daoAccountService"/>
     </bean>
 
+    <bean id="dbChangedAccountsProcessor" class="com.estafet.bankx.camel.processors.DbChangedAccountsProcessor">
+        <property name="accountService" ref="daoAccountService"/>
+    </bean>
+
 </blueprint>

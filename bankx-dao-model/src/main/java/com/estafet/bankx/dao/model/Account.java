@@ -19,7 +19,8 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "Account.allListed",
                 query = "select new com.estafet.bankx.dao.model.Account(o.iban, o.name, o.balance, o.changed) o " +
-                        "from Account o where o.iban in :ibans")
+                        "from Account o where o.iban in :ibans"),
+        @NamedQuery(name = "Account.changed", query = "select o from Account o where o.changed = true")
 })
 public class Account {
 
@@ -90,6 +91,16 @@ public class Account {
     public static List<Account> allListed(EntityManager entityManager, Collection<String> ibans) {
         TypedQuery<Account> query = entityManager.createNamedQuery("Account.allListed", Account.class);
         query.setParameter("ibans", ibans);
+        return query.getResultList();
+    }
+
+    /**
+     * Reads all changed accounts.
+     * @param entityManager An EntityManager instance provided.
+     * @return A list of attached Account objects that are all changed.
+     */
+    public static List<Account> changed(EntityManager entityManager) {
+        TypedQuery<Account> query = entityManager.createNamedQuery("Account.changed", Account.class);
         return query.getResultList();
     }
 

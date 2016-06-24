@@ -2,6 +2,7 @@ package com.estafet.bankx.camel.routes;
 
 import com.estafet.bankx.camel.base.camel.BaseBankXRouteBuilder;
 import com.estafet.bankx.camel.pojo.AccountPayload;
+import com.estafet.bankx.camel.pojo.ReportRequestPayload;
 import com.estafet.bankx.camel.pojo.TransactionPayload;
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
@@ -27,6 +28,7 @@ public class BankXDbRouteBuilder extends BaseBankXRouteBuilder {
     public void configure() throws Exception {
         configureRouteJettyInsertAccounts();
         configureRouteJettyUpdateAmounts();
+        configureRouteCronReport();
     }
 
     /**
@@ -74,5 +76,28 @@ public class BankXDbRouteBuilder extends BaseBankXRouteBuilder {
                 .unmarshal().json(JsonLibrary.Jackson, TransactionPayload.class)
                 .split(simple("${body.getData()}"))
                 .processRef("dbTransactionProcessor");
+    }
+
+    private void configureRouteCronReport() {
+        from("quartz2://report?cron={{bankx.cron.report}}&fireNow=false").routeId("routeCronReport")
+                .processRef("dbChangedAccountsProcessor");
+//                .marshal().json(JsonLibrary.Jackson, ReportRequestPayload.class)
+//                .setHeader(Exchange.HTTP_METHOD, constant("POST"))
+//                .to("http:{{bankx.routeCronReport.toUrl}}").id("routeCronReportHttp");
+
+
+//        from("jetty:{{bankx.endpoint.entry.url}}?httpMethodRestrict=POST&continuationTimeout=5000").routeId("entry")
+//                .onException(Exception.class)
+//                .handled(true)
+//                .transform(constant("Something went wrong."))
+//                .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(HttpServletResponse.SC_INTERNAL_SERVER_ERROR))
+//                .end()
+//                .to(ExchangePattern.InOnly, "direct:entry").setBody(constant(""));
+//
+//        from("direct:entry").routeId("directEntry")
+//                .unmarshal().json(JsonLibrary.Jackson, IbanWrapper.class)
+//                .setHeader("IbanTimestampOfRequest", simple("${date:now:yyyy MM dd HH mm ss SSS}"))
+//                .split(simple("${body.getIbans()}"))
+//                .to("activemq:queue:ibanReport").id("result");
     }
 }
