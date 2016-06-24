@@ -9,5 +9,5 @@ public interface AccountService {
 
     void merge(Account account);
 
-    Account lockup(String iban);
+    boolean transaction(String iban, Double amount);
 }

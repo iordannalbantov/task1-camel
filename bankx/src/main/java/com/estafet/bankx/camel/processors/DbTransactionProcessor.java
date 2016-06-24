@@ -1,25 +1,27 @@
 package com.estafet.bankx.camel.processors;
 
+import com.estafet.bankx.camel.pojo.Transaction;
 import com.estafet.bankx.dao.api.AccountService;
-import com.estafet.bankx.dao.model.Account;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 
 /**
  * Created by Yordan Nalbantov.
  */
-public class DbMergeProcessor implements Processor {
+public class DbTransactionProcessor implements Processor {
 
     private AccountService accountService;
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        Account account = exchange.getIn().getBody(Account.class);
+        Transaction transaction = exchange.getIn().getBody(Transaction.class);
 
-        if (account != null) {
-            account.setChanged(true);
-            accountService.merge(account);
+        boolean success = false;
+        if (transaction != null) {
+            success = accountService.transaction(transaction.getIban(), transaction.getAmount());
         }
+
+        exchange.getOut().setBody("");
     }
 
     public AccountService getAccountService() {

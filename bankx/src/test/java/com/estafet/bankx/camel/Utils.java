@@ -21,6 +21,8 @@ public abstract class Utils {
     private static final int DEFAULT_BUFFER_SIZE = 4096;
     private static final Charset DEFAULT_ENCODING = StandardCharsets.UTF_8;
 
+    public static String baseURI = null;
+
     private Utils() {
     }
 
@@ -34,9 +36,10 @@ public abstract class Utils {
 
     /**
      * This method converts JSON message, presented as String, into JSON object from the specified class.
+     *
      * @param resource The String representation of JSON message.
-     * @param clazz The class to convert to.
-     * @param <T> Generic for type safety.
+     * @param clazz    The class to convert to.
+     * @param <T>      Generic for type safety.
      * @return The result object of clazz type.
      * @throws IOException Exception on any error.
      */
@@ -47,7 +50,8 @@ public abstract class Utils {
     }
 
     public static String resource(String resourceURI) {
-        InputStream inputStream = Utils.class.getClassLoader().getResourceAsStream(resourceURI);
+        String baseEvaluatedURI = baseURI != null ? baseURI : "";
+        InputStream inputStream = Utils.class.getClassLoader().getResourceAsStream(baseEvaluatedURI + resourceURI);
         return toString(inputStream);
     }
 

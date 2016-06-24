@@ -7,30 +7,70 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * Created by estafet.
+ * Created by Yordan Nalbantov.
  */
 public class AccountServiceImpl implements AccountService {
 
+    /**
+     * The EntityManager wired to this service via the modifier.
+     */
     @PersistenceContext
-    protected EntityManager entityManager;
+    private EntityManager entityManager;
 
+    /**
+     * A default constructor as required by the Java beans specification.
+     */
     public AccountServiceImpl() {
     }
 
+    /**
+     * Merges the data provided into the database.
+     *
+     * @param account The Account data provided.
+     */
     @Override
     public void merge(Account account) {
-       Account mergedAccount = entityManager.merge(account);
+        // The attached instance captured in the result variable for future use.
+        Account mergedAccount = entityManager.merge(account);
     }
 
+    /**
+     * Given an iban and amount changes the balance with the given number.
+     *
+     * @param iban   The iban to lockup the account with.
+     * @param amount The amount to add to the account's balance. It could be an negative number or zero.
+     * @return Returns false when there is no account for this iban.
+     */
     @Override
-    public Account lockup(String iban) {
-        return entityManager.find(Account.class, iban);
+    public boolean transaction(String iban, Double amount) {
+        Account account = entityManager.find(Account.class, iban);
+        if (account != null) {
+            double balance = 0;
+            if (account.getBalance() == null) {
+                balance = account.getBalance();
+            }
+            double amountToAdd = 0;
+            if (amount != null) {
+                amountToAdd = amount;
+            }
+            account.setBalance(balance + amountToAdd);
+        }
+        return false;
     }
 
+    /**
+     * An accessor for the EntityManager. The usage scenario requires only the modifier but the beans specification
+     * requires both, so it is good practice to do it that way.
+     * @return The EntityManager instance provided to this service.
+     */
     public EntityManager getEntityManager() {
         return entityManager;
     }
 
+    /**
+     * The modifier for the EntityManager dependency.
+     * @param entityManager The new EntityManager provided for this service.
+     */
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
     }

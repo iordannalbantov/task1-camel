@@ -1,0 +1,27 @@
+<!DOCTYPE dataset SYSTEM "db.dtd">
+<dataset>
+    <table name="account">
+        <column>iban</column>
+        <column>name</column>
+        <column>balance</column>
+        <column>changed</column>
+        <row>
+            <value>BG66 ESTF 0616 0000 0000 01</value>
+            <value>Ivan Ivanov 01</value>
+            <value>10.00</value>
+            <value>false</value>
+        </row>
+        <row>
+            <value>BG66 ESTF 0616 0000 0000 02</value>
+            <value>Petar Petrov 02</value>
+            <value>20.00</value>
+            <value>false</value>
+        </row>
+        <row>
+            <value>BG66 ESTF 0616 0000 0000 03</value>
+            <value>Vasil Vasilev 03</value>
+            <value>30.30</value>
+            <value>false</value>
+        </row>
+    </table>
+</dataset>
