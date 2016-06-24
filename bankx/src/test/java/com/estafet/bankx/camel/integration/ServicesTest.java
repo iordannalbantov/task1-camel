@@ -42,7 +42,7 @@ public class ServicesTest {
 
     @Before
     public void setUp() throws Exception {
-        Utils.baseURI = "payload//integration//db//insert//";
+        Utils.baseURI = "payload//integration//route//insert//";
         RestAssured.baseURI = "http://127.0.0.1:20616/estafet/iban/db/";
         entityManager.clear();
     }
