@@ -1,5 +1,6 @@
 package com.estafet.bankx.test.integration;
 
+import com.estafet.bankx.dao.model.Utils;
 import com.estafet.bankx.test.core.Resource;
 import com.estafet.bankx.camel.pojo.AccountPayload;
 import com.estafet.bankx.dao.model.Account;
@@ -101,7 +102,7 @@ public class ServicesTest {
                 List<Account> accounts = Account.allListed(entityManager, ibans);
                 for (Account account : expectedAccountPayload.getData()) {
                     for (Account dbState : accounts) {
-                        if (Account.equality(dbState.getIban(), account.getIban())) {
+                        if (Utils.equality(dbState.getIban(), account.getIban())) {
                             Assert.assertEquals(account, dbState);
                         }
                     }

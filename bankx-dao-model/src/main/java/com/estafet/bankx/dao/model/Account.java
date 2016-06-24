@@ -65,26 +65,14 @@ public class Account implements Serializable {
     public boolean equals(Object obj) {
         if (obj instanceof Account) {
             Account account = (Account) obj;
-            boolean equalIban = equality(iban, account.iban);
-            boolean equalName = equality(name, account.name);
-            boolean equalBalance = equality(balance, balance);
-            boolean equalCurrency = equality(currency, account.currency);
-            boolean equalChanged = equality(changed, account.changed);
+            boolean equalIban = Utils.equality(iban, account.iban);
+            boolean equalName = Utils.equality(name, account.name);
+            boolean equalBalance = Utils.equality(balance, balance);
+            boolean equalCurrency = Utils.equality(currency, account.currency);
+            boolean equalChanged = Utils.equality(changed, account.changed);
             return equalIban && equalName && equalBalance && equalCurrency && equalChanged;
         }
         return false;
-    }
-
-    /**
-     * Support for testing that primitive classes are equal but wrap the additional null-notnull logic.
-     *
-     * @param a   The first value.
-     * @param b   The second value.
-     * @param <T> A generic to offload to the compiler the class-comparison logic.
-     * @return True if both are equal or null.
-     */
-    public static <T> boolean equality(T a, T b) {
-        return ((a == null) && (b == null)) || ((a != null) && a.equals(b));
     }
 
     /**

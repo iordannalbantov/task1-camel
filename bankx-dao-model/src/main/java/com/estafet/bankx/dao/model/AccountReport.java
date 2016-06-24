@@ -1,14 +1,12 @@
 package com.estafet.bankx.dao.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  * Created by Yordan Nalbantov.
  */
+@IdClass(AccountReportPK.class)
 @Entity
 @Table(name = "account_report")
 public class AccountReport implements Serializable {
@@ -17,6 +15,7 @@ public class AccountReport implements Serializable {
     @Column(name = "stamp")
     private String timestamp;
 
+    @Id
     @Column(name = "iban")
     private String iban;
 
@@ -39,6 +38,20 @@ public class AccountReport implements Serializable {
         this.balance = account.getBalance();
 
         this.timestamp = timestamp;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof AccountReport) {
+            AccountReport account = (AccountReport) obj;
+            boolean equalTimestamp = Utils.equality(timestamp, account.timestamp);
+            boolean equalIban = Utils.equality(iban, account.iban);
+            boolean equalName = Utils.equality(name, account.name);
+            boolean equalBalance = Utils.equality(balance, balance);
+            boolean equalCurrency = Utils.equality(currency, account.currency);
+            return equalTimestamp && equalIban && equalName && equalBalance && equalCurrency;
+        }
+        return false;
     }
 
     public String getTimestamp() {
