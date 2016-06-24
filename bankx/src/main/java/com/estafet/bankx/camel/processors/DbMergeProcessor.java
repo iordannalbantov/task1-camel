@@ -18,7 +18,7 @@ public class DbMergeProcessor implements Processor {
 
         if (account != null) {
             account.setChanged(true);
-            accountService.persist(account);
+            accountService.mergeAccount(account);
         }
     }
 

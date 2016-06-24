@@ -17,6 +17,7 @@ public class AccountsEnricherAggregationStrategy implements AggregationStrategy 
         originalBody.setName(resourceBody.getName());
         originalBody.setBalance(resourceBody.getBalance());
         originalBody.setCurrency(resourceBody.getCurrency());
+        originalBody.setChanged(resourceBody.getChanged());
 
         original.getIn().setBody(originalBody);
         return original;

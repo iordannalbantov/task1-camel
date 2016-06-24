@@ -18,7 +18,7 @@ public class PersistAccountReportProcessor implements Processor {
         AccountsReportWrapper wrapper = (AccountsReportWrapper) exchange.getIn().getBody();
 
         for (AccountReport accountReport : wrapper.getAccounts()) {
-            accountService.persist(accountReport);
+            accountService.persistAccountReport(accountReport);
         }
     }
 

@@ -31,16 +31,26 @@ public class AccountServiceImpl implements AccountService {
      * @param account The Account data provided.
      */
     @Override
-    public void persist(Account account) {
+    public void mergeAccount(Account account) {
         // The attached instance captured in the result variable for future use.
         Account mergedAccount = entityManager.merge(account);
     }
 
+    /**
+     * Merges the data provided into the database.
+     *
+     * @param accountReport The AccountReport provided.
+     */
     @Override
-    public void persist(AccountReport accountReport) {
+    public void persistAccountReport(AccountReport accountReport) {
         entityManager.persist(accountReport);
     }
 
+    /**
+     * Gets the account with the provided IBAN or null if not found.
+     * @param iban The IBAN of the account of interest.
+     * @return The account for the provided IBAN.
+     */
     @Override
     public Account get(String iban) {
         return Account.get(entityManager, iban);
@@ -70,11 +80,19 @@ public class AccountServiceImpl implements AccountService {
         return false;
     }
 
+    /**
+     * Selects from the database currently unchanged accounts.
+     * @return The result set.
+     */
     @Override
     public List<Account> changed() {
         return Account.changed(entityManager);
     }
 
+    /**
+     * The method merges the accounts provided, but beforehand marks them as unchanged.
+     * @param accounts The accounts provided to be marked as unchanged.
+     */
     @Override
     public void same(List<Account> accounts) {
         for (Account account : accounts) {
