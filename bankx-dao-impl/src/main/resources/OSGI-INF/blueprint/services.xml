@@ -8,10 +8,10 @@
                 http://aries.apache.org/xmlns/transactions/v1.0.0
                 http://aries.apache.org/xmlns/jpa/v1.1.0">
 
-    <service id="accountsDbService" ref="accountDbService" interface="com.estafet.bankx.dao.api.AccountService"
+    <service id="accountsService" ref="accountService" interface="com.estafet.bankx.dao.api.AccountService"
              ranking="1"/>
 
-    <bean id="accountDbService" class="com.estafet.bankx.dao.impl.AccountServiceImpl">
+    <bean id="accountService" class="com.estafet.bankx.dao.impl.AccountServiceImpl">
         <jpa:context unitname="bankx" property="entityManager"/>
         <tx:transaction method="*" value="Required"/>
     </bean>

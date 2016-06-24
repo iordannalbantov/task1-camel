@@ -1,4 +1,4 @@
-package com.estafet.bankx.dao.model.other;
+package com.estafet.bankx.camel.pojo.other;
 
 import java.io.Serializable;
 import java.util.ArrayList;

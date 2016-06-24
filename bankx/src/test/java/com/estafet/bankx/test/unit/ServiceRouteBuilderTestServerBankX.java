@@ -2,7 +2,7 @@ package com.estafet.bankx.test.unit;
 
 import com.estafet.bankx.camel.routes.BankXServiceRouteBuilder;
 import com.estafet.bankx.dao.model.Account;
-import com.estafet.bankx.dao.model.other.IbanWrapper;
+import com.estafet.bankx.camel.pojo.other.IbanWrapper;
 import com.estafet.bankx.test.core.Resource;
 import com.estafet.bankx.test.core.TestSupportServerBankX;
 import com.jayway.restassured.http.ContentType;

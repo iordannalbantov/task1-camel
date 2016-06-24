@@ -1,7 +1,7 @@
 package com.estafet.bankx.camel.routes;
 
 import com.estafet.bankx.camel.base.camel.BaseBankXRouteBuilder;
-import com.estafet.bankx.dao.model.other.IbanWrapper;
+import com.estafet.bankx.camel.pojo.other.IbanWrapper;
 import org.apache.camel.Exchange;
 import org.apache.camel.ExchangePattern;
 import org.apache.camel.LoggingLevel;

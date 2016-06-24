@@ -1,4 +1,4 @@
-package com.estafet.bankx.dao.impl;
+package com.estafet.bankx.dao.alt;
 
 import com.estafet.bankx.dao.api.AccountService;
 import com.estafet.bankx.dao.model.Account;

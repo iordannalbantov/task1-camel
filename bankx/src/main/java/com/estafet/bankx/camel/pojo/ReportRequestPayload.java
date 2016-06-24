@@ -1,7 +1,5 @@
 package com.estafet.bankx.camel.pojo;
 
-import com.estafet.bankx.camel.base.pojo.GenericPayloadWrapper;
-
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package com.estafet.bankx.camel.base.pojo;
+package com.estafet.bankx.camel.pojo;
 
 /**
  * Created by Yordan Nalbantov.

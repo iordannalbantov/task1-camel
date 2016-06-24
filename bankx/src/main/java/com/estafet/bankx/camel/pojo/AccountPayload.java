@@ -1,6 +1,5 @@
 package com.estafet.bankx.camel.pojo;
 
-import com.estafet.bankx.camel.base.pojo.GenericPayloadWrapper;
 import com.estafet.bankx.dao.model.Account;
 
 import java.util.ArrayList;
