@@ -80,24 +80,9 @@ public class BankXDbRouteBuilder extends BaseBankXRouteBuilder {
 
     private void configureRouteCronReport() {
         from("quartz2://report?cron={{bankx.cron.report}}&fireNow=false").routeId("routeCronReport")
-                .processRef("dbChangedAccountsProcessor");
-//                .marshal().json(JsonLibrary.Jackson, ReportRequestPayload.class)
-//                .setHeader(Exchange.HTTP_METHOD, constant("POST"))
-//                .to("http:{{bankx.routeCronReport.toUrl}}").id("routeCronReportHttp");
-
-
-//        from("jetty:{{bankx.endpoint.entry.url}}?httpMethodRestrict=POST&continuationTimeout=5000").routeId("entry")
-//                .onException(Exception.class)
-//                .handled(true)
-//                .transform(constant("Something went wrong."))
-//                .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(HttpServletResponse.SC_INTERNAL_SERVER_ERROR))
-//                .end()
-//                .to(ExchangePattern.InOnly, "direct:entry").setBody(constant(""));
-//
-//        from("direct:entry").routeId("directEntry")
-//                .unmarshal().json(JsonLibrary.Jackson, IbanWrapper.class)
-//                .setHeader("IbanTimestampOfRequest", simple("${date:now:yyyy MM dd HH mm ss SSS}"))
-//                .split(simple("${body.getIbans()}"))
-//                .to("activemq:queue:ibanReport").id("result");
+                .processRef("dbChangedAccountsProcessor")
+                .marshal().json(JsonLibrary.Jackson, ReportRequestPayload.class)
+                .setHeader(Exchange.HTTP_METHOD, constant("POST"))
+                .to("{{bankx.routeCronReport.to.url}}").id("routeCronReportHttp");
     }
 }
