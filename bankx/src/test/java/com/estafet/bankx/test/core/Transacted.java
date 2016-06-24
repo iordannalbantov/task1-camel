@@ -1,4 +1,4 @@
-package com.estafet.bankx.camel.integration;
+package com.estafet.bankx.test.core;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -8,9 +8,11 @@ import java.util.logging.Logger;
 /**
  * Created by Yordan Nalbantov.
  */
-public class PersistenceHelper {
+public abstract class Transacted {
 
-    private static final Logger logger = Logger.getLogger("ServicesTest");
+    private static final Logger logger = Logger.getLogger(Transacted.class.getName());
+
+    public abstract void action(EntityManager entityManager);
 
     public static void transaction(EntityManager entityManager, Transacted transacted) {
         EntityTransaction transaction = entityManager.getTransaction();

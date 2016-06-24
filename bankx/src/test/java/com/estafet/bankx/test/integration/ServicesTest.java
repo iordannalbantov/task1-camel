@@ -1,8 +1,9 @@
-package com.estafet.bankx.camel.integration;
+package com.estafet.bankx.test.integration;
 
-import com.estafet.bankx.camel.Utils;
+import com.estafet.bankx.test.core.Resource;
 import com.estafet.bankx.camel.pojo.AccountPayload;
 import com.estafet.bankx.dao.model.Account;
+import com.estafet.bankx.test.core.Transacted;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
@@ -16,7 +17,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.estafet.bankx.camel.integration.PersistenceHelper.transaction;
+import static com.estafet.bankx.test.core.Transacted.transaction;
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -42,7 +43,7 @@ public class ServicesTest {
 
     @Before
     public void setUp() throws Exception {
-        Utils.baseURI = "payload//integration//route//insert//";
+        Resource.baseURI = "integration//";
         RestAssured.baseURI = "http://127.0.0.1:20616/estafet/iban/db/";
         entityManager.clear();
     }
@@ -68,15 +69,15 @@ public class ServicesTest {
     private void testRouteJettyInsertAccountsChallenge(String resource, String expectations)
             throws java.io.IOException, InterruptedException {
 
-        String challenge = Utils.resource(resource);
-        final AccountPayload accountPayload = Utils.jsonFromString(challenge, AccountPayload.class);
+        String challenge = Resource.resource(resource);
+        final AccountPayload accountPayload = Resource.jsonFromString(challenge, AccountPayload.class);
         final List<String> ibans = new ArrayList<>(accountPayload.getData().size());
         for (Account account : accountPayload.getData()) {
             ibans.add(account.getIban());
         }
 
-        String expected = Utils.resource(expectations);
-        final AccountPayload expectedAccountPayload = Utils.jsonFromString(expected, AccountPayload.class);
+        String expected = Resource.resource(expectations);
+        final AccountPayload expectedAccountPayload = Resource.jsonFromString(expected, AccountPayload.class);
 
         Response response = given()
                 //@formatter:off
@@ -115,7 +116,7 @@ public class ServicesTest {
     @Test
     public void challengeRouteJettyInsertAccountsWithJibberish() {
 
-        String challenge = Utils.resource("jibberish.txt");
+        String challenge = Resource.resource("jibberish.txt");
 
         Response response = given()
                 //@formatter:off

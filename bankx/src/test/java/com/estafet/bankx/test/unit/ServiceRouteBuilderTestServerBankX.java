@@ -1,7 +1,7 @@
-package com.estafet.bankx.camel.processor;
+package com.estafet.bankx.test.unit;
 
-import com.estafet.bankx.camel.Utils;
-import com.estafet.bankx.camel.base.BankXServerTestSupport;
+import com.estafet.bankx.test.core.Resource;
+import com.estafet.bankx.test.core.TestSupportServerBankX;
 import com.estafet.bankx.camel.routes.BankXServiceRouteBuilder;
 import com.estafet.bankx.model.Account;
 import com.estafet.bankx.model.IbanWrapper;
@@ -14,6 +14,7 @@ import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.model.FromDefinition;
 import org.apache.camel.model.RouteDefinition;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import javax.servlet.http.HttpServletResponse;
@@ -31,7 +32,7 @@ import static org.hamcrest.Matchers.equalTo;
  * <p>
  * Created by Yordan Nalbantov.
  */
-public class BankXServiceRouteBuilderTest extends BankXServerTestSupport {
+public class ServiceRouteBuilderTestServerBankX extends TestSupportServerBankX {
 
     /**
      * The default assert period in Camel is 10 secconds.
@@ -42,9 +43,12 @@ public class BankXServiceRouteBuilderTest extends BankXServerTestSupport {
     // TODO: Mock accountEnricherService with mockito.
     // TODO: Test negative cases and alternative scenarios.
 
+    @Before
     @Override
     public void setUp() throws Exception {
         super.setUp();
+
+        Resource.baseURI = null;
 
         // At this point, prepare the Ftp for the unit test if needed.
     }
@@ -69,7 +73,7 @@ public class BankXServiceRouteBuilderTest extends BankXServerTestSupport {
 
         // Prepare test data.
 
-        String challenge = Utils.resource("payload//route//direct//entry//challenge.json");
+        String challenge = Resource.resource("payload//route//direct//entry//challenge.json");
 
         // Prepare test scenario.
 
@@ -121,8 +125,8 @@ public class BankXServiceRouteBuilderTest extends BankXServerTestSupport {
 
         // Prepare test data.
 
-        String challenge = Utils.resource("payload//route//direct//entry//challenge.json");
-        IbanWrapper challengeIbanWrapper = Utils.jsonFromString(challenge, IbanWrapper.class);
+        String challenge = Resource.resource("payload//route//direct//entry//challenge.json");
+        IbanWrapper challengeIbanWrapper = Resource.jsonFromString(challenge, IbanWrapper.class);
 
         // Prepare test scenario.
 
@@ -158,8 +162,8 @@ public class BankXServiceRouteBuilderTest extends BankXServerTestSupport {
 
         // Challenge the route.
 
-        Account challenge = Utils.json("payload//route//direct//data//challenge.json", Account.class);
-        Account expected = Utils.json("payload//route//direct//data//expected.json", Account.class);
+        Account challenge = Resource.json("payload//route//direct//data//challenge.json", Account.class);
+        Account expected = Resource.json("payload//route//direct//data//expected.json", Account.class);
 
         Object result = template.sendBody("direct:data", ExchangePattern.InOut, challenge);
 
@@ -177,7 +181,7 @@ public class BankXServiceRouteBuilderTest extends BankXServerTestSupport {
         // Prepare test data.
 
         String challenge = "BG66 ESTF 0616 0000 0000 01";
-//        IbanWrapper challengeIbanWrapper = Utils.jsonFromString(challenge, IbanWrapper.class);
+//        IbanWrapper challengeIbanWrapper = Resource.jsonFromString(challenge, IbanWrapper.class);
 
         // Prepare test scenario.
 

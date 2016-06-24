@@ -1,7 +1,7 @@
-package com.estafet.bankx.camel.processor;
+package com.estafet.bankx.test.unit;
 
-import com.estafet.bankx.camel.Utils;
-import com.estafet.bankx.camel.base.BankXServerTestSupport;
+import com.estafet.bankx.test.core.Resource;
+import com.estafet.bankx.test.core.TestSupportServerBankX;
 import com.estafet.bankx.camel.routes.BankXReportsRouteBuilder;
 import org.apache.camel.Exchange;
 import org.apache.camel.ExchangePattern;
@@ -9,6 +9,7 @@ import org.apache.camel.builder.AdviceWithRouteBuilder;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.model.RouteDefinition;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.LinkedHashMap;
@@ -17,10 +18,18 @@ import java.util.Map;
 /**
  * Created by Yordan Nalbantov.
  */
-public class BankXReportsRouteBuilderTest extends BankXServerTestSupport {
+public class ReportsRouteBuilderTestServerBankX extends TestSupportServerBankX {
 
     private static final int ASSERT_PERIOD = 10_000;
     private static final long WAIT_TIMEOUT = 5000L;
+
+    @Before
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+
+        Resource.baseURI = null;
+    }
 
     @Test
     public void testRouteScan() throws Exception {
@@ -32,11 +41,11 @@ public class BankXReportsRouteBuilderTest extends BankXServerTestSupport {
         // Prepare test data.
 
         Map<String, String> challenges = new LinkedHashMap<>();
-        challenges.put("2016 06 17 17 55 03 078.txt", Utils.resource("payload//route//sftp//scan//2016 06 17 17 55 03 078.txt"));
-        challenges.put("2016 06 17 17 56 44 441.txt", Utils.resource("payload//route//sftp//scan//2016 06 17 17 56 44 441.txt"));
-        challenges.put("2016 06 17 17 56 46 719.txt", Utils.resource("payload//route//sftp//scan//2016 06 17 17 56 46 719.txt"));
+        challenges.put("2016 06 17 17 55 03 078.txt", Resource.resource("payload//route//sftp//scan//2016 06 17 17 55 03 078.txt"));
+        challenges.put("2016 06 17 17 56 44 441.txt", Resource.resource("payload//route//sftp//scan//2016 06 17 17 56 44 441.txt"));
+        challenges.put("2016 06 17 17 56 46 719.txt", Resource.resource("payload//route//sftp//scan//2016 06 17 17 56 46 719.txt"));
 
-//        IbanWrapper challengeIbanWrapper = Utils.jsonFromString(challenge, IbanWrapper.class);
+//        IbanWrapper challengeIbanWrapper = Resource.jsonFromString(challenge, IbanWrapper.class);
 
         // Prepare test scenario.
 

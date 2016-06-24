@@ -1,4 +1,4 @@
-package com.estafet.bankx.camel.base;
+package com.estafet.bankx.test.core;
 
 import com.estafet.bankx.accounts.api.AccountServiceApi;
 import com.estafet.bankx.camel.processors.*;
@@ -14,7 +14,7 @@ import static org.mockito.Mockito.when;
 /**
  * Created by Yordan Nalbantov.
  */
-public abstract class BankXServerTestSupport extends ServerTestSupport {
+public abstract class TestSupportServerBankX extends TestSupportServer {
 
     private static Map<String, Account> database = new LinkedHashMap<>();
 
@@ -29,7 +29,7 @@ public abstract class BankXServerTestSupport extends ServerTestSupport {
         database.put(account.getIban(), account);
     }
 
-    public BankXServerTestSupport() {
+    public TestSupportServerBankX() {
     }
 
     @Override

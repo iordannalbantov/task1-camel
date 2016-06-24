@@ -1,6 +1,6 @@
-package com.estafet.bankx.camel.experimental;
+package com.estafet.bankx.test.experimental;
 
-import com.estafet.bankx.camel.integration.ServicesTest;
+import com.estafet.bankx.test.integration.ServicesTest;
 import org.dbunit.IDatabaseTester;
 import org.dbunit.JdbcDatabaseTester;
 import org.dbunit.dataset.IDataSet;
@@ -34,10 +34,10 @@ public class Tests {
 
     @BeforeClass
     public static void oneTimeSetUp() throws Exception {
-        InputStream accountInitialInputStream = ServicesTest.class.getResourceAsStream("/integration/dataset/db_initial.xml");
+        InputStream accountInitialInputStream = ServicesTest.class.getResourceAsStream("/experimental/dataset/db_initial.xml");
         dataSetAccountInitial = new XmlDataSet(accountInitialInputStream);
 
-        InputStream accountExpectedInputStream = ServicesTest.class.getResourceAsStream("/integration/dataset/db_expected.xml");
+        InputStream accountExpectedInputStream = ServicesTest.class.getResourceAsStream("/experimental/dataset/db_expected.xml");
         dataSetAccountExpected = new XmlDataSet(accountExpectedInputStream);
 
         databaseTester = new JdbcDatabaseTester(DATABASE_DRIVER_CLASS, DATABASE_CONNECTION_URL, DATABASE_USERNAME,

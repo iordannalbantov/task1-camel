@@ -1,17 +1,27 @@
-package com.estafet.bankx.camel.processor;
+package com.estafet.bankx.test.unit;
 
-import com.estafet.bankx.camel.base.BankXServerTestSupport;
+import com.estafet.bankx.test.core.Resource;
+import com.estafet.bankx.test.core.TestSupportServerBankX;
 import com.estafet.bankx.camel.routes.BankXSchedulesRouteBuilder;
 import org.apache.camel.builder.AdviceWithRouteBuilder;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.model.RouteDefinition;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * Created by Yordan Nalbantov.
  */
-public class BankXSchedulesRouteBuilderTest extends BankXServerTestSupport {
+public class SchedulesRouteBuilderTestServerBankX extends TestSupportServerBankX {
+
+    @Before
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+
+        Resource.baseURI = null;
+    }
 
     @Test
     public void testRouteQuartz() throws Exception {

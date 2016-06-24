@@ -1,4 +1,4 @@
-package com.estafet.bankx.camel.base;
+package com.estafet.bankx.test.core;
 
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.apache.ftpserver.ConnectionConfigFactory;
@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by estafet.
  */
-public class FtpServerTestSupport {
+public class TestSupportServerFtp {
 
     private static final String FTP_ROOT_DIR = "./target/res/home";
     private static final File USERS_FILE = new File("./src/test/resources/etc/users.properties");
@@ -53,7 +53,7 @@ public class FtpServerTestSupport {
 
     private static FtpServerFactory createFtpServerFactory() throws Exception {
         assertTrue(USERS_FILE.exists());
-        assertTrue("Port number is not initialized in an expected range: " + ServerTestSupport.port, ServerTestSupport.port >= 21000);
+        assertTrue("Port number is not initialized in an expected range: " + TestSupportServer.port, TestSupportServer.port >= 21000);
 
         NativeFileSystemFactory fileSystemFactory = new NativeFileSystemFactory();
         fileSystemFactory.setCreateHome(true);
@@ -65,7 +65,7 @@ public class FtpServerTestSupport {
         UserManager userManager = pumf.createUserManager();
 
         ListenerFactory factory = new ListenerFactory();
-        factory.setPort(ServerTestSupport.port);
+        factory.setPort(TestSupportServer.port);
 
         FtpServerFactory serverFactory = new FtpServerFactory();
         serverFactory.setUserManager(userManager);

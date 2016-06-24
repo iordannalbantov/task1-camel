@@ -1,4 +1,4 @@
-package com.estafet.bankx.camel.base;
+package com.estafet.bankx.test.core;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.component.properties.PropertiesComponent;
@@ -8,7 +8,7 @@ import org.apache.camel.test.junit4.CamelTestSupport;
 /**
  * Created by estafet.
  */
-public abstract class ServerTestSupport extends CamelTestSupport {
+public abstract class TestSupportServer extends CamelTestSupport {
 
     protected static int port;
 

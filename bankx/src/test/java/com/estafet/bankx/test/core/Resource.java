@@ -1,4 +1,4 @@
-package com.estafet.bankx.camel;
+package com.estafet.bankx.test.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -14,20 +14,19 @@ import java.util.logging.Logger;
 /**
  * Created by Yordan Nalbantov.
  */
-public abstract class Utils {
-
-    private static final Logger logger = Logger.getLogger(Utils.class.getSimpleName());
+public abstract class Resource {
 
     private static final int DEFAULT_BUFFER_SIZE = 4096;
     private static final Charset DEFAULT_ENCODING = StandardCharsets.UTF_8;
+    private static final Logger logger = Logger.getLogger(Resource.class.getSimpleName());
 
     public static String baseURI = null;
 
-    private Utils() {
+    private Resource() {
     }
 
     public static <T> T json(String resourceURI, Class<T> clazz) throws IOException {
-        String resource = Utils.resource(resourceURI);
+        String resource = Resource.resource(resourceURI);
 
         ObjectMapper mapper = new ObjectMapper();
 
@@ -51,7 +50,7 @@ public abstract class Utils {
 
     public static String resource(String resourceURI) {
         String baseEvaluatedURI = baseURI != null ? baseURI : "";
-        InputStream inputStream = Utils.class.getClassLoader().getResourceAsStream(baseEvaluatedURI + resourceURI);
+        InputStream inputStream = Resource.class.getClassLoader().getResourceAsStream(baseEvaluatedURI + resourceURI);
         return toString(inputStream);
     }
 
