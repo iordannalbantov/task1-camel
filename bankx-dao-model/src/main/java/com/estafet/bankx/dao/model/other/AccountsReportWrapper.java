@@ -2,6 +2,7 @@ package com.estafet.bankx.dao.model.other;
 
 
 import com.estafet.bankx.dao.model.Account;
+import com.estafet.bankx.dao.model.AccountReport;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

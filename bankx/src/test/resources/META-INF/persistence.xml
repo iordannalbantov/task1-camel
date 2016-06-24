@@ -9,6 +9,7 @@
         <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
 
         <class>com.estafet.bankx.dao.model.Account</class>
+        <class>com.estafet.bankx.dao.model.AccountReport</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 

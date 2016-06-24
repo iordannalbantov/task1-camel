@@ -1,24 +1,24 @@
 package com.estafet.bankx.camel.processors;
 
 import com.estafet.bankx.dao.api.AccountService;
-import com.estafet.bankx.dao.model.Account;
+import com.estafet.bankx.dao.model.AccountReport;
+import com.estafet.bankx.dao.model.other.AccountsReportWrapper;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 
 /**
  * Created by Yordan Nalbantov.
  */
-public class DbMergeProcessor implements Processor {
+public class PersistAccountReportProcessor implements Processor {
 
     private AccountService accountService;
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        Account account = exchange.getIn().getBody(Account.class);
+        AccountsReportWrapper wrapper = (AccountsReportWrapper) exchange.getIn().getBody();
 
-        if (account != null) {
-            account.setChanged(true);
-            accountService.persist(account);
+        for (AccountReport accountReport : wrapper.getAccounts()) {
+            accountService.persist(accountReport);
         }
     }
 

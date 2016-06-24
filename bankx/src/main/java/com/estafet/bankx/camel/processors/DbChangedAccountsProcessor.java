@@ -1,6 +1,5 @@
 package com.estafet.bankx.camel.processors;
 
-import com.estafet.bankx.camel.pojo.AccountPayload;
 import com.estafet.bankx.camel.pojo.ReportRequestPayload;
 import com.estafet.bankx.dao.api.AccountService;
 import com.estafet.bankx.dao.model.Account;

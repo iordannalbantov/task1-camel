@@ -2,6 +2,7 @@ package com.estafet.bankx.dao.impl;
 
 import com.estafet.bankx.dao.api.AccountService;
 import com.estafet.bankx.dao.model.Account;
+import com.estafet.bankx.dao.model.AccountReport;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,9 +31,14 @@ public class AccountServiceImpl implements AccountService {
      * @param account The Account data provided.
      */
     @Override
-    public void merge(Account account) {
+    public void persist(Account account) {
         // The attached instance captured in the result variable for future use.
         Account mergedAccount = entityManager.merge(account);
+    }
+
+    @Override
+    public void persist(AccountReport accountReport) {
+        entityManager.persist(accountReport);
     }
 
     @Override

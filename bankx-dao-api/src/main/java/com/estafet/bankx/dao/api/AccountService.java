@@ -1,6 +1,7 @@
 package com.estafet.bankx.dao.api;
 
 import com.estafet.bankx.dao.model.Account;
+import com.estafet.bankx.dao.model.AccountReport;
 
 import java.util.List;
 
@@ -9,7 +10,9 @@ import java.util.List;
  */
 public interface AccountService {
 
-    void merge(Account account);
+    void persist(Account account);
+
+    void persist(AccountReport accountReport);
 
     Account get(String iban);
 

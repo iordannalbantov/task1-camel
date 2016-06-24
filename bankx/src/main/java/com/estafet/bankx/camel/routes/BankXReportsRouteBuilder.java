@@ -26,6 +26,7 @@ public class BankXReportsRouteBuilder extends BaseBankXRouteBuilder {
                 .unmarshal().json(JsonLibrary.Jackson, AccountWrapper.class)
                 // Replace the GenericPayloadWrapper with AccountReportWrapper.
                 .processRef("accountsReportProcessor")
+                .wireTap("direct:persistAccountReport")
                 // Aggregate daily data. N.B. Reading should be synchronized to execute once a day.
                 // For the test it is not.
                 .aggregate(simple("${in.header.CamelFileName.substring(0, 10)}"), accountsWrapperAggregationStrategy)
@@ -36,5 +37,8 @@ public class BankXReportsRouteBuilder extends BaseBankXRouteBuilder {
                 // is called once per a minute, but not daily.
                 .processRef("prepareTransformationProcessor")
                 .to("xslt:com/estafet/bankx/camel/xslt/AccountsCSV.xsl?output=file").id("scanResult");
+
+        from("direct:persistAccountReport")
+                .processRef("persistAccountReportProcessor");
     }
 }
