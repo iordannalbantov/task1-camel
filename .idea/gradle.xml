@@ -11,13 +11,10 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/bankx" />
-            <option value="$PROJECT_DIR$/bankx-accounts-alternative-impl" />
-            <option value="$PROJECT_DIR$/bankx-accounts-api" />
-            <option value="$PROJECT_DIR$/bankx-accounts-impl" />
             <option value="$PROJECT_DIR$/bankx-dao-api" />
             <option value="$PROJECT_DIR$/bankx-dao-impl" />
+            <option value="$PROJECT_DIR$/bankx-dao-impl-alt" />
             <option value="$PROJECT_DIR$/bankx-dao-model" />
-            <option value="$PROJECT_DIR$/bankx-models" />
           </set>
         </option>
         <option name="useAutoImport" value="true" />

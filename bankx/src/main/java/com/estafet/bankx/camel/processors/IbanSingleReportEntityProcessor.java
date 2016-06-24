@@ -1,6 +1,6 @@
 package com.estafet.bankx.camel.processors;
 
-import com.estafet.bankx.model.Account;
+import com.estafet.bankx.dao.model.Account;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 
@@ -18,7 +18,8 @@ public class IbanSingleReportEntityProcessor implements Processor {
     public void process(Exchange exchange) throws Exception {
         logger.log(Level.INFO, "IbanTimestampOfRequest = {0}", exchange.getIn().getHeader("IbanTimestampOfRequest"));
         String iban = exchange.getIn().getBody(String.class);
-        Account entity = new Account(iban);
+        Account entity = new Account();
+        entity.setIban(iban);
         exchange.getIn().setBody(entity);
     }
 }

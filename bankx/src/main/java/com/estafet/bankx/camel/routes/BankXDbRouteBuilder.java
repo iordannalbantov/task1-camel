@@ -78,6 +78,10 @@ public class BankXDbRouteBuilder extends BaseBankXRouteBuilder {
                 .processRef("dbTransactionProcessor");
     }
 
+    /**
+     * A schedule, to run once a minute, depending on the configuration. It sends the changed accounts database records
+     * to the reporting service.
+     */
     private void configureRouteCronReport() {
         from("quartz2://report?cron={{bankx.cron.report}}&fireNow=false").routeId("routeCronReport")
                 .processRef("dbChangedAccountsProcessor")

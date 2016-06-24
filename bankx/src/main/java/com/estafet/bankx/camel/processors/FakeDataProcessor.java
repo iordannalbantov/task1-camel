@@ -1,7 +1,7 @@
 package com.estafet.bankx.camel.processors;
 
-import com.estafet.bankx.accounts.api.AccountServiceApi;
-import com.estafet.bankx.model.Account;
+import com.estafet.bankx.dao.api.AccountService;
+import com.estafet.bankx.dao.model.Account;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 
@@ -10,7 +10,7 @@ import org.apache.camel.Processor;
  */
 public class FakeDataProcessor implements Processor {
 
-    private AccountServiceApi accountEnricherService;
+    private AccountService accountService;
 
     @Override
     public void process(Exchange exchange) throws Exception {
@@ -19,18 +19,22 @@ public class FakeDataProcessor implements Processor {
         if (body instanceof Account) {
             Account entity = (Account) body;
 
-            if (accountEnricherService != null) {
-                Account fakeEntity = accountEnricherService.getAccountByIban(entity.getIban());
-                if (fakeEntity != null) {
-                    entity.setName(fakeEntity.getName());
-                    entity.setBalance(fakeEntity.getBalance());
-                    entity.setCurrency(fakeEntity.getCurrency());
+            if (accountService != null) {
+                Account account = accountService.get(entity.getIban());
+                if (account != null) {
+                    entity.setName(account.getName());
+                    entity.setBalance(account.getBalance());
+                    entity.setCurrency(account.getCurrency());
                 }
             }
         }
     }
 
-    public void setAccountEnricherService(AccountServiceApi accountEnricherService) {
-        this.accountEnricherService = accountEnricherService;
+    public AccountService getAccountService() {
+        return accountService;
+    }
+
+    public void setAccountService(AccountService accountService) {
+        this.accountService = accountService;
     }
 }

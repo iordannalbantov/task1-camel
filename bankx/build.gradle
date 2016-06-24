@@ -14,8 +14,6 @@ jar {
                         'org.apache.camel.component.jms, ' +
                         'org.apache.activemq.camel.component, ' +
                         'com.fasterxml.jackson.databind, ' +
-                        'com.estafet.bankx.model, ' +
-                        'com.estafet.bankx.accounts.api, ' +
                         'com.estafet.bankx.dao-model, ' +
                         'com.estafet.bankx.dao-api, ' +
                         'org.springframework.scheduling.quartz, ' +
@@ -25,8 +23,6 @@ jar {
 }
 
 dependencies {
-    compile project(':bankx-models')
-    compile project(':bankx-accounts-api')
     compile project(':bankx-dao-model')
     compile project(':bankx-dao-api')
 
@@ -48,10 +44,6 @@ dependencies {
     compile group: 'org.apache.camel', name: 'camel-test-blueprint', version: '2.15.1'
 
     compile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
-
-    testCompile project(':bankx-models')
-    testCompile project(':bankx-accounts-api')
-    testCompile project(':bankx-accounts-impl')
 
     testCompile group: 'org.apache.camel', name: 'camel-core', version: '2.15.1'
     testCompile group: 'org.apache.camel', name: 'camel-jetty', version: '2.15.1'

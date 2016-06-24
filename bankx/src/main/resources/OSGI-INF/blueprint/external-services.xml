@@ -3,8 +3,6 @@
            xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
            xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
 
-    <reference id="accountService" interface="com.estafet.bankx.accounts.api.AccountServiceApi"/>
-
-    <reference id="daoAccountService" interface="com.estafet.bankx.dao.api.AccountService"/>
+    <reference id="accountService" interface="com.estafet.bankx.dao.api.AccountService"/>
 
 </blueprint>

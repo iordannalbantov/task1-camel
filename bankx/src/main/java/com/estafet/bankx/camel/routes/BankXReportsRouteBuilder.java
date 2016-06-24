@@ -1,15 +1,12 @@
 package com.estafet.bankx.camel.routes;
 
 import com.estafet.bankx.camel.base.camel.BaseBankXRouteBuilder;
-import com.estafet.bankx.camel.pojo.AccountPayload;
-import com.estafet.bankx.model.AccountWrapper;
+import com.estafet.bankx.dao.model.other.AccountWrapper;
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 import org.apache.camel.processor.idempotent.MemoryIdempotentRepository;
-
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by Yordan Nalbantov.

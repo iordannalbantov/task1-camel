@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           xmlns:jpa="http://aries.apache.org/xmlns/jpa/v1.1.0"
+           xmlns:tx="http://aries.apache.org/xmlns/transactions/v1.0.0"
+           xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0
+                http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+                http://aries.apache.org/xmlns/transactions/v1.0.0
+                http://aries.apache.org/xmlns/jpa/v1.1.0">
+
+    <service id="accountsDbService" ref="accountDbService" interface="com.estafet.bankx.dao.api.AccountService"
+             ranking="2"/>
+
+    <bean id="accountDbService" class="com.estafet.bankx.dao.impl.AccountServiceImpl">
+        <jpa:context unitname="bankx" property="entityManager"/>
+        <tx:transaction method="*" value="Required"/>
+    </bean>
+
+</blueprint>

@@ -2,13 +2,14 @@ group 'com.estafet.bankx'
 version '1.0-SNAPSHOT'
 
 jar {
-    baseName = 'bankx-dao-impl'
+    baseName = 'bankx-dao-impl-alt'
     manifest {
         instruction 'Import-Package',
                 'com.estafet.bankx.dao-model, ' +
-                        'com.estafet.bankx.dao-api, ' +
-                        ' *'
-        instruction 'Export-Package', 'com.estafet.bankx.dao-impl, ' +
+                'com.estafet.bankx.dao-api, ' +
+                ' *'
+        instruction 'Export-Package',
+                'com.estafet.bankx.dao-impl-alt, ' +
                 '*'
     }
     destinationDir project.file('/home/estafet/jboss-fuse-6.2.1.redhat-084/deploy')

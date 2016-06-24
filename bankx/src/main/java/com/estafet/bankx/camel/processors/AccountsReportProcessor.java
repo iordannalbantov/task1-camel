@@ -1,7 +1,7 @@
 package com.estafet.bankx.camel.processors;
 
-import com.estafet.bankx.model.AccountWrapper;
-import com.estafet.bankx.model.AccountsReportWrapper;
+import com.estafet.bankx.dao.model.other.AccountWrapper;
+import com.estafet.bankx.dao.model.other.AccountsReportWrapper;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 

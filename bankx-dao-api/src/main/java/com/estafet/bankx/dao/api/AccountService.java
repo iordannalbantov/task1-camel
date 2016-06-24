@@ -11,6 +11,8 @@ public interface AccountService {
 
     void merge(Account account);
 
+    Account get(String iban);
+
     boolean transaction(String iban, Double amount);
 
     List<Account> changed();

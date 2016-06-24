@@ -14,7 +14,7 @@
           class="com.estafet.bankx.camel.processors.PrepareTransformationProcessor"/>
 
     <bean id="fakeDataProcessor" class="com.estafet.bankx.camel.processors.FakeDataProcessor">
-        <property name="accountEnricherService" ref="accountService"/>
+        <property name="accountService" ref="accountService"/>
     </bean>
 
     <bean id="accountsReportProcessor" class="com.estafet.bankx.camel.processors.AccountsReportProcessor"/>
@@ -30,15 +30,15 @@
     <bean id="accountsWrapperAggregationStrategy" class="com.estafet.bankx.camel.processors.AccountsWrapperAggregationStrategy"/>
 
     <bean id="dbMergeProcessor" class="com.estafet.bankx.camel.processors.DbMergeProcessor">
-        <property name="accountService" ref="daoAccountService"/>
+        <property name="accountService" ref="accountService"/>
     </bean>
 
     <bean id="dbTransactionProcessor" class="com.estafet.bankx.camel.processors.DbTransactionProcessor">
-        <property name="accountService" ref="daoAccountService"/>
+        <property name="accountService" ref="accountService"/>
     </bean>
 
     <bean id="dbChangedAccountsProcessor" class="com.estafet.bankx.camel.processors.DbChangedAccountsProcessor">
-        <property name="accountService" ref="daoAccountService"/>
+        <property name="accountService" ref="accountService"/>
     </bean>
 
 </blueprint>

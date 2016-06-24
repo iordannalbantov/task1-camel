@@ -1,8 +1,8 @@
 package com.estafet.bankx.dao.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -20,9 +20,10 @@ import java.util.List;
         @NamedQuery(name = "Account.allListed",
                 query = "select new com.estafet.bankx.dao.model.Account(o.iban, o.name, o.balance, o.changed) o " +
                         "from Account o where o.iban in :ibans"),
-        @NamedQuery(name = "Account.changed", query = "select o from Account o where o.changed = true")
+        @NamedQuery(name = "Account.changed", query = "select o from Account o where o.changed = true"),
+        @NamedQuery(name = "Account.get", query = "select o from Account o where o.iban = :iban")
 })
-public class Account {
+public class Account implements Serializable {
 
     @Id
     @Column(name = "iban")
@@ -30,6 +31,9 @@ public class Account {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "currency")
+    private String currency;
 
     @Column(name = "balance")
     private Double balance;
@@ -41,15 +45,32 @@ public class Account {
         this.changed = false;
     }
 
+    public Account(Account account) {
+        this.iban = account.iban;
+        this.name = account.name;
+        this.balance = account.balance;
+        this.currency = account.currency;
+        this.changed = account.changed;
+    }
+
+    public Account(String iban, String name, double balance, String currency, boolean changed) {
+        this.iban = iban;
+        this.name = name;
+        this.balance = balance;
+        this.currency = currency;
+        this.changed = changed;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Account) {
             Account account = (Account) obj;
-            boolean equalIban = equality(iban, account.getIban());
-            boolean equalName = equality(name, account.getName());
-            boolean equalBalance = equality(balance, account.getBalance());
-            boolean equalChanged = equality(changed, account.getChanged());
-            return equalIban && equalName && equalBalance && equalChanged;
+            boolean equalIban = equality(iban, account.iban);
+            boolean equalName = equality(name, account.name);
+            boolean equalBalance = equality(balance, balance);
+            boolean equalCurrency = equality(currency, account.currency);
+            boolean equalChanged = equality(changed, account.changed);
+            return equalIban && equalName && equalBalance && equalCurrency && equalChanged;
         }
         return false;
     }
@@ -96,12 +117,30 @@ public class Account {
 
     /**
      * Reads all changed accounts.
+     *
      * @param entityManager An EntityManager instance provided.
      * @return A list of attached Account objects that are all changed.
      */
     public static List<Account> changed(EntityManager entityManager) {
         TypedQuery<Account> query = entityManager.createNamedQuery("Account.changed", Account.class);
         return query.getResultList();
+    }
+
+    /**
+     * Reads an account based on its IBAN.
+     *
+     * @param entityManager An EntityManager instance provided.
+     * @param iban          The IBAN of interest.
+     * @return The corresponding Account object or null if not found.
+     */
+    public static Account get(EntityManager entityManager, String iban) {
+        try {
+            TypedQuery<Account> query = entityManager.createNamedQuery("Account.get", Account.class);
+            query.setParameter("iban", iban);
+            return query.getSingleResult();
+        } catch (NoResultException | NonUniqueResultException e) {
+            return null;
+        }
     }
 
     public String getIban() {
@@ -126,6 +165,14 @@ public class Account {
 
     public void setBalance(Double balance) {
         this.balance = balance;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public Boolean getChanged() {

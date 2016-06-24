@@ -29,6 +29,8 @@
       <module name="bankx-bankx_test" target="1.7" />
       <module name="bankx-dao-api_main" target="1.7" />
       <module name="bankx-dao-api_test" target="1.7" />
+      <module name="bankx-dao-impl-alt_main" target="1.7" />
+      <module name="bankx-dao-impl-alt_test" target="1.7" />
       <module name="bankx-dao-impl_main" target="1.7" />
       <module name="bankx-dao-impl_test" target="1.7" />
       <module name="bankx-dao-model_main" target="1.7" />

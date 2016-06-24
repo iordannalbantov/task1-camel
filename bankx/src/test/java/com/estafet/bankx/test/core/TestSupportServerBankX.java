@@ -1,8 +1,8 @@
 package com.estafet.bankx.test.core;
 
-import com.estafet.bankx.accounts.api.AccountServiceApi;
 import com.estafet.bankx.camel.processors.*;
-import com.estafet.bankx.model.Account;
+import com.estafet.bankx.dao.api.AccountService;
+import com.estafet.bankx.dao.model.Account;
 import org.apache.camel.impl.JndiRegistry;
 
 import java.util.LinkedHashMap;
@@ -21,11 +21,11 @@ public abstract class TestSupportServerBankX extends TestSupportServer {
     static {
         Account account;
 
-        account = new Account("BG66 ESTF 0616 0000 0000 01", "Ivan Ivanov", 100.0, "BGN");
+        account = new Account("BG66 ESTF 0616 0000 0000 01", "Ivan Ivanov", 100.0, "BGN", false);
         database.put(account.getIban(), account);
-        account = new Account("BG66 ESTF 0616 0000 0000 02", "Dimitar Iliev", 100.0, "BGN");
+        account = new Account("BG66 ESTF 0616 0000 0000 02", "Dimitar Iliev", 100.0, "BGN", false);
         database.put(account.getIban(), account);
-        account = new Account("BG66 ESTF 0616 0000 0000 03", "Ivan Miltenov", 100.0, "BGN");
+        account = new Account("BG66 ESTF 0616 0000 0000 03", "Ivan Miltenov", 100.0, "BGN", false);
         database.put(account.getIban(), account);
     }
 
@@ -36,10 +36,10 @@ public abstract class TestSupportServerBankX extends TestSupportServer {
     protected JndiRegistry createRegistry() throws Exception {
         JndiRegistry registry = super.createRegistry();
 
-        AccountServiceApi accountService = mock(AccountServiceApi.class);
+        AccountService accountService = mock(AccountService.class);
 
         for (Map.Entry<String, Account> entry : database.entrySet()) {
-            when(accountService.getAccountByIban(entry.getKey())).thenReturn(entry.getValue());
+            when(accountService.get(entry.getKey())).thenReturn(entry.getValue());
         }
 
         registry.bind("accountEnricherService", accountService);
@@ -52,7 +52,7 @@ public abstract class TestSupportServerBankX extends TestSupportServer {
         registry.bind("accountsWrapperAggregationStrategy", new AccountsWrapperAggregationStrategy());
 
         // Manually wiring the services.
-        ((FakeDataProcessor) registry.lookupByName("fakeDataProcessor")).setAccountEnricherService((AccountServiceApi) registry.lookup("accountEnricherService"));
+        ((FakeDataProcessor) registry.lookupByName("fakeDataProcessor")).setAccountService((AccountService) registry.lookup("accountEnricherService"));
 
         return registry;
     }
